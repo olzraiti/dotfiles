@@ -1,3 +1,3 @@
-export JAVA_HOME=/usr/lib/jvm/java-8-jdk
-export WEBIDE_JDK=/usr/lib/jvm/java-8-jdk
+#!/bin/bash
+export WEBIDE_JDK=$JAVA_HOME
 webstorm

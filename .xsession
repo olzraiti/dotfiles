@@ -33,9 +33,15 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 fi
 
 sxhkd &
-xrandr --output DVI-1 --primary
-xrandr --output HDMI-0 --right-of DVI-1
-xrandr --output HDMI-0 --same-as DVI-1
+
+if [[ $(xrandr -q | grep VGA1 | awk '{print $2}') == "connected" ]]; then
+	xrandr --output VGA1 --mode $(xrandr -q | grep VGA -A 1 | tail -n 1 | awk '{print $1}')
+	xrandr --output VGA1 --primary
+	xrandr --output LVDS1 --same-as VGA1
+else
+	xrandr --output LVDS1 --primary
+fi
+
 pia-vpn &
 #dunst &
 notifyd &
@@ -44,7 +50,7 @@ redshift &
 sparkleshare start &
 compton &
 unclutter &
-mpd &
+#mpd &
 urxvtd -q -f -o &
 setxkbmap custom &
 (sleep 8
@@ -56,5 +62,7 @@ setxkbmap custom &
  custom_keys) &
 
 muttatt &
+battery_listener &
 
+#exec startxfce4
 exec bspwm

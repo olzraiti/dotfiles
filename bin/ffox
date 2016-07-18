@@ -1,2 +1,2 @@
 #!/bin/bash
-env GTK2_RC_FILES=/home/olli/.themes/Numix-flatstudio/gtk-2.0/gtkrc firefox
+env GTK2_RC_FILES=/usr/share/themes/Raleigh/gtk-2.0/gtkrc firefox

@@ -18,10 +18,17 @@ if [[ $(query_mute) == true ]]; then
 	vol_symbol=$MUTE_ICON
 fi
 
+battery=$(acpi | cut -d " " -f 4  | sed 's/[^0-9]//g')
+battery_symbol=$BATTERY_ICON
+battery_icon_no=$(awk  'BEGIN { rounded = sprintf("%.0f", '$battery'/25); print rounded }')
+battery_icon_name="BATTERY_"$battery_icon_no"_ICON"
+battery_symbol=${!battery_icon_name}
+[[ $(acpi | cut -d " " -f 3) != *Discharging* ]] && battery_symbol="$CHORD_PLUGGED $battery_symbol"
+
 sep=" "
 gap=$sep
 
-widgets=("kmap" "vol" "date" "clock")
+widgets=("wifi" "battery" "kmap" "vol" "date" "clock")
 
 symbols=""
 datas=""

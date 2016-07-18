@@ -9,11 +9,15 @@ yeahconsole &
 
 sleep 4s
 
-bspc config --desktop ^1 window_gap 10
+bspc config --desktop ^1 window_gap 0
 bspc desktop -f ^1
+
 $BROWSER http://www.reddit.com &
 
 sleep 2
+
+bspc desktop -f ^4
+bspc config --desktop ^4 window_gap 60
 
 irk &
 m &

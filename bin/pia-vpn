@@ -3,4 +3,4 @@ country="Finland"
 if [[ -n $1 ]]; then
 	country=$1
 fi
-vpn $country.conf pia-login.conf $HOME/sparkleshark/wallpaper 
+$HOME/bin/vpn $country.conf pia-login.conf $HOME/sparkleshark/wallpaper 

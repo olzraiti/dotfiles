@@ -86,6 +86,9 @@ super + n
 super + shift + n
 	toggle_cairo_dock
 
+super + ctrl + q
+	query_wifi
+
 super + ctrl + alt + n
 	$BSPWM_SCRIPTS_DIR/rotate_split
 

@@ -1,0 +1,7 @@
+#!/bin/bash
+to_state=tiled
+if [[ -z $(bspc query -N -n focused.$1) ]]; then
+	to_state=$1
+fi
+echo $to_state
+bspc node -t $to_state

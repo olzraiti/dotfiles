@@ -1,0 +1,11 @@
+#!/bin/bash
+#font="Ubuntu Mono-17"
+#dmenu_run -i -h 1080 -w 1920 -q -o 0.6 -fn "$font" -nb "#200000" -nf "#bbbbff" -sb "#200000" -sf "#aa33ff"
+
+#if [[ -z $(pgrep lighthouse) ]]; then
+#	lighthouse | sh
+#else
+#	xdotool search --name lighthouse windowactivate
+#fi
+
+rofi -show run

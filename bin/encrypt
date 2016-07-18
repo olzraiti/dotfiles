@@ -1,0 +1,12 @@
+#!/bin/bash
+inode=$(readlink -f "$1")
+parent=$(dirname "$inode")
+name=$(basename "$inode")
+if [[ -d "$inode" ]]; then
+	tar zcvf - -C "$parent" "$name" | gpg -e -r olli.raitio@helsinki.fi -o /tmp/$name.folder.gpg
+	rm -rf "$inode"
+	mv /tmp/"$name".folder.gpg "$parent"/
+elif [[ -f "$inode" ]]; then
+	gpg -e -r olli.raitio@helsinki.fi "$inode"
+	rm "$inode"
+fi

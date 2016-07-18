@@ -1,0 +1,2 @@
+#!/bin/bash
+vpn openvpn.conf hy-login.conf $HOME/sparkleshark/hy-wallpaper

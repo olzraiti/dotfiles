@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<gconf>
+	<entry name="title" mtime="1438544136" type="string">
+		<stringvalue>./</stringvalue>
+	</entry>
+	<entry name="scrollbar_position" mtime="1438544136" type="string">
+		<stringvalue>hidden</stringvalue>
+	</entry>
+	<entry name="font" mtime="1438544136" type="string">
+		<stringvalue>Fira Code 12</stringvalue>
+	</entry>
+	<entry name="allow_bold" mtime="1424191069" type="bool" value="true"/>
+	<entry name="use_system_font" mtime="1438544136" type="bool" value="false"/>
+	<entry name="use_theme_colors" mtime="1438544136" type="bool" value="false"/>
+	<entry name="background_type" mtime="1438544136" type="string">
+		<stringvalue>transparent</stringvalue>
+	</entry>
+	<entry name="visible_name" mtime="1438544136" type="string">
+		<stringvalue>earthy</stringvalue>
+	</entry>
+	<entry name="foreground_color" mtime="1438544136" type="string">
+		<stringvalue>#FFFFF4D2DEB7</stringvalue>
+	</entry>
+	<entry name="background_color" mtime="1438544136" type="string">
+		<stringvalue>#1F9210D6130C</stringvalue>
+	</entry>
+	<entry name="silent_bell" mtime="1438544136" type="bool" value="true"/>
+	<entry name="default_show_menubar" mtime="1438544136" type="bool" value="false"/>
+	<entry name="bold_color" mtime="1438544136" type="string">
+		<stringvalue>#000000000000</stringvalue>
+	</entry>
+	<entry name="palette" mtime="1438544136" type="string">
+		<stringvalue>#24622C5F2711:#C6D283398339:#9B93CCCC89E5:#CA3CC3D378AB:#7B66893FC5F8:#B73090EFB776:#7A77AFBCB0A3:#D3D3D7D7CFCF:#555557575353:#E4B06AB86AB8:#7B8CDC285810:#EC5EDFFF4555:#647C7ACDDA73:#CD04741ECF5B:#4F90D487D709:#EEEEEEEEECEC</stringvalue>
+	</entry>
+	<entry name="background_darkness" mtime="1438544136" type="float" value="1"/>
+	<entry name="alternate_screen_scroll" mtime="1438544136" type="bool" value="true"/>
+</gconf>

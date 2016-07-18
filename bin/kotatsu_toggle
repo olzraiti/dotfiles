@@ -1,0 +1,9 @@
+#!/bin/bash
+if [[ $(jack_connect 'PulseAudio JACK Sink:front-left' system:playback_5 2>&1)  == *"already connected"* ]]; then
+	jack_disconnect 'PulseAudio JACK Sink:front-left' system:playback_5
+	jack_disconnect 'PulseAudio JACK Sink:front-right' system:playback_6
+	notify-no-icon "$TV_ICON $MUTE_ICON"
+else
+	jack_connect 'PulseAudio JACK Sink:front-right' system:playback_6
+	notify-no-icon "$TV_ICON $VOL_ICON"
+fi

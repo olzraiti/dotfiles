@@ -1,0 +1,9 @@
+#!/bin/bash
+amixer set Master 5%-
+#notify-no-icon "♪ $(amixer get Master | tail -1 | awk '{print $5}' | tr -d '[]')"
+icon=$VOL_ICON
+if [[ $(query_mute) == "true" ]]; then
+	icon=$MUTE_ICON
+fi
+notify-no-icon "$icon $(query_vol)"
+update_wallpaper /tmp/wallpaper

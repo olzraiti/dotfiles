@@ -1,0 +1,15 @@
+#!/bin/bash
+win_name="$1"
+PASSWORD_STORE_DIR=$(get_pass_env)
+pass_entry=$(find $PASSWORD_STORE_DIR -name "*$win_name*.gpg" | awk -F $PASSWORD_STORE_DIR '{print $2}' | rev | cut -d "." -f 1 --complement | rev)
+[[ -n $3 ]] && pass_entry=$3
+
+if [[ -z $pass_entry ]]; then
+	echo "$(find $PASSWORD_STORE_DIR -name "*.gpg" | awk -F $PASSWORD_STORE_DIR '{print $2}' | rev | cut -d "." -f 1 --complement | rev)" > /tmp/pass_rofi_fifo
+	rofi -show pass:~/dotfiles/rofi/pass.sh >/dev/null 2>&1
+elif [[ $(grep -c . <<<"$pass_entry") > 1 ]]; then
+	echo "$pass_entry" > /tmp/pass_rofi_fifo
+	rofi -show pass:~/dotfiles/rofi/pass.sh >/dev/null 2>&1
+else
+	clip_pass $pass_entry
+fi

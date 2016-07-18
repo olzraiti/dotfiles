@@ -1,0 +1,75 @@
+#!/bin/bash
+
+pkill update_wallpaper -9
+
+wallpaper=/tmp/wallpaper_ambience/wallpaper
+converted=$wallpaper
+current=/tmp/wallpaper_ambience/current
+
+vol=$(query_vol)
+
+# create the file path
+mute=false
+if [[ $(query_mute) == true ]]; then
+	converted=$converted"_mute"
+	mute=true
+else
+	converted=$converted"_vol_"$vol
+fi
+
+vpn=false
+if [[ -n $(pgrep openvpn) || -n $(pgrep pptp) ]]; then
+	converted=$converted"_vpn"
+	vpn=true
+fi
+
+blur=false
+focused_desktop=$(bspc query -D -d)
+if [[ -n $(bspc query -N -d $focused_desktop) ]]; then
+	converted=$converted"_blur"
+	blur=true
+fi
+
+battery=false
+battery_amount=$(acpi | cut -d " " -f 4  | sed 's/[^0-9]//g')
+battery_amount=$(($battery_amount / 25 * 25))
+if [[ $(acpi | cut -d " " -f 3) == *Discharging* ]]; then
+	converted=$converted"_battery_"$battery_amount
+	battery=true
+fi
+
+if [[ -f $current && $(cat $current) == $converted ]]; then
+	exit
+fi
+
+echo $converted > $current
+
+# create the file, if it isn't cached
+if [[ ! -f $converted ]]; then
+	convert_cmd="convert $wallpaper"
+	if [[ $mute == true ]]; then
+		convert_cmd=$convert_cmd" -fill navyblue -colorize 60"
+		convert_cmd=$convert_cmd" -fill black -colorize 50"
+	else
+		amount=$(((100 - vol) / 2))
+		convert_cmd=$convert_cmd" -fill blue -colorize $amount"
+		convert_cmd=$convert_cmd" -fill black -colorize $amount"
+	fi
+
+	if [[ $vpn == false ]]; then
+		convert_cmd=$convert_cmd" -fill red -colorize 50"
+	fi
+
+	if [[ $blur == true ]]; then
+		convert_cmd=$convert_cmd" -blur 0x5"
+	fi
+
+	if [[ $battery == true ]]; then
+		battery_amount=$(((100 - $battery_amount) - 20))
+		convert_cmd=$convert_cmd" /home/olli/battery_overlay.png -compose blend -define compose:args="$battery_amount" -composite"
+	fi
+
+	$convert_cmd $converted
+fi
+
+feh --bg-scale --no-xinerama $converted

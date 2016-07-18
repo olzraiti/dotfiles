@@ -1,0 +1,6 @@
+#!/bin/bash
+if [[ -z $(ps ax | grep "[c]airo-dock") ]]; then
+	cairo-dock -f
+else
+	pkill cairo-dock 
+fi

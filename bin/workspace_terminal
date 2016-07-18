@@ -1,0 +1,19 @@
+#!/bin/bash
+current=$(bspc query -D -d)
+name=$current"_terminal"
+
+if [[ -z $(xdotool search --classname $name) ]]; then
+	size=$(xrandr | grep $(query_primary) | awk '{print $4}')
+	width=$(echo $size | awk -F 'x' '{print $1}')
+	height=$(echo $size | awk -F 'x' '{print $2}' | awk -F '+' '{print $1}')
+	term_height=$(($height / 3))
+	urxvtc -name $name
+	xdotool search --classname $name windowsize $width $term_height windowmove 0 $(($height - $term_height))
+else
+	if [[ -z $(xdotool search --classname $name"_hidden") ]]; then
+		xdotool search --classname $name windowunmap set_window --classname $name"_hidden" windowfocus
+	else
+		xdotool search --classname $name"_hidden" windowmap set_window --classname $name
+	fi
+fi
+

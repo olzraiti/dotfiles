@@ -1,0 +1,67 @@
+#!/bin/bash
+command=$1
+target_d=$2
+cur_d=$(($(xdotool get_desktop) + 1))
+
+frames=10
+
+if [[ $target_d == $cur_d ]]; then
+	exit 1
+fi
+
+d_img=/tmp/bspwm_desktop_
+
+scrot $d_img$cur_d".png"
+
+direction="right"
+first=$cur_d
+last=$target_d
+if [[ $target_d < $cur_d ]]; then
+	direction="left"
+	first=$target_d
+	last=$cur_d
+fi
+
+first_img=$d_img$first".png"
+last_img=$d_img$last".png"
+combined=$d_img"combined.png"
+
+convert $first_img $last_img +append $combined
+
+i=1
+while true; do
+	if [[ $i == $frames ]]; then
+		break
+	fi
+
+	offset=$((1920 / $frames * $i))
+
+	convert $combined -crop 1920x1080+$offset $d_img"transition_"$i".png" &
+	i=$(($i + 1))
+done
+
+while [[ -n $(pgrep convert) ]]; do
+	echo "waiting"
+done
+
+i=1
+feh_str="feh -F -D 0.005 --cycle-once "
+while true; do
+	if [[ $i == $frames ]]; then
+		break
+	fi
+
+	frame=$i
+
+	if [[ $direction == "left" ]]; then
+		frame=$(($frames - $i))
+	fi
+
+	feh_str=$feh_str$d_img"transition_"$frame".png "
+	#feh -F -g 1920x1080 +
+	i=$(($i + 1))
+done
+#pkill feh
+
+$feh_str
+bspc $command ^$target_d

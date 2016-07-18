@@ -1,0 +1,28 @@
+.tmux.conf
+.vim
+.vimrc
+.bash_aliases
+.profile
+.zshrc
+.bashrc
+.bash_profile
+.dircolors
+.themes
+scripts
+bin
+.Xresources
+.xmodmap
+.xsession .xinitrc
+.tmux
+dunstrc .config/dunst/dunstrc
+redshift.conf .config/redshift.conf
+qutebrowser .config/qutebrowser
+lighthouse .config/lighthouse
+bspwmrc .config/bspwm/bspwmrc
+sxhkdrc .config/sxhkd/sxhkdrc
+compton.conf .config/compton.conf
+cairo-dock .config/cairo-dock
+.ssh_config .ssh/config
+xdg-applications/vim.desktop .local/share/applications/vim.desktop
+mimeapps.list .config/mimeapps.list
+qute_userscripts .local/share/qutebrowser/userscripts

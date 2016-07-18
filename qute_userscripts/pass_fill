@@ -1,0 +1,79 @@
+#!/bin/bash
+set -o pipefail
+shopt -s nocasematch # make regexp matching in bash case insensitive
+
+simple_url=""
+simplify_url() {
+    simple_url="${1##*://}" # remove protocoll specification
+    simple_url="${simple_url%%\?*}" # remove GET parameters
+    simple_url="${simple_url%%/*}" # remove directory path
+    simple_url="${simple_url%:*}" # remove port
+    simple_url="${simple_url##www.}" # remove www. subdomain
+}
+javascript_escape() {
+    # print the first argument in a escaped way, such that it can savely
+    # be used within javascripts double quotes
+    sed "s,[\\\'\"],\\\&,g" <<< "$1"
+}
+
+js() {
+user=$1
+pass=$2
+cat <<EOF
+    function hasPasswordField(form) {
+        var inputs = form.getElementsByTagName("input");
+        for (var j = 0; j < inputs.length; j++) {
+            var input = inputs[j];
+            if (input.type == "password") {
+                return true;
+            }
+        }
+        return false;
+    };
+    function loadData2Form (form) {
+        var inputs = form.getElementsByTagName("input");
+        for (var j = 0; j < inputs.length; j++) {
+            var input = inputs[j];
+            if (input.type == "text" || input.type == "email") {
+                input.value = "$(javascript_escape $user)";
+            }
+            if (input.type == "password") {
+                input.value = "$(javascript_escape $pass)";
+            }
+        }
+    };
+
+    var forms = document.getElementsByTagName("form");
+    for (i = 0; i < forms.length; i++) {
+        if (hasPasswordField(forms[i])) {
+            loadData2Form(forms[i]);
+        }
+    }
+EOF
+}
+
+printjs() {
+    js $1 $2 | sed 's,//.*$,,' | tr '\n' ' '
+}
+
+execute() {
+ user_pass=$(cat /tmp/pass_clipped_fifo | gpg -d -r olli.raitio@helsinki.fi --no-tty 2>/dev/null)
+ pass=$(echo "$user_pass" | head -n 1)
+ user=$(echo "$user_pass" | grep "user" | awk -F ":" '{print $2}' | awk '{print $1}')
+
+ echo "jseval -q $(printjs $user $pass)" >> "$QUTE_FIFO"
+ echo "enter-mode insert" >> "$QUTE_FIFO"
+}
+
+simplify_url "$QUTE_URL"
+
+simple_url=$(echo $simple_url | rev | awk -F "." '{print $2}' | rev)
+rm /tmp/pass_clipped_fifo
+search_pass "$simple_url"
+
+if [ -f /tmp/pass_clipped_fifo ]; then
+	execute
+else
+	inotifywait -e close_write /tmp/pass_clipped_fifo >/dev/null 2>&1
+	execute
+fi

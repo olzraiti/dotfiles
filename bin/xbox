@@ -1,0 +1,8 @@
+#!/bin/bash
+sudo xboxdrv | while read line; do
+	val=$(echo $line | cut -c 108-109 | sed 's/^0*//')
+	if [[ $val -gt 0 ]]; then
+		echo $val
+	fi
+done
+

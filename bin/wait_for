@@ -1,0 +1,6 @@
+#!/bin/bash
+while true; do
+	if [[ -z $(pidof $1) ]]; then
+		break
+	fi
+done

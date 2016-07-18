@@ -1,0 +1,20 @@
+pkill $BROWSER
+pkill java
+pkill psi
+pkill urxvtd
+
+pia-vpn &
+urxvtd &
+yeahconsole &
+
+sleep 4s
+
+bspc config --desktop ^1 window_gap 10
+bspc desktop -f ^1
+$BROWSER http://www.reddit.com &
+
+sleep 2
+
+irk &
+m &
+notify-no-icon 'Default session initialized'

@@ -1,0 +1,7 @@
+#!/bin/bash
+if [[ $(amixer get Master | tail -1 | awk '{print $6}' | tr -d '[]') == "on" ]]; then
+	echo false
+else
+	echo true
+fi
+

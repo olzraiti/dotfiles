@@ -1,0 +1,32 @@
+[Added Associations]
+application/zip=xarchiver.desktop;
+application/x-mswinurl=wine-extension-url.desktop;
+video/x-msvideo=mpv.desktop;vlc.desktop;
+image/jpeg=userapp-eog-NX1JAY.desktop;gimp.desktop;feh.desktop;wine-extension-jpe.desktop;
+video/x-matroska=vlc.desktop;mpv.desktop;
+image/png=feh.desktop;wine-extension-png.desktop;
+audio/x-wav=vlc.desktop;
+application/x-rar=xarchiver.desktop;
+audio/mpeg=mpv.desktop;vlc.desktop;
+text/html=chromium.desktop;
+video/mp4=vlc.desktop;mpv.desktop;
+audio/mp4=vlc.desktop;
+application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop;
+application/pdf=zathura-pdf-mupdf.desktop;
+text/plain=wine-extension-txt.desktop;
+audio/x-mpegurl=vlc.desktop;
+application/x-bittorrent=transmission-gtk.desktop;
+image/gif=wine-extension-gif.desktop;
+text/csv=libreoffice-calc.desktop;
+video/mp2t=vlc.desktop;
+audio/flac=mpv.desktop;
+audio/x-xm=milkytracker.desktop;
+video/webm=vlc.desktop;
+image/bmp=feh.desktop;
+application/x-compressed-tar=xarchiver.desktop;
+application/gzip=xarchiver.desktop;
+application/x-shellscript=org.gnome.gedit.desktop;gvim.desktop;
+application/x-subrip=wine-extension-txt.desktop;
+
+[Default Applications]
+video/x-msvideo=mpv.desktop

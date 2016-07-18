@@ -1,0 +1,20 @@
+auto-reload yes
+#browser firefox
+cleanup-on-quit yes
+download-path "$HOME/tmp/rss"
+feed-sort-order title-dec
+max-downloads 4
+notify-always yes
+notify-format "newsbeuter: %n unread articles within %f unread feeds"
+notify-program notify-no-icon
+#notify-xterm yes
+#notify-screen yes
+player mplayer
+refresh-on-startup yes
+reload-time 20
+reload-threads 2
+#show-read-articles no
+show-read-feeds no
+
+color listfocus black red
+color listfocus_unread black magenta

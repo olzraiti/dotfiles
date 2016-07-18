@@ -1,0 +1,21 @@
+#!/bin/bash
+
+cairo_on=true
+if [[ -z $(pidof cairo-dock) ]]; then
+	cairo_on=false
+else
+	pkill cairo-dock
+	sleep 0.1
+fi
+
+killall -SIGUSR1 dunst # pause dunst
+
+xwobf /tmp/.i3lock.png; i3lock -i /tmp/.i3lock.png
+
+wait_for i3lock
+
+if [[ $cairo_on == true ]]; then
+	cairo-dock -f &
+fi
+
+killall -SIGUSR2 dunst # resume dunst

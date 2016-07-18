@@ -1,0 +1,5 @@
+#!/bin/bash
+rm -r /tmp/wallpaper_ambience
+mkdir /tmp/wallpaper_ambience
+cp $1 /tmp/wallpaper_ambience/wallpaper
+update_wallpaper

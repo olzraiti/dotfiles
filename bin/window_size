@@ -1,0 +1,9 @@
+#!/bin/bash
+focused=$(xdotool getwindowfocus)
+geometry=$(xdotool getwindowgeometry -shell $focused)
+width=$(echo "$geometry" | sed -n 4p | cut -c 3-)
+height=$(echo "$geometry" | sed -n 5p | cut -c 3-)
+
+xdotool windowsize $focused $(($width + $1)) $(($height + $2)) 
+xdotool windowmove --relative $focused $(($1 / -2)) $(($2 / -2))
+

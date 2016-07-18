@@ -1,0 +1,3 @@
+#!/bin/bash
+echo "download-open" >> $QUTE_FIFO
+echo "download-remove" >> $QUTE_FIFO

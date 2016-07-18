@@ -1,0 +1,3 @@
+#!/bin/bash
+win_name=$(xdotool getwindowname $(xdotool getwindowfocus) | awk -F ' ' '{print tolower($1)}')
+search_pass "$win_name"

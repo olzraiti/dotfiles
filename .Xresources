@@ -1,0 +1,145 @@
+!Xcursor.theme:  Simple-and-Soft
+
+!URXVT
+URxvt.scrollBar: false
+!URxvt*font: xft:Source Code Pro:size=9:Regular
+!*font: -gohu-gohufont-medium-r-normal--11-80-100-100-c-60-iso10646-1
+!URxvt*font: -gohu-gohufont-medium-r-normal--11-80-100-100-c-60-iso10646-1
+!URxvt.boldFont:-gohu-gohufont-medium-r-normal--11-80-100-100-c-60-iso10646-1
+URxvt*font: -gohu-gohufont-medium-*-*-*-11-*-*-*-*-*-iso8859-*
+URxvt.boldFont:-gohu-gohufont-medium-*-*-*-11-*-*-*-*-*-iso8859-*
+!*boldFont: -gohu-gohufont-bold-r-normal--11-80-100-100-c-60-iso10646-1
+!URxvt.boldFont:xft:Ubuntu Mono:size=10:Regular
+!URxvt.letterSpace: -1
+URXvt.clipboard.autocopy: true
+
+!{{{ XFT
+Xft.dpi:       96
+Xft.antialias: true
+Xft.hinting:   true
+Xft.autohint:  true
+Xft.hintstyle: hintfull
+Xft.rgba:      rgb
+!!}}}
+
+!paste keyboard
+URxvt.keysym.Shift-Control-V: perl:clipboard:paste
+URxvt.keysym.Shift-Control-C: perl:clipboard:copy
+URxvt.keysym.M-c: perl:clipboard:copy
+URxvt.keysym.M-v: perl:clipboard:paste
+URxvt.iso14755: False
+
+URxvt.perl-ext-common:      default,matcher,clipboard,url-select,keyboard-select
+
+!links
+URxvt.url-select.launcher:  qutebrowser
+URxvt.url-select.underline: true
+URxvt.keysym.M-u:           perl:url-select:select_next
+URxvt.keysym.M-Escape:      perl:keyboard-select:activate
+URxvt.keysym.M-s:           perl:keyboard-select:search
+URxvt.matcher.rend.0:       Uline fg16
+
+yeahconsole*term: urxvtc
+yeahconsole*toggleKey: Win+e
+yeahconsole*keyBigger: WinControl+e
+yeahconsole*keySmaller: WinControlAlt+e
+yeahconsole*consoleHeight: 30
+yeahconsole*handleWidth: 0
+yeahconsole*aniDelay: 10
+
+!rofi
+rofi.font: gohufont 9
+rofi.color-normal: #1d2a30, #71c2af, #1d2a30, #aa4450, #ffffff
+rofi.color-window: #1d2a30, #1d2a30
+rofi.terminal: urxvtc 
+rofi.run-shell-command: {terminal} -e sh -c 'tmux new-session "{cmd}"'
+rofi.separator-style: solid
+rofi.hide-scrollbar: true
+rofi.kb-remove-word-back: Control+w
+rofi.kb-remove-word-forward: Alt+d
+rofi.kb-mode-next: Control+r
+rofi.kb-mode-previous: Control+shift+r
+rofi.opacity: 99
+rofi.modi: run,file:dotfiles/rofi/rofi-file-browser.sh,ssh,window,
+rofi.tokenize: false
+!rofi.sidebar-mode: true
+
+!XTERM
+XTerm*faceName: Ubuntu Mono
+XTerm*faceSize: 10
+XTerm*allowBoldFonts: false
+!alt key fix
+XTerm*eightBitInput: false
+XTerm*selectToClipboard: true
+XTerm*locale: true
+*VT100*translations: #override Shift <Btn1Up>: exec-formatted("chromium '%t'", PRIMARY)
+
+! ! special
+! *.foreground:   #dedede
+! *.background:   #181818
+! *.cursorColor:  #dedede
+! 
+! ! black
+! *.color0:       #252525
+! *.color8:       #545454
+! 
+! ! red
+! *.color1:       #ff9982
+! *.color9:       #fd5a35
+! 
+! ! green
+! *.color2:       #84ff83
+! *.color10:      #28ff2a
+! 
+! ! yellow
+! *.color3:       #fffd7f
+! *.color11:      #ffcb00
+! 
+! ! blue
+! *.color4:       #87b1ff
+! *.color12:      #387dff
+! 
+! ! magenta
+! *.color5:       #ff80bc
+! *.color13:      #ff54a5
+! 
+! ! cyan
+! *.color6:       #86ffec
+! *.color14:      #00ffd6
+! 
+! ! white
+! *.color7:       #cdcdcd
+! *.color15:      #ffffff
+
+!█▓▒░ scorcerer colors
+*.foreground:   #c2c2b0
+*.background:   #181818
+*.cursorColor:  #c2c2b0
+! black
+*.color0:       #111111
+*.color8:       #7F7F7F
+! red
+*.color1:       #aa4450
+*.color9:       #ff6a6a
+! green
+*.color2:       #719611
+*.color10:      #b1d631
+! yellow
+*.color3:       #cc8800
+*.color11:      #ff9800
+! blue
+*.color4:       #6688aa
+*.color12:      #90b0d1
+! magenta
+*.color5:       #8f6f8f
+*.color13:      #8181a6
+! cyan
+*.color6:       #528b8b
+*.color14:      #87ceeb
+! white
+*.color7:       #d3d3d3
+*.color15:      #c1cdc1
+! stylized
+*.colorIT:      #719611
+*.colorBD:      #d3d3d3
+*.colorUL:      #528b8b

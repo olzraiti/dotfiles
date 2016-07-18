@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Vim Text Editor
+Comment=Edit text files
+Exec=urxvtc -e vim 
+Terminal=true
+Type=Application
+Icon=terminal
+Categories=Utility;TextEditor;
+StartupNotify=true
+MimeType=text/plain;

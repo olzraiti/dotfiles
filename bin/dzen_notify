@@ -1,0 +1,3 @@
+#!/bin/bash
+#pkill dzen2
+echo "$1" | dzen2 -fg \#ffffff -bg \#0F1D25 -p 10 -x 10 -y 10 -fn "Terminus:size=20" -p 3 -w $2 &

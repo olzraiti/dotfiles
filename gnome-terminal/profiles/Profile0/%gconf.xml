@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<gconf>
+	<entry name="custom_command" mtime="1422106344" type="string">
+		<stringvalue></stringvalue>
+	</entry>
+	<entry name="alternate_screen_scroll" mtime="1438544136" type="bool" value="true"/>
+	<entry name="use_custom_command" mtime="1422106344" type="bool" value="false"/>
+	<entry name="font" mtime="1438544136" type="string">
+		<stringvalue>Ubuntu Mono 10</stringvalue>
+	</entry>
+	<entry name="scrollbar_position" mtime="1438544136" type="string">
+		<stringvalue>hidden</stringvalue>
+	</entry>
+	<entry name="use_system_font" mtime="1438544136" type="bool" value="false"/>
+	<entry name="word_chars" mtime="1422106344" type="string">
+		<stringvalue>-A-Za-z0-9,./?%&amp;#:_=+@~</stringvalue>
+	</entry>
+	<entry name="palette" mtime="1438544136" type="string">
+		<stringvalue>#214721472147:#FFFF2E14740D:#2E14FFFF786C:#D443FFFF2E14:#5036662FFFFF:#D11452C5FFFF:#2E14FFFFD8A2:#FD6FF09FA594:#4CCC4CCC4CCC:#FFFF63D69823:#5F92FFFF985F:#E4DEFFFF7F25:#7AE08B70FFFF:#DB39792BFFFF:#769CFFFFFFFF:#FFFFFA58D709</stringvalue>
+	</entry>
+	<entry name="default_size_rows" mtime="1422106344" type="int" value="24"/>
+	<entry name="title" mtime="1422106344" type="string">
+		<stringvalue>Terminal</stringvalue>
+	</entry>
+	<entry name="use_theme_colors" mtime="1438544136" type="bool" value="false"/>
+	<entry name="cursor_blink_mode" mtime="1422106344" type="string">
+		<stringvalue>system</stringvalue>
+	</entry>
+	<entry name="exit_action" mtime="1422106344" type="string">
+		<stringvalue>close</stringvalue>
+	</entry>
+	<entry name="scrollback_lines" mtime="1422106344" type="int" value="512"/>
+	<entry name="scrollback_unlimited" mtime="1422106344" type="bool" value="false"/>
+	<entry name="visible_name" mtime="1438544136" type="string">
+		<stringvalue>hax</stringvalue>
+	</entry>
+	<entry name="silent_bell" mtime="1438544136" type="bool" value="true"/>
+	<entry name="delete_binding" mtime="1422106344" type="string">
+		<stringvalue>escape-sequence</stringvalue>
+	</entry>
+	<entry name="scroll_on_keystroke" mtime="1422106344" type="bool" value="true"/>
+	<entry name="background_type" mtime="1438544136" type="string">
+		<stringvalue>transparent</stringvalue>
+	</entry>
+	<entry name="default_size_columns" mtime="1422106344" type="int" value="80"/>
+	<entry name="use_custom_default_size" mtime="1422106344" type="bool" value="false"/>
+	<entry name="default_show_menubar" mtime="1438544136" type="bool" value="false"/>
+	<entry name="bold_color_same_as_fg" mtime="1422106344" type="bool" value="true"/>
+	<entry name="background_color" mtime="1438544136" type="string">
+		<stringvalue>#000000000000</stringvalue>
+	</entry>
+	<entry name="allow_bold" mtime="1432940607" type="bool" value="true"/>
+	<entry name="backspace_binding" mtime="1422106344" type="string">
+		<stringvalue>ascii-del</stringvalue>
+	</entry>
+	<entry name="title_mode" mtime="1422106344" type="string">
+		<stringvalue>replace</stringvalue>
+	</entry>
+	<entry name="bold_color" mtime="1438544136" type="string">
+		<stringvalue>#000000000000</stringvalue>
+	</entry>
+	<entry name="scroll_on_output" mtime="1422106344" type="bool" value="false"/>
+	<entry name="scroll_background" mtime="1422106344" type="bool" value="true"/>
+	<entry name="update_records" mtime="1422106344" type="bool" value="true"/>
+	<entry name="login_shell" mtime="1422106344" type="bool" value="false"/>
+	<entry name="foreground_color" mtime="1438544136" type="string">
+		<stringvalue>#FFFFFFFFFFFF</stringvalue>
+	</entry>
+	<entry name="background_darkness" mtime="1438544136" type="float" value="0.88477402925491333"/>
+	<entry name="cursor_shape" mtime="1422106344" type="string">
+		<stringvalue>block</stringvalue>
+	</entry>
+	<entry name="background_image" mtime="1422106344" type="string">
+		<stringvalue></stringvalue>
+	</entry>
+</gconf>

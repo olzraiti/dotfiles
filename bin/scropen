@@ -1,0 +1,6 @@
+#!/bin/bash
+if [[ -n $(screen -ls | grep $1) ]]; then
+        screen -dr -S $1
+else
+        screen -S $1 $1
+fi

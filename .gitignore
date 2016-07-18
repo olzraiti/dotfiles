@@ -1,0 +1,6 @@
+.vim/undodir
+lighthouse/__pycache__
+*.pyc
+*.swp
+qutebrowser/bookmarks/*
+qutebrowser/quickmarks

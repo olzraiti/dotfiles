@@ -1,0 +1,35 @@
+#!/bin/bash
+if [[ -z $(bspc query -D | grep 4) ]]; then
+	xrandr --output DVI-1 --left-of HDMI-0
+
+	export BSPWM_DESKTOP_WALL_WIDTH=4
+	$BSPWM_SCRIPTS_DIR/desktop_wall init
+
+	bspc monitor DVI-1 -r 4-1 4-2
+	bspc monitor HDMI-0 -a 4-1 4-2
+
+	change_wallpaper $HOME/SparkleShare/sparkleshark/wallpaper
+
+	pactl load-module module-jack-sink channels=2
+
+	jack_disconnect 'PulseAudio JACK Sink:front-left' system:playback_1
+	jack_disconnect 'PulseAudio JACK Sink:front-right' system:playback_2
+
+	pacmd set-default-sink "jack_out.2"
+else
+	xrandr --output DVI-1 --primary
+	xrandr --output HDMI-0 --right-of DVI-1
+	xrandr --output HDMI-0 --same-as DVI-1
+	export BSPWM_DESKTOP_WALL_WIDTH=3
+
+	$BSPWM_SCRIPTS_DIR/desktop_wall init
+
+	bspc monitor HDMI-0 -r 4-1 4-2
+
+	change_wallpaper $HOME/SparkleShare/sparkleshark/wallpaper
+	
+	pactl unload-module $(pactl list modules | grep jack -B 1 | tail -n 2 | head -n 1 | cut -d " " -f 2 | cut -c 2-)
+
+	jack_connect 'PulseAudio JACK Sink:front-left' system:playback_1
+	jack_connect 'PulseAudio JACK Sink:front-right' system:playback_2
+fi

@@ -1,0 +1,7 @@
+nohup: failed to run command ‘/home/olli/scripts/screen’: No such file or directory
+./screen-daemon.sh: line 16: kill: (6088) - No such process
+nohup: failed to run command ‘/home/olli/scripts/screen.sh’: Permission denied
+./screen-daemon.sh: line 16: kill: (6157) - No such process
+/home/olli/scripts/screen.sh: line 2: syntax error near unexpected token `do'
+/home/olli/scripts/screen.sh: line 2: `while:; do'
+./screen-daemon.sh: line 16: kill: (6179) - No such process

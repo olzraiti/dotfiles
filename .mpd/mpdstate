@@ -1,0 +1,35 @@
+sw_volume: 0
+audio_device_state:1:mpd-output
+audio_device_state:1:my_fifo
+state: play
+current: 0
+time: 2328
+random: 1
+repeat: 0
+single: 0
+consume: 0
+crossfade: 0
+mixrampdb: 0.000000
+mixrampdelay: -1.000000
+playlist_begin
+song_begin: http://stream.kaaosradio.fi:8000/stream2
+Title: Kaaosradio 24h Maanantai - Chillout
+Name: Kaaosradio 24h
+mtime: 0
+song_end
+song_begin: http://188.117.44.132:8000/stream
+Title: Breach-The Key (feat. Kelis)
+Name: Bassoradio
+mtime: 0
+song_end
+song_begin: http://kohina.radio.ethz.ch:8000/kohina.ogg
+Artist: Kohina - Geoff & Tim Follin
+Title: Plok! - Main Theme - SNES
+Name: Kohina Radio - Old school game and demo music
+mtime: 0
+song_end
+song_begin: http://radio.radiohelsinki.fi
+Name: Broadcasting live Radio Helsinki
+mtime: 0
+song_end
+playlist_end

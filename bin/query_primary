@@ -1,0 +1,2 @@
+#!/bin/bash
+xrandr -q | grep 'primary' | awk '{print $1}'

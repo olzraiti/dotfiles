@@ -1,0 +1,25 @@
+pkill $BROWSER
+pkill idea
+pkill urxvtd
+
+hy-vpn &
+urxvtd &
+yeahconsole &
+
+bspc config --desktop ^1 window_gap 0
+bspc desktop -f ^1
+idea &
+$BROWSER http://koivu.luomus.fi/museoinfo2/info/ &
+$BROWSER https://www.pivotaltracker.com/n/projects/993272 &
+$BROWSER https://docs.google.com/spreadsheets/d/1Hz49naSISXvY0mLbrRMpCeo7TPt-fVIRc6tvrVspeTQ/edit#gid=1954368819 &
+
+sleep 4s
+
+bspc desktop -f ^2
+m &
+psi &
+
+sleep 0.5s
+
+bspc desktop -f ^1
+notify-no-icon 'Work session initialized'

@@ -1,0 +1,142 @@
+#!/bin/bash
+corner=$1
+
+# Get coords of the monitor
+monitor_x=$(xrandr | grep "primary" | awk '{print $4}' | awk -F+ '{print $2}')
+monitor_y=$(xrandr | grep "primary" | awk '{print $4}' | awk -F+ '{print $3}')
+# Get the size of the monitor
+monitor_width=$(xrandr | grep "primary" | awk -F'[ x+]' '{print $4}')
+monitor_height=$(xrandr | grep "primary" | awk -F'[ x+]' '{print $5}')
+# Panel size
+pad_x="50"
+pad_y="30"
+height="50"
+# Padding of the text in the panel
+in_pad="30"
+offset="-2"
+# Yes.
+font="-gohu-gohufont-medium-*-*-*-14-*-*-*-*-*-iso8859-*"
+font_icons="FontAwesome:size=11"
+
+color_summary="#71c2af"
+color_bg="#1d2a30"
+color_fg="#c27171"
+
+dismiss=3
+width_treshold=20
+
+touch "/tmp/notify_fifo"$corner
+tmp_file=$(mktemp)
+noti_timestamp=$(mktemp)
+
+last_width=""
+last_lines_c=0
+
+# create 10 tmp files for each line (assume max 10 lines)
+for (( i=0; i<=10; i++ )); do
+	tmp_files[$i]=$(mktemp)
+done
+
+function start_bar {
+	echo $(($(date +%s) + $dismiss)) > $noti_timestamp
+
+	count=$1
+
+	pids=()
+	# lemon bars which listen to multi line parser
+	for (( i=0; i<=$count; i++ )); do
+		bar_height=$height
+		bar_offset=$offset
+		bar_pad_y=$pad_y
+		bar_name="bar_noti_name"$corner
+		if [[ $count > 0 ]]; then
+			bar_height=$(($height / 4 * 3))
+			#bar_name=$bar_name"_no_shadow"
+			if [[ $i -eq 0 ]]; then
+				bar_offset=7
+			else
+				bar_pad_y=$(($bar_pad_y + $bar_height))
+				bar_offset=-12 
+			fi
+		fi
+		position_x=$((monitor_x + monitor_width - pad_x - width))
+		position_y=$bar_pad_y
+		if [[ -n $corner ]]; then #supports only southeast corner atm.
+			position_y=$((monitor_height - bar_pad_y - height))
+			position_x=$pad_x
+		fi
+		bar_opts="-d -g ${width}x${bar_height}+$position_x+$position_y -B $color_bg -f $font -f $font_icons -f monospace -o $bar_offset -n $bar_name"
+		(tail -f -n 0 ${tmp_files[$i]} | (
+			while read -r noti_line; do
+			   echo "$noti_line"
+			done
+			) | lemonbar ${bar_opts} | bash) &
+		pids[$i]=$!
+		sleep 0.01
+	done
+
+	# multiline parsing
+	((tail -f -n 0 $tmp_file | (
+	 while read -r noti_line; do
+		 IFS=';' read -r -a splitted <<< "$noti_line"
+		 for (( i=0; i<=$count; i++ )); do
+			 echo "%{c}%{F$color_summary}${splitted[$i]}" >> ${tmp_files[$i]}
+		 done
+	 done
+	 ))  &
+	 pid=$!
+
+	 while [[ $(cat $noti_timestamp) > $(($(date +%s))) ]]; do
+		 sleep 4
+	 done
+
+	 pkill -P $pid
+	 for pid in "${pids[@]}"; do
+		 pkill -P $pid
+	 done
+	) &
+
+	sleep 0.05 #wait for lemonbar before echoing to $tmp_file
+} 
+
+
+tail -f -n 0 "/tmp/notify_fifo"$corner |\
+  # Reads the notifications line by line
+  while IFS= read -r summary; do
+	line_c=$(grep -o ";" <<< "$summary" | wc -l)
+
+	largest_width=0
+	IFS=';' read -r -a splitted <<< "$summary"
+		# To be precise
+		parsed_summary=$(echo $splitted | sed -e 's/\%[^%}]*}//g')
+		text_width=$(txtw -f $font "${parsed_summary}")
+		if [[ $splitted == *$(date +'%H:%M')* ]]; then
+			text_width=$(($text_width + 30))
+		fi
+
+		width=$((2 * in_pad + text_width))
+		if [[ $width -gt $largest_width ]]; then
+			largest_width=$width
+		fi
+	width=$largest_width
+
+	if [[ -z $(xdotool search --name "bar_noti_name"$corner) ]]; then
+		start_bar $line_c
+	else
+		#if bar size is too different, resize
+		dist=$(($width - $last_width))
+		if [[ $line_c != $last_lines_c || ($dist -gt 0 && $dist -gt $width_treshold) || ($dist -lt 0 && $dist -lt -$(echo $width_treshold)) ]]; then
+			while [[ -n $(xdotool search --name "bar_noti_name"$corner"$") ]]; do
+				xdotool search --name "bar_noti_name"$corner"$" windowkill
+			done
+			start_bar $line_c
+		else 
+			echo $(($(date +%s) + $dismiss)) > $noti_timestamp
+		fi
+	fi
+
+	echo "$summary" >> $tmp_file
+	last_width=$width
+	last_lines_c=$line_c
+  done
+

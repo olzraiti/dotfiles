@@ -1,0 +1,8 @@
+#!/bin/bash
+running=$(pidof trayer | wc -l)
+
+if [[ $running == 1 ]]; then
+	pkill trayer
+else
+	trayer --edge top --widthtype request --distance 5 --tint 0x1F1113 --transparent true
+fi

@@ -1,0 +1,70 @@
+#! /usr/bin/env python3
+
+import os
+import sys
+from subprocess import check_call, check_output
+
+dirns = ['west', 'north', 'east', 'south']
+
+
+def fail (*args):
+    print(*args)
+    sys.exit(2)
+
+
+def mkname (col, row):
+    return '{}-{}'.format(col + 1, row + 1)
+
+
+try:
+    w = int(os.environ.get('BSPWM_DESKTOP_WALL_WIDTH', 3))
+    h = int(os.environ.get('BSPWM_DESKTOP_WALL_HEIGHT', 2))
+    if w <= 0 or h <= 0:
+        raise ValueError()
+except ValueError:
+    fail('invalid width/height specified')
+if len(sys.argv) < 2:
+    fail('expected command argument')
+cmd = sys.argv[1]
+
+if cmd == 'init':
+    check_call(['bspc', 'monitor', '-d'] +
+        [mkname(i % w, i // w) for i in range(w * h)])
+    pass
+
+elif cmd in ('switch', 'switchwithwindow'):
+    with_window = cmd == 'switchwithwindow'
+
+    if len(sys.argv) < 3:
+        fail('expected direction argument')
+    dirn = sys.argv[2].lower()
+    if dirn in dirns:
+        dirn = dirns.index(dirn)
+    else:
+        fail('invalid direction argument:', dirn)
+
+    current = check_output(['bspc', 'query', '-D', '-d', 'focused']).split(b'-')
+    try:
+        x = int(current[0]) - 1
+        y = int(current[1]) - 1
+    except (ValueError, IndexError):
+        fail('unexpected desktop name:', current, '(call `desktop-wall init`)')
+
+    if (x > 0, y > 0, x < w - 1, y < h - 1)[dirn]:
+        pos = [x, y]
+        pos[dirn % 2] += -1 if dirn < 2 else 1
+        target = mkname(*pos)
+
+        if with_window:
+            w_id = check_output(['bspc', 'query', '-N', '-n', 'focused']) \
+                .decode().strip()
+            if w_id:
+                check_call(['xdotool', 'windowunmap', str(w_id)])
+            else:
+                with_window = False
+        check_call(['bspc', 'desktop', '-f', target])
+        if with_window:
+            check_call(['xdotool', 'windowmap', str(w_id)])
+
+else:
+    fail('no such command:', cmd)

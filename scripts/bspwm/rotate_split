@@ -1,0 +1,12 @@
+#! /bin/bash
+
+dir="$("$BSPWM_SCRIPTS_DIR"/get-nearest-edge "$(bspc query -N -n focused)")"
+if [ -n "$dir" ]; then
+    if [ "$dir" = east ] || [ "$dir" = west ]; then
+        angle=90
+    else
+        angle=-90
+    fi
+    echo $dir $angle
+    bspc node @"$dir" -R "$angle"
+fi

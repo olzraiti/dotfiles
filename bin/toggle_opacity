@@ -1,0 +1,6 @@
+#!/bin/bash
+if [[ -z $(ps ax | grep "[c]ompton2") ]]; then
+	pkill compton && compton --shadow-exclude '!focused' --config $HOME/dotfiles/compton2.conf
+else
+	pkill compton && compton
+fi

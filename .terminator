@@ -1,0 +1,47 @@
+[global_config]
+  title_transmit_bg_color = "#ff0037"
+  title_inactive_fg_color = "#363d43"
+  inactive_color_offset = 0.98
+  title_transmit_fg_color = "#d9c624"
+  borderless = True
+[keybindings]
+[profiles]
+  [[default]]
+    scrollbar_position = hidden
+    palette = "#252525:#b76664:#86a752:#b0a95a:#818caf:#ac5e84:#85bdb0:#eee8d5:#545454:#e47b7a:#a6d958:#f7e632:#7ca2f6:#f17db6:#71ffe0:#fde7a3"
+    background_image = None
+    background_darkness = 1.07
+    urgent_bell = True
+    use_system_font = False
+    foreground_color = "#dbdbdb"
+    icon_bell = False
+    show_titlebar = False
+    antialias = False
+    font = Ubuntu Mono 10
+    background_color = "#2e2e2e"
+    allow_bold = False
+    scrollback_infinite = True
+  [[bright]]
+    background_image = None
+    background_darkness = 0.52
+    background_type = transparent
+    scrollbar_position = hidden
+    foreground_color = "#ffd52a"
+    show_titlebar = False
+    background_color = "#0b0b0b"
+  [[asd]]
+    background_image = None
+    background_color = "#272727"
+    scrollbar_position = hidden
+    show_titlebar = False
+    foreground_color = "#ffe1a9"
+[layouts]
+  [[default]]
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+      profile = default
+    [[[window0]]]
+      type = Window
+      parent = ""
+[plugins]

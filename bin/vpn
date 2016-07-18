@@ -1,0 +1,26 @@
+#!/bin/bash
+# 1st parameter is a .conf file which resides in /etc/openvpn
+# 2nd parameter is a authentication file, where 1st. row is user and 2nd row pass.
+# [optional] 3rd parameter is a wallpaper associated with the vpn provider.
+
+sudo pkill -9 openvpn
+sudo pkill openvpn
+sudo pkill pptp
+
+$(
+	sleep 0.1;
+	if [[ -n $3 ]]; then
+		$HOME/bin/change_wallpaper $3
+	fi
+) &
+
+
+if [[ -n "$4" ]]; then
+	$4
+else
+	sudo openvpn --config /etc/openvpn/$1 --auth-user-pass /etc/openvpn/$2
+fi
+
+if [[ -n $3 ]]; then
+	$HOME/bin/update_wallpaper
+fi

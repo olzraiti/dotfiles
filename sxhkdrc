@@ -1,0 +1,264 @@
+#
+# wm independent hotkeys
+#
+
+# terminal emulator
+#super + Return
+#	urxvt
+
+# program launcher
+#super + space
+#	dmenu_run
+
+# make sxhkd reload its configuration files:
+super + Escape
+	pkill -USR1 -x sxhkd
+
+super + Return
+	urxvtc
+super + shift +  Return
+	urxvtc -name floating
+
+super + r
+	launcher
+
+super + space
+	toggle_kmap
+
+super + p
+	toggle_rs
+
+super + q
+	notify_info
+
+super + shift + q
+	toggle_trayer
+
+super + {i, o}
+	{lower_vol, raise_vol}
+XF86Audio{Lower,Raise}Volume
+	{lower_vol, raise_vol}
+XF86AudioMute
+	toggle_mute
+
+super + d
+	xwobflock
+
+Print
+	scrot ~/tmp/%b%d::%H%M%S.png
+
+super + ctrl + 0
+	sudo pkill openvpn && \
+	sleep 0.5 && \
+	poweroff
+
+super + shift + 0
+	sudo pkill openvpn && \
+	sleep 0.5 && \
+	systemctl reboot
+
+super + v
+	xdotool windowmove --relative $(xdotool getwindowfocus) 20 0
+super + c
+	xdotool windowmove --relative $(xdotool getwindowfocus) -20 0
+super + ctrl + v
+	xdotool windowmove --relative $(xdotool getwindowfocus) 100 0
+super + ctrl + c
+	xdotool windowmove --relative $(xdotool getwindowfocus) -100 0
+super + shift + c
+	xdotool windowmove --relative $(xdotool getwindowfocus) 0 -20 
+super + shift + v
+	xdotool windowmove --relative $(xdotool getwindowfocus) 0 20
+super + ctrl + shift + c
+	xdotool windowmove --relative $(xdotool getwindowfocus) 0 -100
+super + ctrl + shift + v
+	xdotool windowmove --relative $(xdotool getwindowfocus) 0 100
+
+super + shift + {i,o, ctrl + i, ctrl + o}
+	window_size {-10 -10, 10 10, -100 -100, 100 100}
+super + alt + {i,o, ctrl + i, ctrl + o}
+	window_size {-10 0, 10 0 ,-100 0,  100 0}
+super + shift + alt + {i,o,  ctrl + i, ctrl + o}
+	window_size {0 -10, 0 10, 0 -100, 0 100}
+
+super + n
+	toggle_opacity
+super + shift + n
+	toggle_cairo_dock
+
+super + ctrl + alt + n
+	$BSPWM_SCRIPTS_DIR/rotate_split
+
+# switch desktop
+ctrl + alt + {_,shift + }{h,j,k,l}
+	$BSPWM_SCRIPTS_DIR/desktop_wall {switch,switchwithwindow} \
+		{west,south,north,east} && \
+	notify_focused_desktop && \
+	update_wallpaper
+
+super + {z, x, ctrl + z, ctrl + x}
+	$BSPWM_SCRIPTS_DIR/gaps {10, -10, 50, -50}
+
+super + shift + {z, x, ctrl + z, ctrl + x}
+	$BSPWM_SCRIPTS_DIR/padding {10, -10, 50, -50} top bottom left right
+
+super + alt +  {z, x, ctrl + z, ctrl + x}
+	$BSPWM_SCRIPTS_DIR/padding {10, -10, 50, -50} left right
+
+super + alt + shift + {z, x, ctrl + z, ctrl + x}
+	$BSPWM_SCRIPTS_DIR/padding {10, -10, 50, -50} top bottom
+
+super + ctrl + {n,m}
+	bspc node @/ -R {-90, 90}
+
+super + ctrl + shift + {n,m}
+	bspc node @parent -R {-90, 90}
+
+super + ctrl + s
+	bspc node -g sticky
+
+super + t
+	bspc node -t tiled
+super + {s, shift + s, f}
+	$BSPWM_SCRIPTS_DIR/state_toggle {floating,pseudo_tiled,fullscreen}
+
+super + {equal, plus, minus}
+	bspc node -l {normal, above, below}
+
+alt + e
+	workspace_terminal
+
+ctrl + space
+	xdotool search --name "bar_noti_name" windowkill %@
+
+#
+# bspwm hotkeys
+#
+
+# if the current node is automatic, send it to the last manual, otherwise pull the last leaf
+super + y
+	bspc query -N -n focused.automatic && bspc node -n last.!automatic || bspc node last.leaf -n focused
+
+super + {_,shift + }Tab
+	bspc node -f {next,prev}
+
+# quit bspwm normally
+super + alt + Escape
+	bspc quit
+
+# close and kill
+super + {_,shift + } w
+	bspc node -{c,k}
+
+# alternate between the tiled and monocle layout
+super + m
+	bspc desktop -l next
+
+
+# swap the current node and the biggest node
+super + g
+	bspc node -s biggest
+
+#
+# state/flags
+#
+
+# set the window state
+#super + {t,shift + t,s,f}
+#	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+
+# set the node flags
+#super + ctrl + {x,y,z}
+#	bspc node -g {locked,sticky,private}
+
+#
+# focus/swap
+#
+
+# focus the node in the given direction
+super + {_,shift + }{h,j,k,l}
+	bspc node -{f,s} {west,south,north,east}
+
+# focus the node for the given path jump
+super + {p,b,comma,period}
+	bspc node -f @{parent,brother,first,second}
+
+# focus the next/previous node
+super + {_,shift + }c
+	bspc node -f {next,prev}
+
+# focus the next/previous desktop
+super + bracket{left,right}
+	bspc desktop -f {prev,next}
+
+# focus the last node/desktop
+#super + {grave,Tab}
+#	bspc {node,desktop} -f last
+
+# focus the older or newer node in the focus history
+#super + {o,i}
+#	bspc wm -h off; \
+#	bspc node {older,newer} -f; \
+#	bspc wm -h on
+
+# focus or send to the given desktop
+super + {_,shift + }{1-9,0}
+	bspc {desktop -f,node -d} '^{1-9,10}' && \
+	notify_focused_desktop && \
+	update_wallpaper
+
+#
+# preselect
+#
+
+# preselect the direction
+super + ctrl + {h,j,k,l}
+	bspc node -p {west,south,north,east}
+
+# preselect the ratio
+super + ctrl + {1-9}
+	bspc node -o 0.{1-9}
+
+# cancel the preselection for the focused node
+super + ctrl + space
+	bspc node -p cancel
+
+# cancel the preselection for the focused desktop
+super + ctrl + shift + space
+	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+
+#
+# resize tiled/floating
+#
+
+# expand the tiled space in the given direction
+super + alt + {h,j,k,l}
+	bspc node {@west -r -10,@south -r +10,@north -r -10,@east -r +10}
+super + alt + ctrl + {h,j,k,l}
+	bspc node {@west -r -50,@south -r +50,@north -r -50,@east -r +50}
+
+# contract the tiled space in the given direction
+super + alt + shift + {h,j,k,l}
+	bspc node {@east -r -10,@north -r +10,@south -r -10,@west -r +10}
+super + alt + shift + ctrl + {h,j,k,l}
+	bspc node {@east -r -50,@north -r +50,@south -r -50,@west -r +50}
+
+# move a floating window
+super + {Left,Down,Up,Right}
+	xdo move {-x -20,-y +20,-y -20,-x +20}
+
+#
+# pointer focus/move/resize
+#
+
+# focus
+~button1
+	bspc pointer -g focus
+
+# start move/resize
+super + button{1-3}
+	; bspc pointer -g {move,resize_side,resize_corner}
+
+# end move/resize
+super + @button{1-3}
+	bspc pointer -u

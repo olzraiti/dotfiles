@@ -1,0 +1,24 @@
+#!/bin/bash
+
+tomcat=$HOME/lib/apache-tomcat-7.0.57
+
+function do_start {
+	echo "Starting tomcat"
+	$tomcat/bin/startup.sh
+	echo "Tomcat started"
+}
+function do_stop {
+	echo "Shutting down tomcat."
+	$tomcat/bin/shutdown.sh
+	echo "Tomcat stopped"
+}
+
+case $1 in
+	start)
+		do_start;;
+	stop)
+		do_stop;;
+	restart)
+		do_stop
+		do_start;;
+esac

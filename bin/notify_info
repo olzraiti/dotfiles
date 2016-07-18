@@ -1,0 +1,46 @@
+#!/bin/bash
+
+clock_symbol=$CLOCK_ICON
+clock=$(date +'%H:%M') 
+
+date_symbol=$CALENDAR_ICON
+date=$(date +'%d.%m.') 
+
+kmap_symbol=$KEYBOARD_ICON
+kmap=$(caps $(setxkbmap -print | awk -F'+' '/xkb_symbols/ {print $2}'))
+kmap_command="toggle_kmap no_notify && notify_info"
+
+vol_symbol=$VOL_ICON
+vol=$(query_vol)
+vol_command="toggle_mute no_notify && notify_info"
+
+if [[ $(query_mute) == true ]]; then
+	vol_symbol=$MUTE_ICON
+fi
+
+sep=" "
+gap=$sep
+
+widgets=("kmap" "vol" "date" "clock")
+
+symbols=""
+datas=""
+
+notify=""
+for w in ${widgets[@]}; do
+	data=${!w}
+	declare symbol=$w"_symbol"
+	symbol=${!symbol}
+	command_prefix=""
+	command_suffix=""
+	declare command=$w"_command"
+	command=${!command}
+	if [[ -n $command ]]; then
+		command_prefix="%{A:"$command":}"
+		command_suffix="%{A}"
+	fi
+	notify=$notify$command_prefix$symbol$sep$data$command_suffix$gap
+done
+notify=${notify%%$gap}
+
+notify-no-icon "$notify"

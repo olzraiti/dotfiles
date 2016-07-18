@@ -1,0 +1,2 @@
+#!/bin/bash
+while true; do setxkbmap -print | awk -F'+' '/xkb_symbols/ {print $2}';sleep 0.5; done

@@ -1,0 +1,11 @@
+#!/bin/bash
+PASSWORD_STORE_DIR=$(get_pass_env)
+export PASSWORD_STORE_DIR
+pass_output=$(pass $1)
+if [[ -z $pass_output ]]; then
+	kill -TERM -$(ps x -o "%p %r %y %x %c " | grep _pass | awk '{print $2}')
+	exit
+fi
+
+echo "$pass_output" | gpg -e -r olli.raitio@helsinki.fi -o /tmp/pass_clipped_fifo --no-tty --yes
+echo $1 > /tmp/pass_picked

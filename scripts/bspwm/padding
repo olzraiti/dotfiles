@@ -1,0 +1,5 @@
+#!/bin/bash
+for padding in "${@:2}"; do
+	padding=$padding"_padding"
+	bspc config -n focused $padding $(($(bspc config -n focused $padding) + $1))
+done

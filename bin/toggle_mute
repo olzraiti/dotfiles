@@ -1,0 +1,10 @@
+#!/bin/bash
+amixer set Master toggle
+mute=$VOL_ICON
+if [[ $(query_mute) == "true" ]]; then
+	mute=$MUTE_ICON
+fi
+if [[ -z $1 ]]; then
+	notify-no-icon $mute
+fi
+update_wallpaper

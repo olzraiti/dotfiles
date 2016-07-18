@@ -1,0 +1,31 @@
+#!/bin/bash
+
+tomcat=$HOME/lib/apache-tomcat-7.0.57
+sulka=$HOME/programming/sulka
+
+function deploy {
+	cp $sulka/target/sulka-1.0.0-BUILD-SNAPSHOT.war $tomcat/webapps/sulka.war
+	echo "Sulka deployed"
+}
+function build {
+	cd $sulka
+	mvn clean install -Dmaven.test.skip=true
+}
+function update {
+	cp -r $sulka/src/main/webapp/* $tomcat/webapps/sulka
+	echo "updated"
+}
+
+case $1 in
+	start)
+		deploy;;
+	deploy)
+		deploy;;
+	build)
+		build;;
+	build_deploy)
+		build
+		deploy;;
+	update)
+		update;;
+esac

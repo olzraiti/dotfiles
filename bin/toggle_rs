@@ -1,0 +1,8 @@
+#!/bin/bash
+if [[ -n $(ps -u $USER | grep redshift) ]]; then
+	pkill redshift
+	notify-no-icon "$REDSHIFT_ICON OFF"
+else
+	redshift &
+	notify-no-icon "$REDSHIFT_ICON ON"
+fi

@@ -1,0 +1,47 @@
+#!/bin/bash
+
+bspc config border_width        0
+bspc config window_gap         10
+
+bspc config split_ratio         0.5
+bspc config borderless_monocle  true
+bspc config gapless_monocle     true
+bspc config focus_by_distance   true
+
+bspc config focused_border_color \#bbbb99
+bspc config presel_border_color \#ffff00
+
+#bspc config top_padding 20
+#bspc monitor DVI-1 -d 1 2 3 4 5 6 7 8 9
+
+#bspc config normal_frame_opacity 0.5
+#bspc config focused_frame_opacity 0.5
+
+bspc rule -a Gimp follow=on 
+bspc rule -a mplayer2 state=floating
+bspc rule -a Kupfer.py focus=on
+bspc rule -a Screenkey manage=off
+bspc rule -a Guake state=floating
+bspc rule -a Tilda state=floating
+bspc rule -a cairo-dock-dialog state=floating
+bspc rule -a ardour_plugin_editor state=floating
+bspc rule -a Lxappearance desktop='^6'
+bspc rule -a Patchage desktop='^6'
+bspc rule -a Boincmgr desktop='^6'
+bspc rule -a URxvt:floating state=floating
+
+export BSPWM_DESKTOP_WALL_WIDTH=3
+export BSPWM_DESKTOP_WALL_HEIGHT=2
+$BSPWM_SCRIPTS_DIR/desktop_wall init
+
+bspc query -D | while read desktop; do
+	bspc rule -a URxvt:$desktop"_terminal" state=floating layer=above
+done
+
+wmname LG3D
+change_wallpaper $HOME/SparkleShare/sparkleshark/wallpaper
+bspc subscribe node_manage node_unmanage | while read line; do update_wallpaper; done &
+yeahconsole &
+xdotool behave_screen_edge --quiesce 600 --delay 0 top-right exec bin/notify_info &
+(start_jack
+ cairo-dock -f) &

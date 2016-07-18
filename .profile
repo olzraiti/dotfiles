@@ -46,6 +46,7 @@ icon CLOCK_ICON "\uf017"
 icon CALENDAR_ICON "\uf073"
 icon REDSHIFT_ICON "\uf042"
 icon TV_ICON "\uf26c"
+icon VPN_ICON "\uf0ac"
 icon UNLOCKED "\uf084 \uf13e"
 
 eval $(dircolors ~/.dircolors) > /dev/null

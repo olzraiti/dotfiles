@@ -1,4 +1,5 @@
 #!/bin/bash
+#Based on code written by /u/tudurom
 corner=$1
 
 # Get coords of the monitor

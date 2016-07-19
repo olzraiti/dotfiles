@@ -1,6 +1,7 @@
 #!/bin/bash
 #Based on code written by /u/tudurom
-corner=$1
+corner="northeast"
+[[ -n $1 ]] && corner=$1
 
 # Get coords of the monitor
 monitor_x=$(xrandr | grep "primary" | awk '{print $4}' | awk -F+ '{print $2}')
@@ -26,7 +27,7 @@ color_fg="#c27171"
 dismiss=3
 width_treshold=20
 
-touch "/tmp/notify_fifo"$corner
+touch "/tmp/notify_fifo_"$corner
 tmp_file=$(mktemp)
 noti_timestamp=$(mktemp)
 
@@ -49,7 +50,7 @@ function start_bar {
 		bar_height=$height
 		bar_offset=$offset
 		bar_pad_y=$pad_y
-		bar_name="bar_noti_name"$corner
+		bar_name="bar_noti_name_"$corner
 		if [[ $count > 0 ]]; then
 			bar_height=$(($height / 4 * 3))
 			#bar_name=$bar_name"_no_shadow"
@@ -60,12 +61,20 @@ function start_bar {
 				bar_offset=-12 
 			fi
 		fi
+
+		# select corner. default is northeast
 		position_x=$((monitor_x + monitor_width - pad_x - width))
 		position_y=$bar_pad_y
-		if [[ -n $corner ]]; then #supports only southeast corner atm.
+		if [[ $corner == "southwest" ]]; then 
 			position_y=$((monitor_height - bar_pad_y - height))
 			position_x=$pad_x
+		elif [[ $corner == "southeast" ]]; then
+			position_y=$((monitor_height - bar_pad_y - height))
+			position_x=$((monitor_width - width - pad_x))
+		elif [[ $corner == "northwest" ]]; then
+			position_x=$pad_x
 		fi
+
 		bar_opts="-d -g ${width}x${bar_height}+$position_x+$position_y -B $color_bg -f $font -f $font_icons -f monospace -o $bar_offset -n $bar_name"
 		(tail -f -n 0 ${tmp_files[$i]} | (
 			while read -r noti_line; do
@@ -101,7 +110,7 @@ function start_bar {
 } 
 
 
-tail -f -n 0 "/tmp/notify_fifo"$corner |\
+tail -f -n 0 "/tmp/notify_fifo_"$corner |\
   # Reads the notifications line by line
   while IFS= read -r summary; do
 	line_c=$(grep -o ";" <<< "$summary" | wc -l)
@@ -121,14 +130,14 @@ tail -f -n 0 "/tmp/notify_fifo"$corner |\
 		fi
 	width=$largest_width
 
-	if [[ -z $(xdotool search --name "bar_noti_name"$corner) ]]; then
+	if [[ -z $(xdotool search --name "bar_noti_name_"$corner) ]]; then
 		start_bar $line_c
 	else
 		#if bar size is too different, resize
 		dist=$(($width - $last_width))
 		if [[ $line_c != $last_lines_c || ($dist -gt 0 && $dist -gt $width_treshold) || ($dist -lt 0 && $dist -lt -$(echo $width_treshold)) ]]; then
-			while [[ -n $(xdotool search --name "bar_noti_name"$corner"$") ]]; do
-				xdotool search --name "bar_noti_name"$corner"$" windowkill
+			while [[ -n $(xdotool search --name "bar_noti_name_"$corner"$") ]]; do
+				xdotool search --name "bar_noti_name_"$corner"$" windowkill
 			done
 			start_bar $line_c
 		else 

@@ -1,7 +1,2 @@
 #!/bin/bash
-pkill dunst
-#notify-send "$1" "$2" -i /dev/null
-#notify-send "$1" "$2" -i ~/noti.png
-echo -e "$1" "$2" >> /tmp/notify_fifo
-#notify-send "$1" "$2"
-
+echo -e "$1" "$2" >> /tmp/notify_fifo_northeast

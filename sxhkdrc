@@ -25,9 +25,6 @@ super + r
 super + space
 	toggle_kmap
 
-super + p
-	toggle_rs
-
 super + q
 	notify_info
 
@@ -81,10 +78,8 @@ super + alt + {i,o, ctrl + i, ctrl + o}
 super + shift + alt + {i,o,  ctrl + i, ctrl + o}
 	window_size {0 -10, 0 10, 0 -100, 0 100}
 
-super + n
-	toggle_opacity
-super + shift + n
-	toggle_cairo_dock
+super + {b, shift + b, ctrl + b}
+	{toggle_opacity, toggle_cairo_dock, toggle_rs}
 
 super + ctrl + q
 	query_wifi
@@ -133,6 +128,9 @@ alt + e
 
 ctrl + space
 	xdotool search --name "bar_noti_name" windowkill %@
+
+super + {p, shift + p, ctrl + p}
+	{paste_pass, paste_user, paste_user_pass}
 
 #
 # bspwm hotkeys

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-pkill update_wallpaper -9
-
 wallpaper=/tmp/wallpaper_ambience/wallpaper
 converted=$wallpaper
 current=/tmp/wallpaper_ambience/current

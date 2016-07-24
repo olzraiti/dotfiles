@@ -59,7 +59,7 @@ icon BATTERY_0_ICON "\uf244"
 icon CHORD_PLUGGED "\uf1e6"
 icon WIFI_ICON "\uf1eb"
 icon WIFI_DISCONNECTED_ICON "\uf1eb ×"
-icon VPN_ICON "\uf0ac" 
+icon VPN_ICON "\uf0ac"
 icon UNLOCKED "\uf084 \uf13e"
 
 eval $(dircolors ~/.dircolors) > /dev/null

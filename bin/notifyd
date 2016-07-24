@@ -1,4 +1,5 @@
 #! /bin/bash
+#Originally written by /u/tudurom
 
 # Get coords of the monitor
 monitor_x=$(xrandr | grep "primary" | awk '{print $4}' | awk -F+ '{print $2}')

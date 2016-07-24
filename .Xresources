@@ -59,6 +59,8 @@ rofi.kb-remove-word-back: Control+w
 rofi.kb-remove-word-forward: Alt+d
 rofi.kb-mode-next: Control+r
 rofi.kb-mode-previous: Control+shift+r
+rofi.kb-clear-line: Control+l
+rofi.kb-row-first: Home,KP_Home,Control+u
 rofi.opacity: 99
 rofi.modi: run,file:dotfiles/rofi/rofi-file-browser.sh,ssh,window,
 rofi.tokenize: false

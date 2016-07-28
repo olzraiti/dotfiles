@@ -126,8 +126,8 @@ alt + e
 ctrl + space
 	xdotool search --name "bar_noti_name" windowkill %@
 
-super + {p, shift + p, ctrl + p}
-	{paste_pass, paste_user, paste_user_pass}
+super + {p, shift + p, ctrl + p, ctrl + shift + p}
+	{paste_pass, paste_user, paste_user_pass, paste_user_then_pass}
 
 #
 # bspwm hotkeys
@@ -178,8 +178,8 @@ super + {_,shift + }{h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
 
 # focus the node for the given path jump
-super + {p,b,comma,period}
-	bspc node -f @{parent,brother,first,second}
+#super + {p,b,comma,period}
+#	bspc node -f @{parent,brother,first,second}
 
 # focus the next/previous node
 super + {_,shift + }c

@@ -131,8 +131,8 @@ alt + e
 ctrl + space
 	xdotool search --name "bar_noti_name" windowkill %@
 
-super + {p, shift + p, ctrl + p}
-	{paste_pass, paste_user, paste_user_pass}
+super + {p, shift + p, ctrl + p, ctrl + shift + p}
+	{paste_pass, paste_user, paste_user_pass, paste_user_then_pass}
 
 #
 # bspwm hotkeys

@@ -47,11 +47,13 @@ Print
 super + ctrl + 0
 	sudo pkill openvpn && \
 	sleep 0.5 && \
+	poweroff || \
 	poweroff
 
 super + shift + 0
 	sudo pkill openvpn && \
 	sleep 0.5 && \
+	systemctl reboot || \
 	systemctl reboot
 
 super + v
@@ -181,8 +183,8 @@ super + {_,shift + }{h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
 
 # focus the node for the given path jump
-super + {p,b,comma,period}
-	bspc node -f @{parent,brother,first,second}
+#super + {p,b,comma,period}
+#	bspc node -f @{parent,brother,first,second}
 
 # focus the next/previous node
 super + {_,shift + }c

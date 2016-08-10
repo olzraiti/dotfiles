@@ -12,8 +12,8 @@ sind -d -t $dismiss -f '%s;%b' |\
 	body=""
 	if [[ -n $(echo $line | awk -F ";" '{print $2}') ]]; then
 		echo there is body
-		summary=$(echo $line | awk -F ";" '{print $2}')
-		body=$(echo $line | awk -F ";" '{print $1}')
+		summary=$(echo $line | awk -F ";" '{print $1}')
+		body=$(echo $line | awk -F ";" '{print $2}')
 	else
 		body=$(echo $line | awk -F ";" '{print $1}')
 	fi

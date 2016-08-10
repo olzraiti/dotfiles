@@ -1,1 +1,1 @@
-urxvtc -e sh -c 'tmux new-session "ssh -t melkki ./irk"'
+urxvtc -e sh -c 'tmux new-session "ssh -t robopop ./irk"'

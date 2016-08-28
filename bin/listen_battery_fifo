@@ -1,0 +1,9 @@
+#!/bin/bash
+touch /tmp/battery_fifo
+tail -f -n 0 /tmp/battery_fifo | while read line; do
+	sleep 0.5
+	notify=$CHORD_PLUGGED
+	[[ $(acpi | cut -d " " -f 3) == *Discharging* ]] && notify=$notify" ×"
+	notify-no-icon $notify
+	update_wallpaper
+done

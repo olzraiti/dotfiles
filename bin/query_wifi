@@ -1,0 +1,58 @@
+#!/bin/bash
+
+function notify {
+	notify-no-icon "$1 $2"
+}
+
+function get_noti {
+	current=$(netctl-auto list | grep "*" | awk -F "* " '{print $2}')
+	noti=""
+
+	if [[ -n $current ]]; then
+		noti="$current"
+	else
+		noti=""
+	fi
+
+	vpn=""
+	if [[ -n $(ps ax | grep '[p]ia-vpn') ]]; then
+		country=$(ps ax | grep '[p]ia-vpn' | awk '{print $7}')
+		if [[ -z $country ]]; then
+			country=$(cat bin/pia-vpn | head -n 2 | tail -n 1 | cut -d "=" -f 2 | sed 's/"//g')
+		fi
+		vpn=$VPN_ICON" "$country
+		noti=$noti" "$vpn
+	fi
+	echo "$noti"
+}
+
+noti="$(get_noti)"
+
+(
+	sleep 0.1
+	while [ true ]; do
+		notify $WIFI_ICON "- $noti"
+		sleep 0.1
+		notify $WIFI_ICON '\\ '"$noti"
+		sleep 0.1
+		notify $WIFI_ICON "| $noti"
+		sleep 0.1
+		notify $WIFI_ICON "/ $noti"
+		sleep 0.1
+	done
+) &
+wait_pid=$!
+
+(ping 8.8.8.8 | (read line
+	if [[ $line == *"bytes of data"* ]]; then
+		notify $WIFI_ICON "$(get_noti)"
+		kill $wait_pid
+		kill $$
+	fi
+)) &
+pid=$!
+
+sleep 1
+kill $pid
+kill $wait_pid
+notify "$WIFI_DISCONNECTED_ICON" "$noti"

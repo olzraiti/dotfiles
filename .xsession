@@ -66,6 +66,7 @@ setxkbmap custom &
 
 muttatt &
 battery_listener &
+listen_battery_fifo &
 
 #exec startxfce4
 exec bspwm

@@ -1,0 +1,5 @@
+#!/bin/bash
+ true; do
+	[[ $(acpi | cut -d " " -f 3) == *Discharging* ]] &&	update_wallpaper
+	sleep 60
+done

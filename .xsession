@@ -36,6 +36,7 @@ sxhkd &
 xrandr --output DVI-1 --primary
 xrandr --output HDMI-0 --right-of DVI-1
 xrandr --output HDMI-0 --same-as DVI-1
+cache_xrandr
 pia-vpn &
 #dunst &
 notifyd &

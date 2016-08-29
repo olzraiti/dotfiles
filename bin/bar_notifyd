@@ -3,12 +3,14 @@
 corner="northeast"
 [[ -n $1 ]] && corner=$1
 
+xrandr_output=$(cat /tmp/xrandr_output)
+
 # Get coords of the monitor
-monitor_x=$(xrandr | grep "primary" | awk '{print $4}' | awk -F+ '{print $2}')
-monitor_y=$(xrandr | grep "primary" | awk '{print $4}' | awk -F+ '{print $3}')
+monitor_x=$(cat "$xrandr_output" | grep "primary" | awk '{print $4}' | awk -F+ '{print $2}')
+monitor_y=$(cat "$xrandr_output" | grep "primary" | awk '{print $4}' | awk -F+ '{print $3}')
 # Get the size of the monitor
-monitor_width=$(xrandr | grep "primary" | awk -F'[ x+]' '{print $4}')
-monitor_height=$(xrandr | grep "primary" | awk -F'[ x+]' '{print $5}')
+monitor_width=$(cat "$xrandr_output" | grep "primary" | awk -F'[ x+]' '{print $4}')
+monitor_height=$(cat "$xrandr_output" | grep "primary" | awk -F'[ x+]' '{print $5}')
 # Panel size
 pad_x="50"
 pad_y="30"

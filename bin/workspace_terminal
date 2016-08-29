@@ -2,7 +2,7 @@
 current=$(bspc query -D -d)
 name=$current"_terminal"
 
-size=$(xrandr | grep $(query_primary) | awk '{print $4}')
+size=$(cat /tmp/xrandr_output | grep $(query_primary) | awk '{print $4}')
 width=$(echo $size | awk -F 'x' '{print $1}')
 height=$(echo $size | awk -F 'x' '{print $2}' | awk -F '+' '{print $1}')
 term_height=$(($height / 3))

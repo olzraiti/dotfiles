@@ -78,7 +78,7 @@ super + alt + {i,o, ctrl + i, ctrl + o}
 super + shift + alt + {i,o,  ctrl + i, ctrl + o}
 	window_size {0 -10, 0 10, 0 -100, 0 100}
 
-super + {b, shift + b, ctrl + b}
+super + b + {_, shift, ctrl}
 	{toggle_opacity, toggle_cairo_dock, toggle_rs}
 
 super + ctrl + alt + n
@@ -126,8 +126,8 @@ alt + e
 ctrl + space
 	xdotool search --name "bar_noti_name" windowkill %@
 
-super + {p, shift + p, ctrl + p, ctrl + shift + p}
-	{paste_pass, paste_user, paste_user_pass, paste_user_then_pass}
+super + p + {_, shift, ctrl, ctrl + shift} + {_, alt}
+	{paste_pass, paste_user, paste_user_pass, paste_user_then_pass} {'', 'dontguess'}
 
 #
 # bspwm hotkeys

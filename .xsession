@@ -45,6 +45,7 @@ for display_port in "${display_ports[@]}"; do
 	fi
 done
 
+cache_xrandr
 pia-vpn &
 #dunst &
 notifyd &

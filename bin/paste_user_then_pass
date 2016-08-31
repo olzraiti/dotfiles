@@ -6,7 +6,7 @@ touch /tmp/pass_clipped_fifo
  user=$(echo "$user_pass" | grep "user" | awk -F ":" '{print $2}' | awk '{print $1}')
  xdotool keyup Super_L Shift_L Control_L
  xdotool type $user
- xdotool key Tab
+ xdotool key Return
  sleep 0.1
  xdotool type $pass
  notify-no-icon "$UNLOCKED pasted $(cat /tmp/pass_picked)"

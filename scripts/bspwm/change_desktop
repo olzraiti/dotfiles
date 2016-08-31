@@ -1,67 +1,108 @@
 #!/bin/bash
 command=$1
 target_d=$2
-cur_d=$(($(xdotool get_desktop) + 1))
+#cur_d=$(($(xdotool get_desktop) + 1))
+#
+#if [[ $target_d != "^"* ]]; then
+#	target_col=$(echo $target_d | cut -d "-" -f 1)
+#	target_row=$(echo $target_d | cut -d "-" -f 2)
+#	target_d=$(($((target_row -1)) * 3 + $target_col))
+#fi
+#
+#
+##frames=10
+#
+#if [[ $target_d == $cur_d ]]; then
+#	exit 1
+#fi
+#
+#d_img=/tmp/bspwm_desktop_
+#
+#scrot $d_img$cur_d".png"
+#
+#direction="right"
+#first=$cur_d
+#last=$target_d
+#if [[ $target_d < $cur_d ]]; then
+#	direction="left"
+#	first=$target_d
+#	last=$cur_d
+#fi
+#
+#first_img=$d_img$first".png"
+#last_img=$d_img$last".png"
+#combined=$d_img"combined.png"
+#
+#convert $first_img $last_img +append $combined
 
-frames=10
+cur_d=$(bspc query -D -d)
 
 if [[ $target_d == $cur_d ]]; then
 	exit 1
+fi
+
+cur_col=$(echo $cur_d | cut -d "-" -f 1)
+cur_row=$(echo $cur_d | cut -d "-" -f 2)
+
+target_col=$(echo $target_d | cut -d "-" -f 1)
+target_row=$(echo $target_d | cut -d "-" -f 2)
+
+direction="east"
+first=$cur_d
+last=$target_d
+append_fn="+" # + for horizontal, - for vertical
+if [[ $target_col -lt $cur_col ]]; then
+	direction="west"
+	first=$target_d
+	last=$cur_d
+elif [[ $target_row -gt $cur_row ]]; then
+	direction="south"
+	append_fn="-"
+elif [[ $target_row -lt $cur_row ]]; then
+	direction="north"
+	first=$target_d
+	last=$cur_d
+	append_fn="-"
 fi
 
 d_img=/tmp/bspwm_desktop_
 
 scrot $d_img$cur_d".png"
 
-direction="right"
-first=$cur_d
-last=$target_d
-if [[ $target_d < $cur_d ]]; then
-	direction="left"
-	first=$target_d
-	last=$cur_d
-fi
-
 first_img=$d_img$first".png"
 last_img=$d_img$last".png"
 combined=$d_img"combined.png"
 
-convert $first_img $last_img +append $combined
+convert $first_img $last_img $append_fn"append" $combined
 
-i=1
-while true; do
-	if [[ $i == $frames ]]; then
-		break
-	fi
+width=1920
+height=1080
+duration=1
 
-	offset=$((1920 / $frames * $i))
+speed=$(echo "1 / $duration / 2" | bc -l)
+west='x=t*w*'$speed"-"$width
+east='x=t*-w*'$speed
+north='y=t*h*'$speed"-"$height
+south='y=t*-h*'$speed
 
-	convert $combined -crop 1920x1080+$offset $d_img"transition_"$i".png" &
-	i=$(($i + 1))
-done
+scale="-1:"$height
+if [[ $direction == "south" || $direction == "north" ]]; then
+	scale=$width":-1"
+fi
 
-while [[ -n $(pgrep convert) ]]; do
-	echo "waiting"
-done
+direction_cmd=${!direction}
 
-i=1
-feh_str="feh -F -D 0.005 --cycle-once "
-while true; do
-	if [[ $i == $frames ]]; then
-		break
-	fi
+ffmpeg -f lavfi -i color=s=$width"x"$height:d=$duration -loop 1 -i $combined -y \
+	-filter_complex \
+	"[1:v]scale=$scale[fg]; \
+	 [0:v][fg]overlay="$direction_cmd":shortest=1[v]" \
+	 -map "[v]" /tmp/output.mkv
 
-	frame=$i
+mpv /tmp/output.mkv --title="ampeevee" &
 
-	if [[ $direction == "left" ]]; then
-		frame=$(($frames - $i))
-	fi
+sleep 1
 
-	feh_str=$feh_str$d_img"transition_"$frame".png "
-	#feh -F -g 1920x1080 +
-	i=$(($i + 1))
-done
-#pkill feh
-
-$feh_str
-bspc $command ^$target_d
+bspc $command $target_d
+#echo $target_d > /tmp/target
+sleep 0.2
+scrot $d_img$target_d".png"

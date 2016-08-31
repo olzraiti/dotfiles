@@ -63,6 +63,7 @@ elif cmd in ('switch', 'switchwithwindow'):
             else:
                 with_window = False
         check_call(['bspc', 'desktop', '-f', target])
+        #check_call([os.environ.get('BSPWM_SCRIPTS_DIR') + "/change_desktop", "desktop -f", target ])
         if with_window:
             check_call(['xdotool', 'windowmap', str(w_id)])
 

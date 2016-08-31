@@ -10,7 +10,7 @@ function install_packages {
 }
 
 echo "Decrypting..."
-$dir"/decrypts.sh"
+$dir"/decrypt.sh"
 
 echo "Installing packages"
 

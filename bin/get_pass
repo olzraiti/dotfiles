@@ -1,3 +1,6 @@
 #!/bin/bash
-win_name=$(xdotool getwindowname $(xdotool getwindowfocus) | awk -F ' ' '{print tolower($1)}')
+win_name=""
+#if there is argument, don't search by window name
+[[ -z $1 ]] && echo "etitään window anme"
+[[ -z $1 ]] && win_name=$(xdotool getwindowname $(xdotool getwindowfocus) | awk -F ' ' '{print tolower($1)}')
 search_pass "$win_name"

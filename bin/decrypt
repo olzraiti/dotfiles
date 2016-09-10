@@ -1,9 +1,13 @@
 #!/bin/bash
 remove=true
-while getopts 'd' flag; do
+overwrite_param=""
+while getopts 'dy' flag; do
 	case "${flag}" in
 		d) 
 			remove=false
+		;;
+		y)
+			overwrite_param="--yes"
 		;;
   esac
 done
@@ -14,7 +18,7 @@ parent=$(dirname "$inode")
 name=$(basename "$inode")
 
 if [[ "$1" == *.folder.gpg ]]; then
-	gpg -d "$inode" | tar xz -C "$parent"/
+	gpg -d $overwrite_param "$inode" | tar xz -C "$parent"/
 	decrypted_name=${name%%.folder.gpg}
 	decrypted_inode=${inode%%.gpg}
 	if [[ -d $decrypted_inode && $remove == true ]]; then
@@ -23,7 +27,8 @@ if [[ "$1" == *.folder.gpg ]]; then
 else
 	decrypted_name=${name%%.gpg}
 	decrypted_inode=${inode%%.gpg}
-	gpg -o "$parent"/"$decrypted_name" -d "$inode"
+	gpg $overwrite_param -o "$parent"/"$decrypted_name" -d "$inode"
+	echo ""$overwrite_param" -o "$parent"/"$decrypted_name" -d "$inode""
 	if [[ -f $decrypted_inode && $remove == true ]]; then
 		rm "$inode"
 	fi

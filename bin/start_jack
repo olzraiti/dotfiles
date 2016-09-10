@@ -1,3 +1,0 @@
-#!/bin/bash
-jack_control start
-scripts/jack/start.sh

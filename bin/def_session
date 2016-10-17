@@ -1,13 +1,13 @@
 pkill $BROWSER
-pkill java
-pkill psi
-pkill urxvtd
+pkill java &
+pkill psi &
+#pkill urxvtd &
 
 pia-vpn &
-urxvtd &
-yeahconsole &
+#urxvtd &
+#yeahconsole &
 
-sleep 4s
+#sleep 4s
 
 bspc config --desktop ^1 window_gap 0
 bspc desktop -f ^1

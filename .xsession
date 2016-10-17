@@ -54,7 +54,9 @@ setxkbmap custom &
  xset -b # audible bell off
  xset r rate 200 25 # key repeat rate
  xset m 3 4 # mouse speed
- custom_keys) &
+ custom_keys
+ ~/programming/steamcontroller/scripts/custom.py start
+ ) &
 
 muttatt &
 

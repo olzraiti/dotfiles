@@ -62,7 +62,7 @@ rofi.kb-mode-previous: Control+shift+r
 rofi.kb-clear-line: Control+l
 rofi.kb-row-first: Home,KP_Home,Control+u
 rofi.opacity: 99
-rofi.modi: run,file:dotfiles/rofi/rofi-file-browser.sh,ssh,window,
+rofi.modi: run,ssh
 rofi.tokenize: false
 !rofi.sidebar-mode: true
 

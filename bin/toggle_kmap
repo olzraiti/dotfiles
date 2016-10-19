@@ -1,9 +1,9 @@
 #!/bin/bash
 kmap=$(setxkbmap -print | awk -F"+" '/xkb_symbols/ {print $2}')
-if [[ $kmap == "custom" ]]; then
-	$(setxkbmap fi)
+if [[ $kmap == "us_custom" ]]; then
+	$(setxkbmap fi_custom)
 else
-	$(setxkbmap custom)
+	$(setxkbmap us_custom)
 fi
 setxkbmap -option 'caps:ctrl_modifier' -option 'lv3:ralt_switch'
 if [[ -z $1 ]]; then

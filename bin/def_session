@@ -3,7 +3,7 @@ pkill java &
 pkill psi &
 #pkill urxvtd &
 
-pia-vpn &
+#pia-vpn &
 #urxvtd &
 #yeahconsole &
 

@@ -56,7 +56,7 @@ compton &
 unclutter &
 #mpd &
 urxvtd -q -f -o &
-setxkbmap custom &
+setxkbmap us_custom &
 (sleep 8
  xset -dpms 
  xset s off  # screen blanking off

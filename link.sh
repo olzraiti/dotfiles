@@ -38,6 +38,6 @@ cat $HOME'/dotfiles/symlinks' | while read line; do
 
 	if [[ $doLink == true ]]; then
 		mkdir -p $(dirname $link)
-		ln -s $file $link
+		ln -sf $file $link
 	fi
 done

@@ -1,5 +1,5 @@
 #!/bin/bash
-touch /tmp/pass_clipped_fifo
+[[ -f /tmp/pass_clipped_fifo ]] || touch /tmp/pass_clipped_fifo
 (inotifywait -e close_write /tmp/pass_clipped_fifo >/dev/null 2>&1
  pass=$(cat /tmp/pass_clipped_fifo | gpg -d -r olli.raitio@helsinki.fi --no-tty 2>/dev/null | head -n 1)
  xdotool keyup Super_L Shift_L Control_L

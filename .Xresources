@@ -12,7 +12,6 @@ URxvt.boldFont: xft:gohufont:pixelsize=11
 !*boldFont: -gohu-gohufont-bold-r-normal--11-80-100-100-c-60-iso10646-1
 !URxvt.boldFont:xft:Ubuntu Mono:size=10:Regular
 !URxvt.letterSpace: -1
-URXvt.clipboard.autocopy: true
 URxvt.keysym.C-Up: font-size:incglobal
 URxvt.keysym.C-Down: font-size:decglobal
 URxvt.font-size.step: 4
@@ -34,6 +33,10 @@ URxvt.keysym.M-v: perl:clipboard:paste
 URxvt.iso14755: False
 
 URxvt.perl-ext-common:      default,matcher,clipboard,url-select,keyboard-select,font-size
+
+!URXvt.clipboard.autocopy: true
+URxvt.clipboard.copycmd:  xclip -i -sel clip
+URxvt.clipboard.pastecmd: xclip -o -sel clip
 
 !links
 URxvt.url-select.launcher:  qutebrowser

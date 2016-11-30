@@ -1,5 +1,6 @@
 #!/bin/bash
 
+bspc config merge_overlapping_monitors true
 bspc config border_width        0
 bspc config window_gap         10
 
@@ -46,6 +47,7 @@ wmname LG3D
 change_wallpaper $HOME/SparkleShare/sparkleshark/wallpaper
 listen_wallpaper_fifo &
 bspc subscribe node_manage node_unmanage | while read line; do update_wallpaper; done &
+
 yeahconsole &
 #(sleep 1; cairo-dock -f) &
 xdotool behave_screen_edge --quiesce 600 --delay 0 top-right exec bin/notify_info &

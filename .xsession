@@ -33,19 +33,7 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 fi
 
 sxhkd &
-display_ports=( "VGA1" "DP1" )
-for display_port in "${display_ports[@]}"; do
-	if [[ $(xrandr -q | grep $display_port | awk '{print $2}') == "connected" ]]; then
-		xrandr --output $display_port --mode $(xrandr -q | grep $display_port -A 1 | tail -n 1 | awk '{print $1}')
-		xrandr --output $display_port --primary
-		xrandr --output LVDS1 --same-as $display_port
-		break
-	else
-		xrandr --output LVDS1 --primary
-	fi
-done
-
-cache_xrandr
+update_monitors
 pia-vpn &
 #dunst &
 notifyd &

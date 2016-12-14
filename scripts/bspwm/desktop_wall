@@ -43,7 +43,8 @@ elif cmd in ('switch', 'switchwithwindow'):
     else:
         fail('invalid direction argument:', dirn)
 
-    current = check_output(['bspc', 'query', '-D', '-d', 'focused']).split(b'-')
+    path = os.environ.get('BSPWM_SCRIPTS_DIR') + "/get_focused"
+    current = check_output(["sh", path]).split(b'-')
     try:
         x = int(current[0]) - 1
         y = int(current[1]) - 1

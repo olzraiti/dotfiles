@@ -1,0 +1,6 @@
+#!/bin/bash
+
+tmp=/tmp/jolla
+[[ -d $tmp ]] || mkdir $tmp
+
+scp jolla:{Pictures,Camera}/Camera/$(date +%Y%m%d)_'*.jpg' $tmp

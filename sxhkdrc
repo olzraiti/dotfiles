@@ -140,7 +140,7 @@ super + y
 	bspc query -N -n focused.automatic && bspc node -n last.!automatic || bspc node last.leaf -n focused
 
 super + {_,shift + }Tab
-	bspc node -f {next,prev}
+	bspc node -f {next,prev}.local
 
 # quit bspwm normally
 super + alt + Escape

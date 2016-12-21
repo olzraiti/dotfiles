@@ -117,10 +117,10 @@ super + ctrl + shift + {n,m}
 super + ctrl + s
 	bspc node -g sticky
 
-super + t
-	bspc node -t tiled
-super + {s, shift + s, f}
-	$BSPWM_SCRIPTS_DIR/state_toggle {floating,pseudo_tiled,fullscreen}
+#super + t
+#	bspc node -t tiled
+super + {s, shift + s, f, t}
+	$BSPWM_SCRIPTS_DIR/state_toggle {floating,pseudo_tiled,fullscreen,tiled}
 
 super + {equal, plus, minus}
 	bspc node -l {normal, above, below}

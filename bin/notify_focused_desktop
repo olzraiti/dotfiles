@@ -1,5 +1,6 @@
 #!/bin/bash
-empty_icon="%{O1}\uf096"
+#empty_icon="%{O1}\uf096"
+empty_icon="\uf096"
 filled_icon="\uf0c8"
 focused_icon="%{F$notify_icon_fg}$filled_icon%{F$notify_color_fg}"
 

@@ -12,15 +12,15 @@ monitor_y=$(echo "$xrandr_output" | grep "primary" | awk '{print $4}' | awk -F+ 
 monitor_width=$(echo "$xrandr_output" | grep "primary" | awk -F'[ x+]' '{print $4}')
 monitor_height=$(echo "$xrandr_output" | grep "primary" | awk -F'[ x+]' '{print $5}')
 # Panel size
-pad_x="50"
-pad_y="30"
+pad_x="10"
+pad_y="10"
 height="50"
 # Padding of the text in the panel
-in_pad="30"
+in_pad="20"
 offset="-2"
 # Yes.
-font="-gohu-gohufont-medium-*-*-*-14-*-*-*-*-*-iso8859-*"
-font_icons="FontAwesome:size=11"
+font="-gohu-gohufont-medium-*-*-*-11-*-*-*-*-*-iso8859-*"
+font_icons="FontAwesome:size=8"
 
 color_summary="#71c2af"
 color_bg="#1d2a30"
@@ -122,9 +122,6 @@ tail -f -n 0 "/tmp/notify_fifo_"$corner |\
 		# To be precise
 		parsed_summary=$(echo $splitted | sed -e 's/\%[^%}]*}//g')
 		text_width=$(txtw -f $font "${parsed_summary}")
-		if [[ $splitted == *$(date +'%H:%M')* ]]; then
-			text_width=$(($text_width + 30))
-		fi
 
 		width=$((2 * in_pad + text_width))
 		if [[ $width -gt $largest_width ]]; then

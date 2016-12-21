@@ -6,7 +6,7 @@ function install_packages {
 	while read line; do
 		packages="$packages $line"
 	done <<< "$(cat $HOME'/dotfiles/packages')"
-	pacaur -Syyu --noconfirm $packages
+	pacaur -Syyu --needed --noconfirm $packages
 }
 
 echo "Decrypting..."

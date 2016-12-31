@@ -18,7 +18,7 @@ $(
 if [[ -n "$4" ]]; then
 	$4
 else
-	sudo openvpn --config /etc/openvpn/$1 --auth-user-pass /etc/openvpn/$2
+	sudo openvpn --config /etc/openvpn/client/$1 --auth-user-pass /etc/openvpn/client/$2
 fi
 
 if [[ -n $3 ]]; then

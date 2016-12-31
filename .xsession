@@ -35,7 +35,6 @@ fi
 sxhkd &
 update_monitors
 pia-vpn &
-#dunst &
 notifyd &
 bar_notifyd &
 redshift &

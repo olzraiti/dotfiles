@@ -92,7 +92,7 @@ source $ZSH/oh-my-zsh.sh
 #
 
 [[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
-plugins=(git vi-mode dirhistory mvn pip sudo)
+plugins=(git vi-mode dirhistory sudo)
 
 #vim mode
 bindkey -v

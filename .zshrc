@@ -92,7 +92,7 @@ source $ZSH/oh-my-zsh.sh
 #
 
 [[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
-plugins=(git vi-mode dirhistory mvn pip sudo)
+plugins=(git vi-mode dirhistory sudo)
 
 #vim mode
 bindkey -v
@@ -106,7 +106,7 @@ bindkey '^[d' kill-word
 bindkey '^r' history-incremental-search-backward
 # Accept suggestions without leaving insert mode
 bindkey '^f' vi-forward-word
-bindkey '^g' autosuggest-execute-suggestion
+bindkey '^g' autosuggest-execute
 bindkey '^A' beginning-of-line
 bindkey '^E' end-of-line
 
@@ -117,7 +117,7 @@ function zle-line-init {
 	zle reset-prompt
 
 	#autosuggest hint
-	zle autosuggest-start
+	#zle autosuggest-start
 }
 function zle-keymap-select {
 	#vim hint
@@ -137,12 +137,12 @@ if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
 fi
 
 
+AUTOSUGGESTION_HIGHLIGHT_STYLE='fg=8'
+
+#autosuggets
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 #syntax highlighting
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-#autosuggets
-source /usr/share/zsh/plugins/zsh-autosuggestions/autosuggestions.zsh
-
-AUTOSUGGESTION_HIGHLIGHT_COLOR='fg=8'
 
 # TMUX
 if which tmux >/dev/null 2>&1; then

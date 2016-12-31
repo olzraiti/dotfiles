@@ -38,11 +38,11 @@ xrandr --output HDMI-0 --right-of DVI-1
 xrandr --output HDMI-0 --same-as DVI-1
 cache_xrandr
 pia-vpn &
-#dunst &
 notifyd &
 bar_notifyd &
 redshift &
 sparkleshare start &
+darkhttpd /var/cache/pacman/pkg &
 compton &
 unclutter &
 mpd &

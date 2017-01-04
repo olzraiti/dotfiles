@@ -40,8 +40,12 @@ export BSPWM_DESKTOP_WALL_WIDTH=3
 export BSPWM_DESKTOP_WALL_HEIGHT=2
 $BSPWM_SCRIPTS_DIR/desktop_wall init
 
+directions=( bottom top left right )
 bspc query -D | while read desktop; do
-	bspc rule -a URxvt:$desktop"_terminal" state=floating layer=above
+	for direction in "${directions[@]}"; do
+		bspc rule -a URxvt:$desktop"_"$direction"_terminal" state=floating layer=above
+		bspc rule -a URxvt:$desktop"_"$direction"_pull_window" state=floating layer=above
+	done
 done
 
 wmname LG3D

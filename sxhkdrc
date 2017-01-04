@@ -114,16 +114,16 @@ super + ctrl + shift + {n,m}
 super + ctrl + s
 	bspc node -g sticky
 
-super + t
-	bspc node -t tiled
-super + {s, shift + s, f}
-	$BSPWM_SCRIPTS_DIR/state_toggle {floating,pseudo_tiled,fullscreen}
+super + {s, shift + s, f, t}
+	$BSPWM_SCRIPTS_DIR/state_toggle {floating,pseudo_tiled,fullscreen,tiled}
 
 super + {equal, plus, minus}
 	bspc node -l {normal, above, below}
 
-alt + e
-	workspace_terminal
+alt + {_, shift, ctrl} + e
+	workspace_terminal {bottom, left, right}
+super + {_, shift, ctrl, alt} + a
+	pull_window {bottom, left, right, top}
 
 ctrl + space
 	xdotool search --name "bar_noti_name" windowkill %@

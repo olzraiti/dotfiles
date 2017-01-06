@@ -126,7 +126,7 @@ super + {equal, plus, minus}
 	bspc node -l {normal, above, below}
 
 super + {_, shift, ctrl, shift + ctrl} + e
-	pull_window -g  -d {top, left, right, bottom}
+	workspace_terminal -g  -d {top, left, right, bottom}
 alt + {_, shift, ctrl, shift + ctrl} + e
 	workspace_terminal -d {bottom, left, right, top}
 alt + {_, shift, ctrl, shift + ctrl} + a

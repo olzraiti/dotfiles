@@ -1,12 +1,35 @@
 #!/bin/bash
 
+name=$(get_pull_name "$@")
+
 direction="bottom"
-[[ -n $1 ]] && direction=$1
+namespace=""
+forget=false
 
-current=$(bspc query -D -d)
-name=$current"_"$direction"_pull_window"
+while getopts 'd:n:gf' flag; do
+	case "${flag}" in
+		d) 
+			direction="$OPTARG"
+		;;
+		f)
+			forget=true
+		;;
+  esac
+done
+shift $((OPTIND-1))
 
-if [[ -z $(xdotool search --classname $name) ]]; then
+
+if [[ $forget == true ]]; then
+	# TODO should we save the original classnames and restore them upon forgetting?
+	bspc rule -r *:$name state=floating layer=above
+	xdotool getwindowfocus set_window --classname "forgotten"
+	exit
+fi
+
+
+bspc rule -a *:$name state=floating layer=above
+
+if [[ -z $(xdotool search --classname '^'$name'$') ]]; then
 	size=$(cat /tmp/xrandr_output | grep $(query_primary) | awk '{print $4}')
 	width=$(echo $size | awk -F 'x' '{print $1}')
 	height=$(echo $size | awk -F 'x' '{print $2}' | awk -F '+' '{print $1}')
@@ -33,10 +56,10 @@ if [[ -z $(xdotool search --classname $name) ]]; then
 	$BSPWM_SCRIPTS_DIR/state_toggle floating
 	xdotool getwindowfocus set_window --classname $name windowsize $win_width $win_height windowmove $x_offset $y_offset
 else
-	if [[ -z $(xdotool search --classname --onlyvisible $name) ]]; then
-		xdotool search --classname $name windowmap 
+	if [[ -z $(xdotool search --classname --onlyvisible '^'$name'$') ]]; then
+		xdotool search --classname '^'$name'$' windowmap 
 	else
-		xdotool search --classname $name windowunmap windowfocus
+		xdotool search --classname '^'$name'$' windowunmap windowfocus
 	fi
 fi
 

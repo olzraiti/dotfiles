@@ -1,1 +1,4 @@
+#!/bin/bash
+
+echo $HOSTNAME | ssh robopop 'cat > /tmp/muttclienthost'
 urxvtc -e sh -c 'tmux new-session "ssh -t robopop ./m"'

@@ -122,14 +122,14 @@ super + {s, shift + s, f, t}
 super + {equal, plus, minus}
 	bspc node -l {normal, above, below}
 
-super + e
-	workspace_terminal -d top -g
-alt + {_, shift, ctrl} + e
-	workspace_terminal -d {bottom, left, right}
+super + {_, shift, ctrl, shift + ctrl} + e
+	pull_window -g  -d {top, left, right, bottom}
+alt + {_, shift, ctrl, shift + ctrl} + e
+	workspace_terminal -d {bottom, left, right, top}
 alt + {_, shift, ctrl, shift + ctrl} + a
 	pull_window -d {bottom, left, right, top}
 super + {_, shift, ctrl, shift + ctrl} + a
-	pull_window -g  -d {bottom, left, right, top}
+	pull_window -g  -d {top, left, right, bottom}
 
 ctrl + space
 	xdotool search --name "bar_noti_name" windowkill %@
@@ -162,8 +162,8 @@ super + m
 
 
 # swap the current node and the biggest node
-super + g
-	bspc node -s biggest
+#super + g
+#	bspc node -s biggest
 
 #
 # state/flags

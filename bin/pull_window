@@ -5,6 +5,7 @@ name=$(get_pull_name "$@")
 direction="bottom"
 namespace=""
 forget=false
+global=false
 
 while getopts 'd:n:gf' flag; do
 	case "${flag}" in
@@ -13,6 +14,9 @@ while getopts 'd:n:gf' flag; do
 		;;
 		f)
 			forget=true
+		;;
+		g)
+			global=true
 		;;
   esac
 done
@@ -28,6 +32,7 @@ fi
 
 
 bspc rule -a *:$name state=floating layer=above
+[[ $global == true ]] && bspc rule -a *:$name sticky=on
 
 if [[ -z $(xdotool search --classname '^'$name'$') ]]; then
 	size=$(cat /tmp/xrandr_output | grep $(query_primary) | awk '{print $4}')

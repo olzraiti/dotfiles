@@ -1,7 +1,5 @@
 #!/bin/bash
 to_state=tiled
-if [[ -z $(bspc query -N -n focused.$1) ]]; then
-	to_state=$1
-fi
-echo $to_state
+[[ -z $(bspc query -N -n focused.$1) ]] && to_state=$1
 bspc node -t $to_state
+[[ $to_state == tiled ]] && bspc node -g sticky=off

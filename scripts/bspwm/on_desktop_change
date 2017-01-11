@@ -1,0 +1,11 @@
+#!/bin/bash
+dirs=( top bottom left right )
+
+for dir in "${dirs[@]}"; do
+	win=$(xdotool search --classname --onlyvisible '^_'${dir}'_pull_window')
+	if [[ -n $win ]]; then 
+		xdotool windowactivate $win
+		break
+	fi
+done
+

@@ -1,4 +1,8 @@
 #!/bin/bash
+
+notify_focused_desktop &
+update_wallpaper &
+
 dirs=( top bottom left right )
 
 for dir in "${dirs[@]}"; do

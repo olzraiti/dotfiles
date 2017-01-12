@@ -93,9 +93,7 @@ super + ctrl + alt + n
 ctrl + alt + {_,shift + }{h,j,k,l}
 	$BSPWM_SCRIPTS_DIR/desktop_wall {switch,switchwithwindow} \
 		{west,south,north,east} && \
-	notify_focused_desktop && \
-	update_wallpaper
-
+	$BSPWM_SCRIPTS_DIR/on_desktop_change
 super + {z, x, ctrl + z, ctrl + x}
 	$BSPWM_SCRIPTS_DIR/gaps {10, -10, 50, -50}
 
@@ -213,8 +211,7 @@ super + bracket{left,right}
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,10}' && \
-	notify_focused_desktop && \
-	update_wallpaper
+	$BSPWM_SCRIPTS_DIR/on_desktop_change
 
 #
 # preselect

@@ -30,13 +30,22 @@ if [[ $forget == true ]]; then
 	exit
 fi
 
+function hide_others {
+	dirs=( top bottom left right )
+
+	dir=$1
+	win=$(xdotool search --classname --onlyvisible '_'$dir'_pull_window')
+	if [[ -n $win ]]; then 
+		xdotool windowunmap $win
+		break
+	fi
+}
 
 bspc rule -a *:$name state=floating layer=above
 [[ $global == true ]] && bspc rule -a *:$name sticky=on
 
 if [[ -z $(xdotool search --classname '^'$name'$') ]]; then
-	size=$(cat /tmp/xrandr_output | grep $(query_primary) | awk '{print $4}')
-	width=$(echo $size | awk -F 'x' '{print $1}')
+	size=$(cat /tmp/xrandr_output | grep $(query_primary) | awk '{print $4}') width=$(echo $size | awk -F 'x' '{print $1}')
 	height=$(echo $size | awk -F 'x' '{print $2}' | awk -F '+' '{print $1}')
 	win_height=$height
 	win_width=$width
@@ -62,6 +71,7 @@ if [[ -z $(xdotool search --classname '^'$name'$') ]]; then
 	xdotool getwindowfocus set_window --classname $name windowsize $win_width $win_height windowmove $x_offset $y_offset
 else
 	if [[ -z $(xdotool search --classname --onlyvisible '^'$name'$') ]]; then
+		hide_others $direction
 		xdotool search --classname '^'$name'$' windowmap 
 	else
 		xdotool search --classname '^'$name'$' windowunmap windowfocus

@@ -45,7 +45,8 @@ bspc rule -a *:$name state=floating layer=above
 [[ $global == true ]] && bspc rule -a *:$name sticky=on
 
 if [[ -z $(xdotool search --classname '^'$name'$') ]]; then
-	size=$(cat /tmp/xrandr_output | grep $(query_primary) | awk '{print $4}') width=$(echo $size | awk -F 'x' '{print $1}')
+	size=$(cat /tmp/xrandr_output | grep $(query_primary) | awk '{print $4}')
+	width=$(echo $size | awk -F 'x' '{print $1}')
 	height=$(echo $size | awk -F 'x' '{print $2}' | awk -F '+' '{print $1}')
 	win_height=$height
 	win_width=$width

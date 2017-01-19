@@ -1,0 +1,51 @@
+#!/bin/bash
+echo $@ >> /tmp/kek
+name=$(get_name $@)
+direction="bottom"
+win=$(xdotool getwindowfocus)
+
+while getopts ':d:s:w:n:Agf' flag; do
+	case "${flag}" in
+		d) 
+			direction="$OPTARG"
+		;;
+		w)
+			win="$OPTARG"
+		;;
+  esac
+done
+shift $((OPTIND-1))
+
+size=$(cat /tmp/xrandr_output | grep $(query_primary) | awk '{print $4}')
+width=$(echo $size | awk -F 'x' '{print $1}')
+height=$(echo $size | awk -F 'x' '{print $2}' | awk -F '+' '{print $1}')
+
+geometry=$(xdotool getwindowgeometry -shell $win)
+x=$(echo "$geometry" | sed -n 2p | awk -F '=' '{print $2}')
+y=$(echo "$geometry" | sed -n 3p | awk -F '=' '{print $2}')
+win_width=$(echo "$geometry" | sed -n 4p | awk -F '=' '{print $2}')
+win_height=$(echo "$geometry" | sed -n 5p | awk -F '=' '{print $2}')
+
+if [[ $direction == "top" || $direction == "bottom" ]]; then
+	end_x=$x
+fi
+if [[ $direction == "left" || $direction == "right" ]]; then
+	end_y=$y
+fi
+
+case "${direction}" in
+top)
+	end_y='-'$win_height
+	;;
+bottom)
+	end_y=$(($height + $win_height))
+	;;
+left)
+	end_x='-'$win_width
+	;;
+right)
+	end_x=$(($width + $win_width))
+	;;
+esac
+
+echo $end_x $end_y

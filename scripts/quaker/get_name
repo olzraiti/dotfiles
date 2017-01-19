@@ -4,7 +4,7 @@ direction="bottom"
 namespace=""
 current=$(bspc query -D -d)
 
-while getopts 'd:n:g' flag; do
+while getopts ':d:s:w:n:Agf' flag; do
 	case "${flag}" in
 		d) 
 			direction="$OPTARG"
@@ -15,8 +15,10 @@ while getopts 'd:n:g' flag; do
 		n)
 			namespace="$OPTARG"
 		;;
+		?)
+
+		;;
   esac
 done
-shift $((OPTIND-1))
 
 echo $current"_"$direction"_pull_window"$namespace

@@ -116,7 +116,7 @@ super + ctrl + s
 	bspc node -g sticky
 
 super +  t
-	pull_window -f && $BSPWM_SCRIPTS_DIR/state_toggle tiled
+	quakify -f && $BSPWM_SCRIPTS_DIR/state_toggle tiled
 super + {s, shift + s, f, t}
 	$BSPWM_SCRIPTS_DIR/state_toggle {floating,pseudo_tiled,fullscreen,tiled}
 
@@ -124,13 +124,13 @@ super + {equal, plus, minus}
 	bspc node -l {normal, above, below}
 
 super + {_, shift, ctrl, shift + ctrl} + e
-	workspace_terminal -g  -d {top, left, right, bottom}
+	quake_terminal -g  -d {top, left, right, bottom}
 alt + {_, shift, ctrl, shift + ctrl} + e
-	workspace_terminal -d {bottom, left, right, top}
+	quake_terminal -d {bottom, left, right, top}
 alt + {_, shift, ctrl, shift + ctrl} + a
-	pull_window -d {bottom, left, right, top}
+	quakify -d {bottom, left, right, top}
 super + {_, shift, ctrl, shift + ctrl} + a
-	pull_window -g  -d {top, left, right, bottom}
+	quakify -g -d {top, left, right, bottom}
 
 ctrl + space
 	xdotool search --name "bar_noti_name" windowkill %@

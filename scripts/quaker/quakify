@@ -1,0 +1,244 @@
+#!/bin/bash
+POS_DIR=/tmp/win_positions
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+get_name=$DIR/get_name
+get_end_pos=$DIR/get_end_pos
+
+! [[ -d $POS_DIR ]] && mkdir $POS_DIR
+
+direction="bottom"
+forget=false
+global=false
+speed=30
+animate=true
+win=""
+
+while getopts ':d:s:w:n:Agf' flag; do
+	case "${flag}" in
+		d) 
+			direction="$OPTARG"
+		;;
+		w)
+			win="$OPTARG"
+		;;
+		s)
+			speed="$OPTARG"
+		;;
+		f)
+			forget=true
+		;;
+		g)
+			global=true
+		;;
+		A)
+			animate=false
+		;;
+		?)
+
+		;;
+  esac
+done
+
+name=$(get_name $@)
+
+function forget {
+	local name="$1"
+	local win="$2"
+	# TODO should we save the original classnames and restore them upon forgetting?
+	bspc rule -r *:$name state=floating layer=above
+	xdotool set_window --classname "forgotten" $win
+}
+
+#focused ei pitäis käyttää jos löytyy jo ikkuna
+function get_win {
+	local name="$1"
+	local win="$2"
+	local existing=$(xdotool search --classname '^'$name'$')
+	if [[ -n $existing ]]; then
+		if [[ -n $win ]] && [[ $existing != $win ]]; then
+			forget $name $existing
+			xdotool windowmap $existing
+			bspc node $existing -t tiled # pop window to desktop
+			echo $win
+			return
+		fi
+		echo $existing
+		return
+	fi
+	if [[ -n $win ]]; then
+		echo $win
+	else
+		echo $(xdotool getwindowfocus)
+	fi
+}
+
+function hide_others {
+	local dir=$1
+	local show_win=$2
+
+	xdotool search --classname --onlyvisible '_'$dir'_pull_window' | while read _win; do
+		if [[ -n $_win ]] && [[ $_win != $show_win ]]; then 
+			local xy=$(get_end_pos $params -d $dir -w $_win)
+			local end_x=$(echo $xy | awk '{print $1}')
+			local end_y=$(echo $xy | awk '{print $2}')
+
+			move_animation $_win $x $y $end_x $end_y
+			xdotool windowunmap $_win
+		fi
+	done
+}
+
+function move_animation {
+	[[ $animate == false ]] && return 1
+	local win=$1
+	local start_x=$2
+	local start_y=$3
+	local end_x=$4
+	local end_y=$5
+
+	xdotool windowmap $win windowmove $win $start_x $start_y
+
+	for axis in "x" "y"; do
+		start="start_"$axis
+		end="end_"$axis
+		sequence=$axis"_seq"
+
+		_speed=$speed
+		[[ ${!start} -gt ${!end} ]] && _speed='-'$_speed
+
+		for i in $(seq ${!start} $_speed ${!end}); do
+			declare $sequence="${!sequence}"$i$'\n'
+		done
+
+		declare $sequence="${!sequence}"${!end}
+		len_var=$axis"_len"
+
+		declare $len_var=$(echo "${!sequence}" | wc -l)
+	done
+
+	# even column lengths
+	if [[ $x_len != $y_len ]]; then
+		shorter=$x_seq
+		longer=$y_seq
+		dist=$(($y_len - $x_len))
+		if [[ $x_len -gt $y_len ]]; then
+			shorter=$y_seq
+			longer=$x_seq
+			dist=$(($x_len - $y_len))
+		fi
+
+		last=$(echo "$shorter" | tail -n 1)
+		for i in $(seq 1 $dist); do
+			shorter=$shorter$'\n'$last
+		done
+
+		if [[ $x_len -gt $y_len ]]; then
+			y_seq=$shorter
+		else
+			x_seq=$shorter
+		fi
+	fi
+
+	columns=$(paste -d " " <(echo "$x_seq") <(echo "$y_seq"))
+
+	while read -r xy; do
+		xdotool windowmove --sync $win $xy
+	done <<< "$columns"
+	$($cmd)
+
+}
+
+win=$(get_win $name $win)
+
+if [[ $forget == true ]]; then
+	forget $name $win
+	exit
+fi
+
+bspc rule -a *:$name state=floating layer=above
+[[ $global == true ]] && bspc rule -a *:$name sticky=on
+
+size=$(cat /tmp/xrandr_output | grep $(query_primary) | awk '{print $4}')
+width=$(echo $size | awk -F 'x' '{print $1}')
+height=$(echo $size | awk -F 'x' '{print $2}' | awk -F '+' '{print $1}')
+
+if [[ -z $(xdotool search --classname '^'$name'$') ]]; then
+	win_height=$height
+	win_width=$width
+
+	if [[ $direction == "bottom" || $direction == "top" ]]; then
+		win_height=$(($height / 3))
+	else
+		win_width=$(($width / 3))
+	fi
+
+	x_offset=0
+	y_offset=0
+	if [[ $direction == "bottom" ]]; then
+		y_offset=$(($height - $win_height))
+	elif [[ $direction == "right" ]]; then
+		x_offset=$(($width - $win_width))
+	elif [[ $direction == "left" || $direction == "top" ]]; then
+		x_offset=0
+	fi
+
+	geometry=$(xdotool getwindowgeometry -shell $win)
+	x=$(echo "$geometry" | sed -n 2p | awk -F '=' '{print $2}')
+	y=$(echo "$geometry" | sed -n 3p | awk -F '=' '{print $2}')
+
+	xdotool set_window --classname $name $win
+	bspc node $win -t floating -l above
+	xdotool windowsize --sync $win $win_width $win_height
+
+	xdotool windowmove --sync $win $x $y
+	move_animation $win $x $y $x_offset $y_offset
+	xdotool windowsize $win $win_width $win_height
+	xdotool windowactivate $win
+else
+	geometry=$(xdotool getwindowgeometry -shell $win)
+	x=$(cat $POS_DIR/$name | awk '{print $1}')
+	y=$(cat $POS_DIR/$name | awk '{print $2}')
+	win_width=$(echo "$geometry" | sed -n 4p | awk -F '=' '{print $2}')
+	win_height=$(echo "$geometry" | sed -n 5p | awk -F '=' '{print $2}')
+
+	if [[ -z $(xdotool search --classname --onlyvisible '^'$name'$') ]]; then
+		hide_others $direction $win &
+		sleep 0.05
+		
+		if [[ $direction == "top" || $direction == "bottom" ]]; then
+			start_x=$x
+		elif [[ $direction == "left" || $direction == "right" ]]; then
+			start_y=$y
+		fi
+
+		case "${direction}" in
+		top)
+			start_y='-'$win_height
+			;;
+		bottom)
+			start_y=$(($height + $win_height))
+			;;
+		left)
+			start_x='-'$win_width
+			;;
+		right)
+			start_x=$(($width + $win_width))
+			;;
+		esac
+
+		echo start show ani
+		move_animation $win $start_x $start_y $x $y
+		xdotool windowactivate $win
+	else
+		x=$(echo "$geometry" | sed -n 2p | awk -F '=' '{print $2}')
+		y=$(echo "$geometry" | sed -n 3p | awk -F '=' '{print $2}')
+		echo "$x $y" > $POS_DIR/$name
+
+		xy=$(get_end_pos $@)
+		end_x=$(echo $xy | awk '{print $1}')
+		end_y=$(echo $xy | awk '{print $2}')
+
+		move_animation $win $x $y $end_x $end_y
+		xdotool windowunmap $win
+	fi
+fi

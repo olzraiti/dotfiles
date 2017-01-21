@@ -36,6 +36,8 @@ export EDITOR="$VISUAL"
 export BROWSER="qutebrowser"
 export BSPWM_SCRIPTS_DIR=$HOME/scripts/bspwm
 
+PATH="$HOME/scripts/quaker:$PATH"
+
 color_fg="#71c2af"
 color_icon="#ff6a6a"
 export notify_color_fg=$color_fg

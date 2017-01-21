@@ -21,4 +21,4 @@ while getopts ':d:s:w:n:Agf' flag; do
   esac
 done
 
-echo $current"_"$direction"_pull_window"$namespace
+echo $current"_"$direction"_quaked"$namespace

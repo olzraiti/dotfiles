@@ -76,7 +76,7 @@ function hide_others {
 	local dir=$1
 	local show_win=$2
 
-	xdotool search --classname --onlyvisible '_'$dir'_pull_window' | while read _win; do
+	xdotool search --classname --onlyvisible '_'$dir'_quaked' | while read _win; do
 		if [[ -n $_win ]] && [[ $_win != $show_win ]]; then 
 			local xy=$(get_end_pos $params -d $dir -w $_win)
 			local end_x=$(echo $xy | awk '{print $1}')
@@ -226,7 +226,6 @@ else
 			;;
 		esac
 
-		echo start show ani
 		move_animation $win $start_x $start_y $x $y
 		xdotool windowactivate $win
 	else
@@ -242,3 +241,4 @@ else
 		xdotool windowunmap $win
 	fi
 fi
+update_wallpaper

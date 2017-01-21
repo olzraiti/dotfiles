@@ -134,7 +134,7 @@ if [[ ! -f $converted ]]; then
 			idx=1
 			[[ $dir == "bottom" || $dir == "right" ]] && idx=0
 
-			convert_cmd=$convert_cmd" $DIR/$prefix$axis"-"$idx".png" -compose blend -define compose:args=50 -gravity $gravity -composite"
+			convert_cmd=$convert_cmd" $DIR/$prefix$axis"-"$idx".png" -compose blend -define compose:args=40 -gravity $gravity -composite"
 		fi
 	done
 

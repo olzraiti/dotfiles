@@ -113,17 +113,17 @@ if [[ ! -f $converted ]]; then
 			fi
 
 			create=false
-			x_vol=2
-			y_vol=8
+			x_weight=2
+			y_weight=10
 			if [[ $dir == "bottom" ||  $dir == "top"  ]]; then
 				axis="horizontal"
-				radii_width=$(($_width / $x_vol))
-				radii_height=$(($_height / $y_vol))
+				radii_width=$(($_width / $x_weight))
+				radii_height=$y_weight
 				crop="x%50"
 			else
 				axis="vertical"
-				radii_width=$(($_width / $y_vol))
-				radii_height=$(($_height / $x_vol))
+				radii_width=$y_weight
+				radii_height=$(($_height / $x_weight))
 				crop="%50x100%"
 			fi
 

@@ -1,8 +1,9 @@
 #!/bin/bash
 
-wallpaper=/tmp/wallpaper_ambience/wallpaper
+DIR=/tmp/wallpaper_ambience
+wallpaper=$DIR/wallpaper
 converted=$wallpaper
-current=/tmp/wallpaper_ambience/current
+current=$DIR/current
 
 vol=$(query_vol)
 
@@ -29,18 +30,42 @@ if [[ -n $(bspc query -N -d $focused_desktop) ]]; then
 fi
 
 battery=false
-battery_amount=$(acpi | cut -d " " -f 4  | sed 's/[^0-9]//g')
-battery_amount=$(($battery_amount / 25 * 25))
-if [[ $(acpi | cut -d " " -f 3) == *Discharging* ]]; then
-	converted=$converted"_battery_"$battery_amount
-	battery=true
+if [[ -n $(command -v acpi) ]]; then # desktop doesn't have acpi or a battery
+	battery_amount=$(acpi | cut -d " " -f 4  | sed 's/[^0-9]//g')
+	battery_amount=$(($battery_amount / 25 * 25))
+	if [[ $(acpi | cut -d " " -f 3) == *Discharging* ]]; then
+		converted=$converted"_battery_"$battery_amount
+		battery=true
+	fi
 fi
+
+dirs=( bottom top left right )
+desktop=$(bspc query -D -d)
+dir_found=false
+for dir in ${dirs[@]}; do
+	if [[ -n $(xdotool search --classname $desktop"_"$dir"_quaked") ]]; then
+		var_name=$dir"_quake"
+		declare $var_name=true
+		echo $dir
+		converted=$converted"_quaked_"$dir
+		dir_found=true
+	fi
+done
+
 
 if [[ -f $current && $(cat $current) == $converted ]]; then
 	exit
 fi
 
 echo $converted > $current
+
+width=""
+height=""
+if [[ $dir_found == true ]]; then
+	size=$(cat /tmp/xrandr_output | grep $(query_primary) | awk '{print $4}')
+	width=$(echo $size | awk -F 'x' '{print $1}')
+	height=$(echo $size | awk -F 'x' '{print $2}' | awk -F '+' '{print $1}')
+fi
 
 # create the file, if it isn't cached
 if [[ ! -f $converted ]]; then
@@ -66,6 +91,53 @@ if [[ ! -f $converted ]]; then
 		battery_amount=$(((100 - $battery_amount) - 20))
 		convert_cmd=$convert_cmd" /home/olli/dotfiles/battery_overlay.png -compose blend -define compose:args="$battery_amount" -composite"
 	fi
+
+	for dir in ${dirs[@]}; do
+		var_name=$dir"_quake"
+		echo $dir
+		if [[ -n ${!var_name} ]]; then
+			echo on $dir
+			_height=$height
+			_width=$width
+			if [[ $dir == "top" || $dir == "bottom" ]]; then
+				_height=$(( $height / 10 ))
+			else
+				_width=$(( $width / 15 ))
+			fi
+
+			gravity="NorthWest"
+			if [[ $dir == "bottom" ]]; then
+				gravity="SouthWest"
+			elif [[ $dir == "right" ]]; then
+				gravity="NorthEast"
+			fi
+
+			create=false
+			x_vol=2
+			y_vol=8
+			if [[ $dir == "bottom" ||  $dir == "top"  ]]; then
+				axis="horizontal"
+				radii_width=$(($_width / $x_vol))
+				radii_height=$(($_height / $y_vol))
+				crop="x%50"
+			else
+				axis="vertical"
+				radii_width=$(($_width / $y_vol))
+				radii_height=$(($_height / $x_vol))
+				crop="%50x100%"
+			fi
+
+			prefix="_quake_gradient"
+			gradient_file=$DIR/$prefix$axis".png"
+			[[ ! -f $DIR/$prefix$axis"-0.png" ]] && convert -size $_width'x'$_height -define gradient:radii=$radii_width,$radii_height radial-gradient:white-none -crop $crop $gradient_file
+
+			idx=1
+			[[ $dir == "bottom" || $dir == "right" ]] && idx=0
+
+			convert_cmd=$convert_cmd" $DIR/$prefix$axis"-"$idx".png" -compose blend -define compose:args=40 -gravity $gravity -composite"
+		fi
+	done
+
 
 	$convert_cmd $converted
 fi

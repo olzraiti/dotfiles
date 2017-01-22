@@ -10,15 +10,16 @@ cat $HOME'/dotfiles/symlinks' | while read line; do
 		link=$HOME'/'$(echo $line | awk '{print $2}')
 		file=$HOME'/dotfiles/'$(echo $line | awk '{print $1}')
 	fi	
+	file=$(realpath $file)
 
 	doLink=true
 	doMove=false
 
-	if [[ ! -f $link  && -d $link && $(readlink -f $link) == $link ]]; then
+	if [[ ! -f $link && -d $link && $(readlink -f $link) == $link ]]; then
 		doMove=true
 	fi
 
-	if [[ -f $link  && ! -d $link && $(readlink -f $link) == $link ]]; then
+	if [[ -f $link && ! -d $link && $(readlink -f $link) == $link ]]; then
 		doMove=true
 	fi
 
@@ -34,7 +35,6 @@ cat $HOME'/dotfiles/symlinks' | while read line; do
 		echo "file exists, creating "$link".old"
 		mv $link $link".old"
 	fi
-
 
 	if [[ $doLink == true ]]; then
 		mkdir -p $(dirname $link)

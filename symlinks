@@ -26,3 +26,4 @@ cairo-dock .config/cairo-dock
 xdg-applications/vim.desktop .local/share/applications/vim.desktop
 mimeapps.list .config/mimeapps.list
 qute_userscripts .local/share/qutebrowser/userscripts
+../SparkleShare/sparkleshark/.password-store .password-store

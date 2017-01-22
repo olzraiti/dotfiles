@@ -12,9 +12,15 @@ function install_packages {
 echo "Decrypting..."
 $dir"/decrypt.sh"
 
+sudo reflector --sort rate  -f 5 -l 5  --save /etc/pacman.d/mirrorlist  
+
 echo "Installing packages"
 
 install_packages
+
+echo "Updating packages"
+
+pacaur -syu --noconfirm
 
 $HOME/dotfiles/link.sh
 

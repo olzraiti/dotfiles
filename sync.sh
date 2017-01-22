@@ -12,6 +12,8 @@ function install_packages {
 echo "Decrypting..."
 $dir"/decrypt.sh"
 
+mirrorlist="$(echo Server = http://192.168.1.3:8080'\n'"$( reflector --sort rate -f 5 -l 5)")"
+sudo sh -c "echo \"$mirrorlist\" > /etc/pacman.d/mirrorlist"
 sudo reflector --sort rate  -f 5 -l 5  --save /etc/pacman.d/mirrorlist  
 
 echo "Installing packages"

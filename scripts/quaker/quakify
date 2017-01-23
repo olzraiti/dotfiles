@@ -77,7 +77,7 @@ function hide_others {
 	local show_win=$2
 
 	xdotool search --classname --onlyvisible '_'$dir'_quaked' | while read _win; do
-		if [[ -n $_win ]] && [[ $_win != $show_win ]]; then 
+		if [[ -n $_win && $_win != $show_win ]]; then 
 			local xy=$(get_end_pos $params -d $dir -w $_win)
 			local end_x=$(echo $xy | awk '{print $1}')
 			local end_y=$(echo $xy | awk '{print $2}')
@@ -162,7 +162,7 @@ size=$(cat /tmp/xrandr_output | grep $(query_primary) | awk '{print $4}')
 width=$(echo $size | awk -F 'x' '{print $1}')
 height=$(echo $size | awk -F 'x' '{print $2}' | awk -F '+' '{print $1}')
 
-if [[ -z $(xdotool search --classname '^'$name'$') ]]; then
+if [[ -z $(xdotool search --classname '^'$name'$') && -z $(xdotool search --classname --onlyvisible $direction"_quaked") ]]; then
 	win_height=$height
 	win_width=$width
 
@@ -202,9 +202,14 @@ else
 	win_height=$(echo "$geometry" | sed -n 5p | awk -F '=' '{print $2}')
 
 	if [[ -z $(xdotool search --classname --onlyvisible '^'$name'$') ]]; then
+		if [[ $(xdotool getwindowfocus) == $win ]]; then
+			xdotool windowactivate $win
+			exit
+		fi
+
 		hide_others $direction $win &
 		sleep 0.05
-		
+
 		if [[ $direction == "top" || $direction == "bottom" ]]; then
 			start_x=$x
 		elif [[ $direction == "left" || $direction == "right" ]]; then
@@ -229,6 +234,11 @@ else
 		move_animation $win $start_x $start_y $x $y
 		xdotool windowactivate $win
 	else
+		if [[ $(xdotool getwindowfocus) != $win ]]; then
+			xdotool windowactivate $win
+			exit
+		fi
+
 		x=$(echo "$geometry" | sed -n 2p | awk -F '=' '{print $2}')
 		y=$(echo "$geometry" | sed -n 3p | awk -F '=' '{print $2}')
 		echo "$x $y" > $POS_DIR/$name

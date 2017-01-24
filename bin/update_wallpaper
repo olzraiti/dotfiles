@@ -46,7 +46,6 @@ for dir in ${dirs[@]}; do
 	if [[ -n $(xdotool search --classname $desktop"_"$dir"_quaked") ]]; then
 		var_name=$dir"_quake"
 		declare $var_name=true
-		echo $dir
 		converted=$converted"_quaked_"$dir
 		dir_found=true
 	fi
@@ -94,22 +93,14 @@ if [[ ! -f $converted ]]; then
 
 	for dir in ${dirs[@]}; do
 		var_name=$dir"_quake"
-		echo $dir
 		if [[ -n ${!var_name} ]]; then
-			echo on $dir
-			_height=$height
-			_width=$width
-			if [[ $dir == "top" || $dir == "bottom" ]]; then
-				_height=$(( $height / 10 ))
-			else
-				_width=$(( $width / 15 ))
-			fi
-
-			gravity="NorthWest"
+			gravity="North"
 			if [[ $dir == "bottom" ]]; then
-				gravity="SouthWest"
+				gravity="South"
 			elif [[ $dir == "right" ]]; then
-				gravity="NorthEast"
+				gravity="East"
+			elif [[ $dir == "left" ]]; then
+				gravity="West"
 			fi
 
 			create=false
@@ -117,19 +108,19 @@ if [[ ! -f $converted ]]; then
 			y_weight=10
 			if [[ $dir == "bottom" ||  $dir == "top"  ]]; then
 				axis="horizontal"
-				radii_width=$(($_width / $x_weight))
+				radii_width=$(($width / $x_weight))
 				radii_height=$y_weight
 				crop="x%50"
 			else
 				axis="vertical"
 				radii_width=$y_weight
-				radii_height=$(($_height / $x_weight))
+				radii_height=$(($height / $x_weight))
 				crop="%50x100%"
 			fi
 
 			prefix="_quake_gradient"
 			gradient_file=$DIR/$prefix$axis".png"
-			[[ ! -f $DIR/$prefix$axis"-0.png" ]] && convert -size $_width'x'$_height -define gradient:radii=$radii_width,$radii_height radial-gradient:white-none -crop $crop $gradient_file
+			[[ ! -f $DIR/$prefix$axis"-0.png" ]] && convert -size $width'x'$height -define gradient:radii=$radii_width,$radii_height radial-gradient:white-none -crop $crop $gradient_file
 
 			idx=1
 			[[ $dir == "bottom" || $dir == "right" ]] && idx=0

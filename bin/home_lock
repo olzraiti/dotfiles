@@ -1,0 +1,5 @@
+if [[ -n $1 ]]; then
+	ssh robopop 'rm home.lock'
+else
+	ssh robopop 'touch home.lock'
+fi

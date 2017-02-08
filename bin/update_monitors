@@ -19,3 +19,6 @@ fi
 xrandr -s 0
 
 cache_xrandr
+
+pkill bar_notifyd -9
+bar_notifyd &

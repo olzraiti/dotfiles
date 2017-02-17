@@ -6,7 +6,7 @@ update_wallpaper &
 dirs=( top bottom left right )
 
 for dir in "${dirs[@]}"; do
-	win=$(xdotool search --classname --onlyvisible '^_'${dir}'_pull_window')
+	win=$(xdotool search --classname --onlyvisible '^_'${dir}'_quaked')
 	if [[ -n $win ]]; then 
 		xdotool windowactivate $win
 		break

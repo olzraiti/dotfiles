@@ -3,10 +3,10 @@ dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 function install_packages {
 	packages=""
-	while read line; do
-		packages="$packages $line"
+	while read package; do
+		[[ -z $(pacman -Q $package) ]] && packages="$packages $package"
 	done <<< "$(cat $HOME'/dotfiles/packages')"
-	pacaur -Syyu --needed --noconfirm $packages
+	[[ -n $packages ]] && pacaur -Syyu --needed --noconfirm $packages
 }
 
 echo "Decrypting..."

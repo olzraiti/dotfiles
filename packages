@@ -37,7 +37,7 @@ gst-plugins-base
 gst-plugins-good
 gst-plugins-bad
 gst-plugins-ugly
-pyxdg
+python-xdg
 tmux
 flashplugin
 oh-my-zsh-git
@@ -46,13 +46,12 @@ zsh-syntax-highlighting-git
 xwobf-git
 qutebrowser-git
 numix-circle-icon-theme-git
-xcape
+xcape-git
 yeahconsole
 compton-git
 chromium-pepper-flash
 unclutter-xfixes-git
 pdfjs
-skype-desktop-bin
 git
 gohufont
 txtw-git
@@ -60,7 +59,7 @@ lemonbar-xft-git
 ttf-font-awesome
 private-internet-access-vpn
 rofi-git
-sind
+sind-git
 reflector
 pass
 inotify-tools

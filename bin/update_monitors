@@ -1,6 +1,6 @@
 #!/bin/bash
-display_ports=( "VGA1" "DP1" )
-primary=LVDS1
+display_ports=( "VGA-1" "DP-1" )
+primary=LVDS-1
 external=false
 for display_port in "${display_ports[@]}"; do
 	if [[ $(xrandr -q | grep $display_port | awk '{print $2}') == "connected" ]]; then

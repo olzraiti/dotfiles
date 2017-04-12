@@ -1,8 +1,8 @@
-execute pathogen#infect()
 filetype plugin indent on
 syntax on
 
-colorscheme delek
+colorscheme default
+hi Search cterm=NONE ctermfg=black ctermbg=yellow
  
 " Show partial commands in the last line of the screen
 set showcmd
@@ -42,10 +42,9 @@ set undodir=~/.vim/undodir
 
 set relativenumber!
 
-cmap w!! w !sudo tee > /dev/null %
+set path=$PWD/**
 
-nnoremap <A-j> :tabprevious
-nnoremap <A-k> :tabnext
+cmap w!! w !sudo tee > /dev/null %
 
 let mapleader = "\<Space>"
 nnoremap <Leader>w :w<CR>
@@ -56,14 +55,17 @@ nnoremap <Leader>v viw<CR>
 nnoremap <Leader>V viW<CR>
 nnoremap <Leader>y yiw<CR>
 nnoremap <Leader>Y yiW<CR>
-vmap <Leader>y "+y
-vmap <Leader>d "+d
-nmap <Leader>p "+p
-nmap <Leader>P "+P
-vmap <Leader>p "+p
-vmap <Leader>P "+P
-map <Leader><Leader> :NERDTreeToggle<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+nnoremap <Leader>b :ls<CR>:b<Space>
+nnoremap <Leader>x :bd<CR>
+nnoremap <Leader>f :find<Space>
+nnoremap <Leader><Leader>w :mksession!<Space>.vimsession<CR>
+nnoremap <Leader><Leader>W :mksession!<Space>.vimsession<CR>:wq<CR>
+nnoremap <Leader>r ye:%s/<C-r>"//g<left><left>
+
+map <C-J> :bprevious<CR>
+map <C-K> :bnext<CR>
+map <C-L> :tabn<CR>
+map <C-H> :tabp<CR>
 
 function! g:ToggleBothNums()
   if &relativenumber && &number
@@ -76,6 +78,7 @@ endfunction
 nnoremap <silent> <leader>nr :set relativenumber!<cr>
 nnoremap <silent> <leader>na :set number!<cr>
 nnoremap <silent> <leader>nn :call g:ToggleBothNums()<cr>
+
 function! g:OffRelNumPreserve()
   let w:preserved_rnu = &relativenumber
   let w:preserved_nu = &number
@@ -96,3 +99,53 @@ endfunction
 
 au WinLeave * call g:OffRelNumPreserve()
 au WinEnter * call g:RestoreRelNum()
+
+set wildmode=longest,list,full
+set wildmenu
+
+set backupcopy=yes
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'tpope/vim-surround'
+Plug 'vim-syntastic/syntastic'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'xolox/vim-easytags'
+Plug 'xolox/vim-misc'
+"Plug 'vim-scripts/buftabs'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
+
+call plug#end()
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = ['eslint']
+
+let g:jsx_ext_required = 0
+
+let g:easytags_async = 1
+let g:easytags_languages = {
+			\   'javascript': {
+			\     'cmd': 'jsctags',
+			\	    'args': [],
+			\	    'fileoutput_opt': '-f',
+			\	    'stdout_opt': '-f-',
+			\	    'recurse_flag': '-R'
+			\   }
+			\}
+
+let g:airline#extensions#tabline#enabled = 1
+
+let g:airline_theme='base16_eighties'
+

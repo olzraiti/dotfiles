@@ -1,0 +1,10 @@
+#!/bin/bash
+state=$(bspc query -T -n | jq .client.state)
+
+if [[ $state == "\"floating\"" ]]; then
+	amount=$(($1 * -1))
+	$BSPWM_SCRIPTS_DIR/floating_expander $amount $amount
+else
+	# x y	
+	$BSPWM_SCRIPTS_DIR/gaps $1
+fi

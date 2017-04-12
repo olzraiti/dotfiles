@@ -1,0 +1,50 @@
+#!/bin/bash
+
+dir=ne
+while getopts ':d' flag; do
+	case "${flag}" in
+		d)
+			case "${OPTARG}" in
+			ne)
+				;&
+			northeast)
+				;&
+			nw)
+				;&
+			northwest)
+				;&
+			se)
+				;&
+			southeast)
+				;&
+			sw)
+				;&
+			southwest)
+				dir="$OPTARG"
+				;;
+			*)
+				echo invalid direction.
+				;;
+			esac
+			;;
+	esac
+done
+
+shift $((OPTIND-1))
+
+case "$dir" in
+	ne)
+		dir=northeast
+		;;
+	nw)
+		dir=northwest
+		;;
+	se)
+		dir=southheast
+		;;
+	sw)
+		dir=southwest
+		;;
+esac
+
+echo -e "$@" >> /tmp/notify_fifo_"$dir"

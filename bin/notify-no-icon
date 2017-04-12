@@ -1,2 +1,2 @@
 #!/bin/bash
-echo -e "$1" "$2" >> /tmp/notify_fifo_northeast
+notify "$@"

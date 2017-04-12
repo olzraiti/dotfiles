@@ -1,0 +1,53 @@
+#!/bin/bash
+function close_existing {
+	existing_name=$(~/scripts/quaker/get_name $@)
+	existing_win=$(xdotool search --classname '^'$existing_name'$')
+
+	if [[ -n $existing_win ]]; then
+		sleep 0.1
+		win=$(xdotool getwindowfocus)
+		quakify $@
+		if ! zenity --question --text "Close this window?"; then
+			xdotool windowactivate $existing_win
+			quakify -f && $BSPWM_SCRIPTS_DIR/state_toggle tiled
+		else
+			xdotool getwindowfocus windowclose
+		fi
+		xdotool windowactivate $win
+	fi
+}
+
+foldername=$1
+name=$(echo $1 | sed -e 's/^.*\/.*\///' | sed -e 's/\.*\..*//')
+browser=$BROWSER
+[[ -n $2 ]] && browser="$2"
+cmd=$3
+
+port=$(grep ' --port' $foldername/package.json | tail -1 | sed -e 's/^.*--port \([0-9]*\).*$/\1/')
+
+if [[ -z $(tmux ls | grep $name) ]]; then
+	args=""
+	[[ -f $1/.vimsession ]] && args="-S .vimsession"
+	urxvtc -e tmux new -s $name "cd $1; vim $args"
+else
+	urxvtc -e tmux a -t $name
+fi
+
+urxvtc -e tmux new zsh -c "cd $1 ; tmux split -h \"npm start\" ; zsh"
+sleep 0.5
+close_existing -d bottom -n quake_terminal
+quakify -d bottom -n quake_terminal
+quakify -d bottom -n quake_terminal
+
+close_existing -d bottom -n spawned_by_a_key
+
+$browser "http://localhost:"$port &
+
+sleep 3
+
+[[ -n $cmd ]] && $cmd
+
+sleep 0.1
+
+quakify -d bottom -n spawned_by_a_key
+quakify -d bottom -n quake_terminal

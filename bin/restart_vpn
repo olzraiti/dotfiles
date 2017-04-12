@@ -3,13 +3,10 @@
 export HOME="/home/olli"
 
 vpn_run=$(ps ax | grep "[o]penvpn" | tail -n 1)
-sudo pkill openvpn -9
+vpn_country=$(ps ax | grep "[o]penvpn" | tail -n 1 | awk '{print $7}' | sed 's/^.*\/\(.*\)\.conf/\1/')
+[[ -n $vpn_run ]] && sudo pkill openvpn -9
 
-if [[ $vpn_run == *pia* ]]; then
-	#country="Sweden"
-	#/home/olli/bin/pia-vpn
-	$HOME/bin/pia-vpn
-	#$HOME/bin/vpn $country.conf pia-login.conf $HOME/sparkleshark/wallpaper 
-#elif [[ $vpn_run == *hy* ]]; then
-	#/home/olli/bin/hy-vpn
-fi
+sleep 1
+
+[[ $vpn_run == *pia* ]] && $HOME/bin/pia-vpn $vpn_country
+[[ $vpn_run == *hy* ]] && $HOME/bin/hy-vpn

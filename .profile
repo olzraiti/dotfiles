@@ -67,7 +67,7 @@ icon UNLOCKED "\uf084 \uf13e"
 
 eval $(dircolors ~/.dircolors) > /dev/null
 
-if [[ -z $SSH_CONNECTION && -z $DISPLAY && $XDG_VTNR -eq 1 ]]; then
+if [[ -z $TMUX && -z $SSH_CONNECTION && -z $DISPLAY && $XDG_VTNR -eq 1 ]]; then
 	exec startx
 else
 	export GPG_TTY=`tty`

@@ -1,3 +1,4 @@
 #!/bin/bash
-export WEBIDE_JDK=$JAVA_HOME
+#export WEBIDE_JDK=$JAVA_HOME
+export WEBIDE_JDK=/opt/webstorm
 webstorm

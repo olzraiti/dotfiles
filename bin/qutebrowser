@@ -1,1 +1,1 @@
-/usr/bin/qutebrowser --backend webengine $@
+/usr/bin/qutebrowser --backend webengine --enable-webengine-inspector $@

@@ -27,9 +27,11 @@ $HOME/dotfiles/link.sh
 sudo cp $HOME/dotfiles/us_custom /usr/share/X11/xkb/symbols/
 sudo cp $HOME/dotfiles/fi_custom /usr/share/X11/xkb/symbols/
 
-ln -s ~/SparkleShare/sparkleshark/.password-store ~/
+#ln -s ~/SparkleShare/sparkleshark/.password-store ~/
 
 ~/.tmux/plugins/tpm/bin/install_plugins
 tmux source ~/.tmux.conf
+
+vim +PlugInstall +qa! 
 
 xrdb .Xresources

@@ -1,0 +1,2 @@
+#!/bin/sh
+/usr/bin/feh -. -B black --auto-rotate -S filename $@

@@ -1,4 +1,22 @@
 #!/bin/bash
+
+state=$(bspc query -T -n | jq .client.state)
+
+if [[ $state == "\"floating\"" ]]; then
+	amount=$(($1 * -1))
+	if [[ "$@" == *"top"* && "$@" == *"bottom"* && \
+		  "$@" == *"left"* && "$@" == *"right"* ]]; then
+		$BSPWM_SCRIPTS_DIR/floating_expander $amount $amount
+		exit
+	elif [[ "$@" == *"top"* && "$@" == *"bottom"* ]]; then
+		$BSPWM_SCRIPTS_DIR/floating_expander 0 $amount
+		exit
+	elif [[ "$@" == *"left"* && "$@" == *"right"* ]]; then
+		$BSPWM_SCRIPTS_DIR/floating_expander $amount 0
+		exit
+	fi
+fi
+
 for padding in "${@:2}"; do
 	padding=$padding"_padding"
 	bspc config -n focused $padding $(($(bspc config -n focused $padding) + $1))

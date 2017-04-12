@@ -66,3 +66,5 @@ inotify-tools
 urxvt-font-size-git
 jq
 ttf-emojione-color
+ctags
+jstags-tern-git

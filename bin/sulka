@@ -1,7 +1,7 @@
 #!/bin/bash
 
-tomcat=$HOME/lib/apache-tomcat-7.0.57
-sulka=$HOME/programming/sulka
+tomcat=$HOME/lib/apache-tomcat-7.0.77
+sulka=$HOME/src/luomus/sulka
 
 function deploy {
 	cp $sulka/target/sulka-1.0.0-BUILD-SNAPSHOT.war $tomcat/webapps/sulka.war
@@ -9,7 +9,7 @@ function deploy {
 }
 function build {
 	cd $sulka
-	mvn clean install -Dmaven.test.skip=true
+	mvn clean install -Dmaven.test.skip=true -Djava.net.preferIPv4Stack=true
 }
 function update {
 	cp -r $sulka/src/main/webapp/* $tomcat/webapps/sulka

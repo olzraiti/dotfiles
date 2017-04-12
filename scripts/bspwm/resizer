@@ -1,0 +1,60 @@
+#!/bin/bash
+# Resizes tiling layout to a direction.
+# If focused window is floating, that window is resized.
+
+function invert {
+	local dir=$1
+	if [[ $dir == "left" ]]; then
+		dir="right"
+	elif [[ $dir == "right" ]]; then
+		dir="left"
+	elif [[ $dir == "top" ]]; then
+		dir="bottom"
+	elif [[ $dir == "bottom" ]]; then
+		dir="top"
+	elif [[ $dir == "bottom_left" ]]; then
+		dir="top_right"
+	elif [[ $dir == "bottom_right" ]]; then
+		dir="top_left"
+	elif [[ $dir == "top_left" ]]; then
+		dir="bottom_right"
+	elif [[ $dir == "top_right" ]]; then
+		dir="bottom_left"
+	fi
+	echo $dir
+}
+
+while getopts 'i' flag; do
+	case "${flag}" in
+	i) 
+		dir=$(invert $2)
+	;;
+	esac
+done
+shift $((OPTIND-1))
+
+[[ -z $dir ]] && dir=$1
+x=$2
+y=$3
+
+amount="$x $y"
+
+function get_geom {
+xdotool getwindowgeometry --shell $(xdotool getwindowfocus)
+}
+
+function get_width {
+	get_geom | sed -n 4p | awk -F '=' '{print $2}'
+}
+
+function get_height {
+	get_geom | sed -n 5p | awk -F '=' '{print $2}'
+}
+
+win_width=$(get_width)
+win_height=$(get_height)
+bspc node -z $dir $amount
+if [[ $win_width == $(get_width) && $win_height == $(get_height) ]]; then
+	dir=$(invert $dir)
+	bspc node -z $dir $amount
+fi

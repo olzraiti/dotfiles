@@ -8,6 +8,7 @@ date=$(date +'%d.%m.')
 
 kmap_symbol=$KEYBOARD_ICON
 kmap=$(caps $(setxkbmap -print | awk -F'+' '/xkb_symbols/ {print $2}'))
+[[ $kmap == *_* ]] && kmap=$(echo $kmap | awk -F "_" '{print $1}')
 kmap_command="toggle_kmap no_notify && notify_info"
 
 vol_symbol=$VOL_ICON

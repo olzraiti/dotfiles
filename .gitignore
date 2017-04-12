@@ -4,3 +4,7 @@ lighthouse/__pycache__
 *.swp
 qutebrowser/bookmarks/*
 qutebrowser/quickmarks
+.tmux/plugins
+!.tmux/plugins/tpm
+.vim/plugged
+bin/tags

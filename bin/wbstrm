@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 export JAVA_HOME=/usr/lib/jvm/java-8-jdk
 export WEBIDE_JDK=/usr/lib/jvm/java-8-jdk
+=======
+#!/bin/bash
+#export WEBIDE_JDK=$JAVA_HOME
+export WEBIDE_JDK=/opt/webstorm
+>>>>>>> 204c348... sxhkd rethinking, vim plugin manager changed to plug, whole lot of utils
 webstorm

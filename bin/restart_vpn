@@ -1,0 +1,12 @@
+#!/bin/bash
+
+export HOME="/home/olli"
+
+vpn_run=$(ps ax | grep "[o]penvpn" | tail -n 1)
+vpn_country=$(ps ax | grep "[o]penvpn" | tail -n 1 | awk '{print $7}' | sed 's/^.*\/\(.*\)\.conf/\1/')
+[[ -n $vpn_run ]] && sudo pkill openvpn -9
+
+sleep 1
+
+[[ $vpn_run == *pia* ]] && $HOME/bin/pia-vpn $vpn_country
+[[ $vpn_run == *hy* ]] && $HOME/bin/hy-vpn

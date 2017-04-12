@@ -1,0 +1,24 @@
+#!/bin/bash
+display_ports=( "VGA1" "DP1" )
+primary=LVDS1
+external=false
+for display_port in "${display_ports[@]}"; do
+	if [[ $(xrandr -q | grep $display_port | awk '{print $2}') == "connected" ]]; then
+		xrandr --output $display_port --mode $(xrandr -q | grep $display_port -A 1 | tail -n 1 | awk '{print $1}')
+		xrandr --output $display_port --primary
+		xrandr --output $display_port --same-as $primary
+		external=true
+		break
+	fi
+done
+
+if [[ $external == false ]]; then
+	xrandr --output $primary --mode $(xrandr -q | grep $primary -A 1 | tail -n 1 | awk '{print $1}')
+	xrandr --output $primary --primary
+fi
+xrandr -s 0
+
+cache_xrandr
+
+pkill bar_notifyd -9
+bar_notifyd &

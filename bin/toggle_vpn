@@ -1,0 +1,9 @@
+#!/bin/bash
+
+vpn_run=$(ps ax | grep "[o]penvpn" | tail -n 1)
+
+if [[ $vpn_run == *pia* ]]; then
+	sudo pkill openvpn -9
+else
+	pia-vpn
+fi

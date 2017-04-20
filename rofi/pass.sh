@@ -2,8 +2,8 @@
 
 if [[ -n $@ ]]
 then
-	coproc (clip_pass $@ > /dev/null 2>&1)
 	echo $@ > /tmp/pass_rofi_picked
+	clip_pass $@ > /dev/null 2>&1
 	exit
 fi
 

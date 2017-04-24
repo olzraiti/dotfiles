@@ -1,0 +1,3 @@
+#!/bin/bash
+[[ -p /tmp/pass_clipped_fifo ]] || mkfifo /tmp/pass_clipped_fifo
+[[ -p /tmp/pass_picked ]] || mkfifo /tmp/pass_picked

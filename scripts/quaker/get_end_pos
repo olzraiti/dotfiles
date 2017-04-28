@@ -1,5 +1,4 @@
 #!/bin/bash
-echo $@ >> /tmp/kek
 name=$(get_name $@)
 direction="bottom"
 win=$(xdotool getwindowfocus)

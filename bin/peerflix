@@ -1,0 +1,2 @@
+#!/bin/bash
+ensure_vpn && /usr/bin/peerflix --mpv "$@" || notify "HELP! VPN EI OO PÄÄLLÄ :("

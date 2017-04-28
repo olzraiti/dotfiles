@@ -21,9 +21,8 @@ foldername=$1
 name=$(echo $1 | sed -e 's/^.*\/.*\///' | sed -e 's/\.*\..*//')
 browser=$BROWSER
 [[ -n $2 ]] && browser="$2"
-cmd=$3
 
-port=$(grep ' --port' $foldername/package.json | tail -1 | sed -e 's/^.*--port \([0-9]*\).*$/\1/')
+port=$(grep -E 'start.*--port' $foldername/package.json | head -1 | sed -e 's/^.*--port \([0-9]*\).*$/\1/')
 
 if [[ -z $(tmux ls | grep $name) ]]; then
 	args=""
@@ -45,7 +44,11 @@ $browser "http://localhost:"$port &
 
 sleep 3
 
-[[ -n $cmd ]] && $cmd
+if [[ $browser == *chromium* ]]; then
+	xdotool key ctrl+shift+j
+elif [[ $browser == *qutebrowser* ]]; then
+	xdotool type wi
+fi
 
 sleep 0.1
 

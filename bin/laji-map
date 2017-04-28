@@ -1,1 +1,1 @@
-js-session src/luomus/laji-map.js "qutebrowser --target window" "xdotool type wi"
+js-session src/luomus/laji-map.js "qutebrowser --target window"

@@ -1,0 +1,7 @@
+#!/bin/bash
+directions=( bottom left right top )
+bspc query -D | while read desktop; do
+	for direction in "${directions[@]}"; do
+		bspc rule -a *:$desktop"_"$direction"_pull_window" state=floating layer=above
+	done
+done

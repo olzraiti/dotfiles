@@ -46,14 +46,17 @@ should_discard=false
 should_link=true
 msg="Marked %{F$notify_icon_fg}$name%{F$notify_color_fg} as $(icon_for_tag $sub) $sub"
 if [[ $sub == "query" ]]; then
-	xdotool search --name "bar_noti_name" windowkill %@
+	#xdotool search --name "bar_noti_name" windowkill %@
 	msg=""
+	last=$([[ -f $folder/.last ]] && cat $folder/.last)
+	[[ -z $last || $last != $filename ]] && msg=$(ls $folder/*.JPG | grep $filename -n | awk -F ':' '{print $1}')"/"$(ls $folder/*.JPG | wc -l)
 	for i in "edit" "potential"; do
 		[[ -f $folder/$i/$filename ]] &&  msg="$(icon_for_tag $i) $i"
 	done
 	if [[ -n $sub_param ]]; then
 		echo $filename > $folder/.pimiofile
 	fi
+	echo $filename > $folder/.last
 elif [[ $sub == "discard" ]]; then
 	do_discard
 	msg=""

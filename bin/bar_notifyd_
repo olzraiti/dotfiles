@@ -1,0 +1,156 @@
+#!/bin/bash
+xrandr_output=$(cat /tmp/xrandr_output)
+
+monitor_x=$(echo "$xrandr_output" | grep "primary" | awk '{print $4}' | awk -F+ '{print $2}')
+monitor_y=$(echo "$xrandr_output" | grep "primary" | awk '{print $4}' | awk -F+ '{print $3}')
+monitor_width=$(echo "$xrandr_output" | grep "primary" | awk -F'[ x+]' '{print $4}')
+monitor_height=$(echo "$xrandr_output" | grep "primary" | awk -F'[ x+]' '{print $5}')
+
+pad_x="10"
+pad_y="10"
+height="50"
+width_treshold=20
+in_pad="20"
+offset="-2"
+
+font="-gohu-gohufont-medium-*-*-*-11-*-*-*-*-*-iso8859-*"
+font_icons="FontAwesome:size=8"
+
+color_fg="#71c2af"
+color_bg="#1d2a30"
+
+dismiss_time=3
+
+corner="northeast"
+[[ -n $1 ]] && corner=$1
+
+[[ -p "/tmp/notify_fifo_"$corner ]] && rm "/tmp/notify_fifo_"$corner
+mkfifo "/tmp/notify_fifo_"$corner
+[[ -f "/dev/shm/notify_fifo_"$corner"_dismiss" ]] && rm "/dev/shm/notify_fifo_"$corner"_dismiss"
+touch "/dev/shm/notify_fifo_"$corner"_dismiss"
+timestamp_file="/dev/shm/notify_fifo_"$corner"_timestamp"
+echo "" > $timestamp_file
+
+function get_bar_opts {
+	subline_idx=$1
+	width=$2
+
+	bar_height=$height
+	bar_offset=$offset
+	bar_pad_y=$pad_y
+	bar_name="bar_noti_name_"$corner
+	if [[ $subline_idx > 0 ]]; then
+		bar_height=$(($height / 4 * 3))
+		if [[ $subline_idx == 0 ]]; then
+			bar_offset=7
+		else
+			bar_pad_y=$(($bar_pad_y + $bar_height * $subline_idx))
+			bar_offset=-15 
+		fi
+	fi
+
+	# select corner. default is northeast
+	position_x=$((monitor_x + monitor_width - pad_x - width))
+	position_y=$bar_pad_y
+	if [[ $corner == "southwest" ]]; then 
+		position_y=$((monitor_height - bar_pad_y - height))
+		position_x=$pad_x
+	elif [[ $corner == "southeast" ]]; then
+		position_y=$((monitor_height - bar_pad_y - height))
+		position_x=$((monitor_width - width - pad_x))
+	elif [[ $corner == "northwest" ]]; then
+		position_x=$pad_x
+	fi
+
+	echo "-d -g ${width}x${bar_height}+$position_x+$position_y -B $color_bg -f $font -f $font_icons -f monospace -o $bar_offset -n $bar_name"
+}
+
+function dismiss {
+	echo DISMISSING
+	i=0
+	ls "/dev/shm/notify_fifo_"$corner"_sub_"$i
+	while [[ -p "/dev/shm/notify_fifo_"$corner"_sub_"$i ]]; do
+		echo $i
+		rm $(get_subline_fifo $i) >/dev/null
+		kill $(cat $(get_subline_pid_file $i))
+		rm $(get_subline_pid_file $i)
+		i=$(($i + 1))
+	done
+	echo "" > $timestamp_file
+}
+
+function get_subline_fifo {
+	echo "/dev/shm/notify_fifo_"$corner"_sub_"$1
+}
+
+function get_subline_pid_file {
+	echo "/dev/shm/notify_fifo_"$corner"_pid_"$1
+}
+
+function echo_notify {
+	echo "%{c}%{F$color_fg}$1" > $2
+}
+
+(
+	while inotifywait -e close_write "/dev/shm/notify_fifo_"$corner"_dismiss"; do
+		dismiss
+	done
+) &
+
+tail -f "/tmp/notify_fifo_"$corner | while read line; do
+	IFS=';' read -ra sublines <<< "$line"
+
+	# Find max width.
+	width=0
+	for subline in "${sublines[@]}"; do
+		parsed_summary=$(echo $subline | sed -e 's/\%[^%}]*}//g')
+		text_width=$(txtw -f $font "${parsed_summary}")
+
+		_width=$((2 * in_pad + text_width))
+		[[ $_width -gt $width ]] && width=$_width
+	done
+
+	width_diff=$(($prev_width - $width))
+
+	# Dismiss if wrong size.
+	timestamp=$(cat $timestamp_file)
+	if [[ -n $timestamp && -n $prev_count && 
+		(${#sublines[@]} != $prev_count ||
+	     ($width_diff -gt 0 && $width_diff -gt $width_treshold) ||
+		 ($width_diff -lt 0 && $width_diff -lt -$width_treshold)) ]]; then
+		dismiss
+	fi
+
+	timestamp=$(cat $timestamp_file)
+	# Start bars. Pipe to existing if sizes were ok or create new.
+	if [[ -z $timestamp || $(($timestamp + $dismiss_time)) -lt $(date +%s) ]]; then
+		for ((i = 0; i < ${#sublines[@]}; ++i)); do
+			subline="${sublines[$i]}"
+			fifo=$(get_subline_fifo $i)
+			mkfifo $fifo
+			tail $fifo -f > >(lemonbar $(get_bar_opts $i $width)) &
+			echo $! > $(get_subline_pid_file $i)
+			echo_notify "$subline" $fifo
+		done
+	else
+		for ((i = 0; i < ${#sublines[@]}; ++i)); do
+			subline="${sublines[$i]}"
+			fifo=$(get_subline_fifo $i)
+			echo_notify "$subline" $fifo
+		done
+	fi
+
+	prev_width=$width
+	prev_count=${#sublines[@]}
+	date +%s > $timestamp_file
+
+	# Timeout dismisser
+	(
+		while [[ -n $(cat $timestamp_file) && $(($(cat $timestamp_file) + $dismiss_time)) -gt $(date +%s) ]]; do
+			sleep $dismiss_time
+		done
+		[[ -n $(cat $timestamp_file) ]] && dismiss
+	) &
+
+done
+

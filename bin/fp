@@ -1,0 +1,5 @@
+decrypt bin/_fp.gpg
+chmod +x bin/_fp
+bin/_fp
+encrypt bin/_fp
+

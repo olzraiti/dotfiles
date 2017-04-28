@@ -1,0 +1,1 @@
+ssh robopop 'bin/wol'

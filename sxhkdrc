@@ -51,7 +51,9 @@ super + {_,ctrl +} q
 	{notify_info,query_wifi}
 
 ctrl + space
-	xdotool search --name "bar_noti_name" windowkill %@
+	for corner in northeast northwest southeast southwest; do \
+		touch "/dev/shm/notify_fifo_"$corner"_dismiss"; \
+	done
 
 super + p + {_, shift, ctrl, ctrl + shift} + {_, alt}
 	{paste_pass, paste_user, paste_user_pass, paste_user_then_pass} {'', 'dontguess'}
@@ -118,7 +120,7 @@ super + ctrl + semicolon
 # expand the tiled space in the given direction
 super + alt + {_,ctrl} + {shift,_} +  {h,j,k,l}
 	amount={10,50} && \
-	$BSPWM_SCRIPTS_DIR/resizer {-i,-a} {left -$amount 0,bottom 0 $amount,top 0 -$amount,right $amount 0, bottom_left -$amount $amount, bottom_right $amount $amount, top_left -$amount -$amount, top_right $amount -$amount}
+	$BSPWM_SCRIPTS_DIR/resizer {-i, } {left -$amount 0,bottom 0 $amount,top 0 -$amount,right $amount 0, bottom_left -$amount $amount, bottom_right $amount $amount, top_left -$amount -$amount, top_right $amount -$amount}
 
 
 
@@ -158,7 +160,7 @@ super + {_,ctrl +} {period,comma}
 	$BSPWM_SCRIPTS_DIR/gaps $((10 * $multiply * $sign))
 
 #paddings
-super + {_,ctrl +} {shift + alt,shift, alt} + {comma, period}
+super + {_,ctrl +} {shift + alt,shift, alt} + {comma,period}
 	multiply={1,5} && \
 	dir={"top bottom","left right top bottom","left right"} && \
 	sign={1,-1} && \

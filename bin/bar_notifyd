@@ -29,7 +29,8 @@ color_fg="#c27171"
 dismiss=3
 width_treshold=20
 
-touch "/tmp/notify_fifo_"$corner
+rm "/tmp/notify_fifo_"$corner
+[[ -p "/tmp/notify_fifo_"$corner ]] || mkfifo "/tmp/notify_fifo_"$corner
 tmp_file=$(mktemp)
 noti_timestamp=$(mktemp)
 
@@ -78,7 +79,7 @@ function start_bar {
 		fi
 
 		bar_opts="-d -g ${width}x${bar_height}+$position_x+$position_y -B $color_bg -f $font -f $font_icons -f monospace -o $bar_offset -n $bar_name"
-		(tail -f -n 0 ${tmp_files[$i]} | (
+		(tail -f -n 0 ${tmp_files[$i]} 2>/dev/null | (
 			while read -r noti_line; do
 			   echo "$noti_line"
 			done
@@ -88,7 +89,7 @@ function start_bar {
 	done
 
 	# multiline parsing
-	((tail -f -n 0 $tmp_file | (
+	((tail -f -n 0 $tmp_file 2>/dev/null | (
 	 while read -r noti_line; do
 		 IFS=';' read -r -a splitted <<< "$noti_line"
 		 for (( i=0; i<=$count; i++ )); do
@@ -112,7 +113,7 @@ function start_bar {
 } 
 
 
-tail -f -n 0 "/tmp/notify_fifo_"$corner |\
+tail -f "/tmp/notify_fifo_"$corner 2>/dev/null |\
   # Reads the notifications line by line
   while IFS= read -r summary; do
 	line_c=$(grep -o ";" <<< "$summary" | wc -l)

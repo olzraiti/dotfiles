@@ -20,3 +20,4 @@ alias ls='ls --color'
 alias scrot='scrot'
 alias cal='cal -m'
 #alias vis='urxvt -e vis'
+alias t="todo.sh"

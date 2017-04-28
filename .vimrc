@@ -55,11 +55,11 @@ nnoremap <Leader>v viw<CR>
 nnoremap <Leader>V viW<CR>
 nnoremap <Leader>y yiw<CR>
 nnoremap <Leader>Y yiW<CR>
-nnoremap <Leader>b :ls<CR>:b<Space>
+nnoremap <Leader><Leader> :ls<CR>:b<Space>
 nnoremap <Leader>x :bd<CR>
 nnoremap <Leader>f :find<Space>
-nnoremap <Leader><Leader>w :mksession!<Space>.vimsession<CR>
-nnoremap <Leader><Leader>W :mksession!<Space>.vimsession<CR>:wq<CR>
+nnoremap <Leader>s :mksession!<Space>.vimsession<CR>
+nnoremap <Leader>S :mksession!<Space>.vimsession<CR>:wq<CR>
 nnoremap <Leader>r ye:%s/<C-r>"//g<left><left>
 
 map <C-J> :bprevious<CR>
@@ -105,9 +105,6 @@ set wildmenu
 
 set backupcopy=yes
 
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
 
 autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
 
@@ -126,9 +123,13 @@ Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 
 call plug#end()
 
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_javascript_checkers = ['eslint']
 

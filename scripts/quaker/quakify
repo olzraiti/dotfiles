@@ -1,15 +1,26 @@
 #!/bin/bash
+function quit {
+	#rmdir /tmp/quake_lock
+	exit
+}
+
 POS_DIR=/tmp/win_positions
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 get_name=$DIR/get_name
 get_end_pos=$DIR/get_end_pos
+
+#if ! mkdir /tmp/quake_lock; then
+#	exit
+#fi
+
 
 ! [[ -d $POS_DIR ]] && mkdir $POS_DIR
 
 direction="bottom"
 forget=false
 global=false
-speed=30
+speed=40
+framerate=60
 animate=true
 win=""
 
@@ -103,10 +114,10 @@ function move_animation {
 		end="end_"$axis
 		sequence=$axis"_seq"
 
-		_speed=$speed
-		[[ ${!start} -gt ${!end} ]] && _speed='-'$_speed
+		gap=1
+		[[ ${!start} -gt ${!end} ]] && gap='-'$gap
 
-		for i in $(seq ${!start} $_speed ${!end}); do
+		for i in $(seq ${!start} $gap ${!end}); do
 			declare $sequence="${!sequence}"$i$'\n'
 		done
 
@@ -140,19 +151,32 @@ function move_animation {
 	fi
 
 	columns=$(paste -d " " <(echo "$x_seq") <(echo "$y_seq"))
+	interval=$((1000 / $framerate))
 
-	while read -r xy; do
+	function get_millis {
+		echo $(($(date +%s%N)/1000000))
+	}
+
+	now=$(get_millis)
+	gone=0
+	lines_amount=$(wc -l <<< "$columns")
+
+	while [[ $gone -lt $speed ]]; do
+		gone_of_second_ratio=$(echo "scale=3; $gone / $speed" | bc)
+		line_c=$(($(echo "$lines_amount * $gone_of_second_ratio" | bc | awk '{printf("%d\n",$1 + 0.5)}') + 1))
+		xy="$(sed -n "$line_c"p <<< "$columns")"
 		xdotool windowmove --sync $win $xy
-	done <<< "$columns"
-	$($cmd)
-
+		sleep 0.00"$interval"
+		gone=$(($(get_millis) - $now))
+	done
+	xdotool windowmove --sync $win $(tail -n 1 <<< "$columns")
 }
 
 win=$(get_win $name $win)
 
 if [[ $forget == true ]]; then
 	forget $name $win
-	exit
+	quit
 fi
 
 bspc rule -a *:$name state=floating layer=above
@@ -204,7 +228,7 @@ else
 	if [[ -z $(xdotool search --classname --onlyvisible '^'$name'$') ]]; then
 		if [[ $(xdotool getwindowfocus) == $win ]]; then
 			xdotool windowactivate $win
-			exit
+			quit
 		fi
 
 		hide_others $direction $win &
@@ -236,7 +260,7 @@ else
 	else
 		if [[ $(xdotool getwindowfocus) != $win ]]; then
 			xdotool windowactivate $win
-			exit
+			quit
 		fi
 
 		x=$(echo "$geometry" | sed -n 2p | awk -F '=' '{print $2}')
@@ -251,4 +275,7 @@ else
 		xdotool windowunmap $win
 	fi
 fi
+
+quit
+
 update_wallpaper

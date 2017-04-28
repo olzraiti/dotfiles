@@ -1,1 +1,9 @@
-bspc config -n focused window_gap $(($(bspc config -n focused window_gap) + $1))
+#!/bin/bash
+state=$(bspc query -T -n | jq .client.state)
+
+if [[ $state == "\"floating\"" ]]; then
+	amount=$(($1 * -1))
+	$BSPWM_SCRIPTS_DIR/floating_expander $amount $amount
+else
+	bspc config -n focused window_gap $(($(bspc config -n focused window_gap) + $1))
+fi

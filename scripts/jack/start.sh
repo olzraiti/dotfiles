@@ -18,4 +18,4 @@ sleep 5
 
 aconnect 16 128
 
-a2midid -e & > /tmp/a2mididoutput
+a2jmidid -e & 1>/dev/null 2>&1

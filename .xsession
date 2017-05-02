@@ -33,16 +33,11 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 fi
 
 sxhkd &
-<<<<<<< HEAD
 xrandr --output DVI-1 --primary
 xrandr --output HDMI-0 --right-of DVI-1
 xrandr --output HDMI-0 --same-as DVI-1
 cache_xrandr
 pia-vpn &
-=======
-update_monitors
-pia-vpn Japan &
->>>>>>> 204c348... sxhkd rethinking, vim plugin manager changed to plug, whole lot of utils
 notifyd &
 bar_notifyd &
 redshift &

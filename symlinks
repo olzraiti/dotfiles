@@ -27,3 +27,5 @@ xdg-applications/vim.desktop .local/share/applications/vim.desktop
 mimeapps.list .config/mimeapps.list
 qute_userscripts .local/share/qutebrowser/userscripts
 ../SparkleShare/sparkleshark/.password-store .password-store
+ranger_rifle.conf .config/ranger/rifle.conf
+ranger_rc.conf .config/ranger/rc.conf

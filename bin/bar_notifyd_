@@ -131,6 +131,7 @@ tail -f "/tmp/notify_fifo_"$corner | while read line; do
 			tail $fifo -f > >(lemonbar $(get_bar_opts $i $width)) &
 			echo $! > $(get_subline_pid_file $i)
 			echo_notify "$subline" $fifo
+			sleep 0.001 # make sure bars are started in right order
 		done
 	else
 		for ((i = 0; i < ${#sublines[@]}; ++i)); do

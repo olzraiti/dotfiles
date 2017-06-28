@@ -24,10 +24,12 @@ dismiss_time=3
 corner="northeast"
 [[ -n $1 ]] && corner=$1
 
-[[ -p "/tmp/notify_fifo_"$corner ]] && rm "/tmp/notify_fifo_"$corner
-mkfifo "/tmp/notify_fifo_"$corner
+notify_fifo="/dev/shm/notify_fifo_"$corner
+[[ -p $notify_fifo ]] && rm $notify_fifo
+mkfifo $notify_fifo
 [[ -f "/dev/shm/notify_fifo_"$corner"_dismiss" ]] && rm "/dev/shm/notify_fifo_"$corner"_dismiss"
-touch "/dev/shm/notify_fifo_"$corner"_dismiss"
+dismiss_file="/dev/shm/notify_fifo_"$corner"_dismiss"
+touch $dismiss_file
 timestamp_file="/dev/shm/notify_fifo_"$corner"_timestamp"
 echo "" > $timestamp_file
 
@@ -41,12 +43,8 @@ function get_bar_opts {
 	bar_name="bar_noti_name_"$corner
 	if [[ $subline_idx > 0 ]]; then
 		bar_height=$(($height / 4 * 3))
-		if [[ $subline_idx == 0 ]]; then
-			bar_offset=7
-		else
-			bar_pad_y=$(($bar_pad_y + $bar_height * $subline_idx))
-			bar_offset=-15 
-		fi
+		bar_pad_y=$(($bar_pad_y + $bar_height * $subline_idx))
+		bar_offset=-15 
 	fi
 
 	# select corner. default is northeast
@@ -69,13 +67,19 @@ function dismiss {
 	i=0
 	ls "/dev/shm/notify_fifo_"$corner"_sub_"$i
 	while [[ -p "/dev/shm/notify_fifo_"$corner"_sub_"$i ]]; do
-		echo $i
 		rm $(get_subline_fifo $i) >/dev/null
 		kill $(cat $(get_subline_pid_file $i))
 		rm $(get_subline_pid_file $i)
 		i=$(($i + 1))
 	done
 	echo "" > $timestamp_file
+}
+
+function finish {
+	dismiss
+	rm $dismiss_file
+	rm $timestamp_file
+	rm $notify_fifo
 }
 
 function get_subline_fifo {
@@ -91,12 +95,12 @@ function echo_notify {
 }
 
 (
-	while inotifywait -e close_write "/dev/shm/notify_fifo_"$corner"_dismiss"; do
+	while inotifywait -e close_write $dismiss_file; do
 		dismiss
 	done
 ) &
 
-tail -f "/tmp/notify_fifo_"$corner | while read line; do
+tail -f $notify_fifo | while read line; do
 	IFS=';' read -ra sublines <<< "$line"
 
 	# Find max width.
@@ -151,5 +155,7 @@ tail -f "/tmp/notify_fifo_"$corner | while read line; do
 		[[ -n $(cat $timestamp_file) ]] && dismiss
 	) &
 
+	# Die gracefully
+	trap finish EXIT
 done
 

@@ -144,6 +144,8 @@ super + {equal, plus, minus}
 
 super + {_,shift + }Tab
 	bspc node -f {next,prev}.local
+alt + {_,shift + }Tab
+	bspc node -f {next,prev}.local
 
 # rotations
 super + {_, ctrl +} {n,m}

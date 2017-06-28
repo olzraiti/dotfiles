@@ -1,0 +1,5 @@
+flobotti stop
+rofi -show 'Wake up time?':~/dotfiles/rofi/bedtime.sh
+sleep 2
+sudo pkill openvpn -9
+poweroff

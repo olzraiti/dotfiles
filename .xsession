@@ -37,6 +37,7 @@ xrandr --output DVI-1 --primary
 xrandr --output HDMI-0 --right-of DVI-1
 xrandr --output HDMI-0 --same-as DVI-1
 cache_xrandr
+amixer -c 1 set Master 80% &
 pia-vpn &
 notifyd &
 bar_notifyd &
@@ -57,6 +58,15 @@ setxkbmap us_custom &
  custom_keys
  ~/programming/steamcontroller/scripts/custom.py start
  ) &
+
+function restore_alsa {
+	while [ -z "$(pidof pulseaudio)" ]; do
+		sleep 0.5
+	done
+	amixer -c 1 set Master 80%
+}
+
+restore_alsa
 
 muttatt &
 

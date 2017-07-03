@@ -125,7 +125,7 @@ super + alt + {_,ctrl} + {shift,_} +  {h,j,k,l}
 
 
 # node modes
-super + ctrl + s
+super + ctrl + d
 	bspc node -g sticky
 super + {d, shift + d, f}
 	$BSPWM_SCRIPTS_DIR/state_toggle {floating,pseudo_tiled,fullscreen}

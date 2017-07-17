@@ -1,0 +1,43 @@
+#!/bin/bash
+state=$(bspc query -T -n | jq .client.state)
+
+if [[ $state == "\"floating\"" ]]; then
+	amount=20
+	[[ $2 == 2 ]] && amount=100
+	dirs=""
+	case $1 in
+	1)
+		dirs="-$amount 0"
+		;;
+	2)
+		dirs="0 $amount"
+		;;
+	3)
+		dirs="0 -$amount"
+		;;
+	4)
+		dirs="$amount 0"
+		;;
+	esac
+
+	xdotool windowmove --relative $(xdotool getwindowfocus) $dirs
+else
+	dir=""
+	case $1 in
+	1)
+		dir="west"
+		;;
+	2)
+		dir="south"
+		;;
+	3)
+		dir="north"
+		;;
+	4)
+		dir="east"
+		;;
+	esac
+
+	notify  "bspc node -p $dir"
+	bspc node -p $dir
+fi

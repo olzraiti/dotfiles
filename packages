@@ -59,7 +59,6 @@ lemonbar-xft-git
 ttf-font-awesome
 private-internet-access-vpn
 rofi-git
-sind-git
 reflector
 pass
 inotify-tools
@@ -71,3 +70,4 @@ jsctags-tern-git
 peerflix
 sxiv
 sxiv-rifle
+imagemagick

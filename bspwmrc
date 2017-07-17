@@ -44,5 +44,4 @@ bspc subscribe node_manage node_unmanage | while read line; do update_wallpaper;
 
 yeahconsole &
 xdotool behave_screen_edge --quiesce 600 --delay 0 top-right exec bin/notify_info &
-(start_jack
- cairo-dock -f) &
+start_jack &

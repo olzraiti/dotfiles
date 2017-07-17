@@ -1,11 +1,2 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =9
-let g:netrw_dirhist_1='/home/olli/src/luomus/laji-form.js/playground'
-let g:netrw_dirhist_2='/home/olli/src/luomus/laji-form.js/src/components/fields'
-let g:netrw_dirhist_3='/home/olli/dotfiles'
-let g:netrw_dirhist_4='/home/olli/src/luomus/laji.fi-front/src/styles'
-let g:netrw_dirhist_5='/home/olli/src/luomus/laji-form.js/playground'
-let g:netrw_dirhist_6='/home/olli/src/luomus/sulka/src/main/java/fi/luomus/sulka/controllers'
-let g:netrw_dirhist_7='/home/olli/src/luomus/laji-validate.js/test/validators'
-let g:netrw_dirhist_8='/home/olli/src/lib/validate.js/specs/validators'
-let g:netrw_dirhist_9='/home/olli/src/luomus/laji-form.js/src/components'
+let g:netrw_dirhist_cnt =0

@@ -63,6 +63,7 @@ function restore_alsa {
 	while [ -z "$(pidof pulseaudio)" ]; do
 		sleep 0.5
 	done
+	sleep 0.5
 	amixer -c 1 set Master 80%
 }
 

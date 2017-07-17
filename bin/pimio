@@ -1,7 +1,8 @@
 #!/bin/bash
 folder=$(readlink -f $1)
+echo $folder > /dev/shm/pimio_folder
 params=""
-[[ $2 == continue ]] && params+=" --start-at $folder/$(cat "$folder"/.pimiofile)"
+[[ $2 == continue ]] && params+=" -n $folder/$(cat "$folder"/.pimiofile)"
 
 if [[ $(basename $folder) != "potential" && $(basename $folder) != "edit" ]]; then
 	for sub in "potential" "edit"; do
@@ -9,8 +10,4 @@ if [[ $(basename $folder) != "potential" && $(basename $folder) != "edit" ]]; th
 	done
 fi
 
-/usr/bin/feh $params -. -B black --auto-rotate -S filename --info "_pimio_linker $folder %N query mark &"  $folder/*.JPG \
-	--action1 "_pimio_linker $folder %N edit" \
-	--action2 "_pimio_linker $folder %N potential" \
-	--action3 "_pimio_linker $folder %N discard" \
-	--action4 "_pimio_linker $folder %N query"
+sxiv $params $folder/*.JPG 

@@ -38,6 +38,5 @@ else
 		;;
 	esac
 
-	notify  "bspc node -p $dir"
 	bspc node -p $dir
 fi

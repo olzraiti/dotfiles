@@ -71,7 +71,7 @@ rofi.kb-remove-word-forward: Alt+d
 rofi.kb-mode-next: Control+r
 rofi.kb-mode-previous: Control+shift+r
 rofi.kb-clear-line: Control+l
-rofi.kb-row-first: Home,KP_Home,Control+u
+rofi.kb-row-first: Home,KP_Home
 rofi.opacity: 99
 rofi.modi: run,ssh
 rofi.tokenize: false

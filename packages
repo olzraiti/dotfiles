@@ -1,5 +1,5 @@
 xorg-server
-xorg-server-utils
+xorg-apps
 xorg-xinit
 bspwm
 sxhkd
@@ -28,7 +28,7 @@ pulseaudio
 alsa-utils
 mpv
 youtube-dl
-livestreamer
+streamlink
 thefuck
 yaourt
 xdotool
@@ -41,7 +41,7 @@ python-xdg
 tmux
 flashplugin
 oh-my-zsh-git
-zsh-autosuggestions-git
+zsh-autosuggestions
 zsh-syntax-highlighting-git
 xwobf-git
 qutebrowser-git
@@ -49,7 +49,6 @@ numix-circle-icon-theme-git
 xcape-git
 yeahconsole
 compton-git
-chromium-pepper-flash
 unclutter-xfixes-git
 pdfjs
 git

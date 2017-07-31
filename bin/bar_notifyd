@@ -100,6 +100,9 @@ function echo_notify {
 	done
 ) &
 
+# Die gracefully (Unfortunately tail below must first receive one line - TODO).
+trap finish TERM
+
 tail -f $notify_fifo | while read line; do
 	IFS=';' read -ra sublines <<< "$line"
 
@@ -154,8 +157,4 @@ tail -f $notify_fifo | while read line; do
 		done
 		[[ -n $(cat $timestamp_file) ]] && dismiss
 	) &
-
-	# Die gracefully
-	trap finish EXIT
 done
-

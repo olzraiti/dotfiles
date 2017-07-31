@@ -16,6 +16,9 @@ URxvt*font:-gohu-gohufont-medium-*-*-*-11-*-*-*-*-*-iso8859-*
 URxvt.keysym.C-Up: font-size:incglobal
 URxvt.keysym.C-Down: font-size:decglobal
 URxvt.font-size.step: 4
+URxvt*dynamicColors: on
+URxvt.keysym.C-7: command:\033]11;#c2c2b0\007\033]10;#181818\007
+URxvt.keysym.C-8: command:\033]11;#181818\007\033]10;#c2c2b0\007
 
 !{{{ XFT
 Xft.dpi:       96
@@ -68,7 +71,7 @@ rofi.kb-remove-word-forward: Alt+d
 rofi.kb-mode-next: Control+r
 rofi.kb-mode-previous: Control+shift+r
 rofi.kb-clear-line: Control+l
-rofi.kb-row-first: Home,KP_Home,Control+u
+rofi.kb-row-first: Home,KP_Home
 rofi.opacity: 99
 rofi.modi: run,ssh
 rofi.tokenize: false

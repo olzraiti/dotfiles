@@ -5,7 +5,7 @@ if [[ $kmap == "us_custom" ]]; then
 else
 	$(setxkbmap us_custom)
 fi
-setxkbmap -option 'caps:ctrl_modifier' -option 'lv3:ralt_switch'
+custom_keys "skip_xcape"
 if [[ -z $1 ]]; then
 	notify-no-icon "$KEYBOARD_ICON  $(setxkbmap -print | awk -F '+' '/xkb_symbols/ {print toupper($2)}')"
 fi

@@ -50,7 +50,7 @@ elif [[ $browser == *qutebrowser* ]]; then
 	xdotool type wi
 fi
 
-sleep 0.2
+sleep 1
 
 quakify -d bottom -n spawned_by_a_key
 quakify -d bottom -n quake_terminal

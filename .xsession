@@ -54,6 +54,16 @@ setxkbmap us_custom &
  ~/programming/steamcontroller/scripts/custom.py start
  ) &
 
+function restore_alsa {
+	while [ -z "$(pidof pulseaudio)" ]; do
+		sleep 0.5
+	done
+	sleep 0.5
+	amixer -c 1 set Master 80%
+}
+
+restore_alsa
+
 muttatt &
 battery_listener &
 listen_battery_fifo &

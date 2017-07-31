@@ -1,2 +1,2 @@
 #!/bin/bash
-livestreamer -p mpv twitch.tv/$1 high --http-header Client-ID=jzkbprff40iqj646a697cyrvl0zt2m6
+livestreamer -p mpv twitch.tv/$1 720p --http-header Client-ID=jzkbprff40iqj646a697cyrvl0zt2m6

@@ -47,4 +47,4 @@ case "$dir" in
 		;;
 esac
 
-echo -e "$@" >> /tmp/notify_fifo_"$dir"
+echo -e "$@" >> /dev/shm/notify_fifo_"$dir"

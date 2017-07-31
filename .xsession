@@ -34,7 +34,7 @@ fi
 
 sxhkd &
 update_monitors
-pia-vpn Japan &
+pia-vpn &
 notifyd &
 bar_notifyd &
 redshift &

@@ -96,10 +96,6 @@ super + {_,shift + } w
 super + {_,shift + }{h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
 
-# preselect the direction
-super + ctrl + {h,j,k,l}
-	bspc node -p {west,south,north,east}
-
 # preselect the ratio
 super + ctrl + {1-9}
 	bspc node -o 0.{1-9}
@@ -142,6 +138,8 @@ super + g
 super + {equal, plus, minus}
 	bspc node -l {normal, above, below}
 
+alt + {_,shift + }Tab
+	bspc node -f {next,prev}.local
 super + {_,shift + }Tab
 	bspc node -f {next,prev}.local
 
@@ -168,17 +166,15 @@ super + {_,ctrl +} {shift + alt,shift, alt} + {comma,period}
 #
 
 #floating move
-super + {_,ctrl +} {y,u,i,o}
-	multiply={1,5} && \
-	a=$(($multiply * 20)) && \
-	xdotool windowmove --relative $(xdotool getwindowfocus) {-$a 0, 0 $a, 0 -$a, $a 0}
+super + {y,u,i,o} + {_, ctrl} 
+	$BSPWM_SCRIPTS_DIR/presel_or_move_floating {1,2,3,4} {1,2}
 
 #
 #DESKTOPS
 #
 # switch desktop
-ctrl + alt + {_,shift + }{h,j,k,l}
-	$BSPWM_SCRIPTS_DIR/desktop_wall {switch,switchwithwindow} \
+ctrl + {super,alt} + {_,shift + }{h,j,k,l}
+	$BSPWM_SCRIPTS_DIR/desktop_wall{ , }{switch,switchwithwindow} \
 		{west,south,north,east} && \
 	$BSPWM_SCRIPTS_DIR/on_desktop_change
 

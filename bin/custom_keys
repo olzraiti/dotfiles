@@ -1,6 +1,7 @@
 #!/bin/bash
+
 setxkbmap -option 'caps:ctrl_modifier' -option 'lv3:ralt_switch'
-xcape -e 'Caps_Lock=Escape' -t 150
+[[ -z $1 ]] && xcape -e 'Caps_Lock=Escape' -t 150
 
 xmodmap -e "keycode 94 = Shift_L"
 xset -r 94

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 dir=ne
-while getopts ':d' flag; do
+while getopts ':d:' flag; do
 	case "${flag}" in
 		d)
 			case "${OPTARG}" in
@@ -23,7 +23,7 @@ while getopts ':d' flag; do
 				dir="$OPTARG"
 				;;
 			*)
-				echo invalid direction.
+				echo invalid direction - directing to north east.
 				;;
 			esac
 			;;
@@ -40,7 +40,7 @@ case "$dir" in
 		dir=northwest
 		;;
 	se)
-		dir=southheast
+		dir=southeast
 		;;
 	sw)
 		dir=southwest

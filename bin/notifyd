@@ -20,7 +20,6 @@ sind -d -t $dismiss -f '%s;%b' |\
 
 	notification="%{F$notify_color_fg}$body"
 	[[ -n $summary ]] && notification="%{F$notify_icon_fg}$summary $notification"
-	echo $notification
 
-	echo $notification >> /tmp/notify_fifo_southeast
+	notify -d southeast "$notification"
   done

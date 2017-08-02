@@ -1,50 +1,27 @@
 #!/bin/bash
 
-dir=ne
+dir=northeast
 while getopts ':d:' flag; do
 	case "${flag}" in
-		d)
-			case "${OPTARG}" in
-			ne)
-				;&
-			northeast)
-				;&
-			nw)
-				;&
-			northwest)
-				;&
-			se)
-				;&
-			southeast)
-				;&
-			sw)
-				;&
-			southwest)
-				dir="$OPTARG"
-				;;
-			*)
-				echo invalid direction - directing to north east.
-				;;
-			esac
+	d)
+		case "${OPTARG}" in
+		northeast)
+			;&
+		northwest)
+			;&
+		southeast)
+			;&
+		southwest)
+			dir="$OPTARG"
 			;;
+		*)
+			echo invalid direction - directing to north east.
+			;;
+		esac
+		;;
 	esac
 done
 
 shift $((OPTIND-1))
-
-case "$dir" in
-	ne)
-		dir=northeast
-		;;
-	nw)
-		dir=northwest
-		;;
-	se)
-		dir=southeast
-		;;
-	sw)
-		dir=southwest
-		;;
-esac
 
 echo -e "$@" >> /dev/shm/notify_fifo_"$dir"

@@ -29,4 +29,4 @@ qute_userscripts .local/share/qutebrowser/userscripts
 ../SparkleShare/bitbucket.org/sparkleshark/.password-store .password-store
 ranger_rifle.conf .config/ranger/rifle.conf
 ranger_rc.conf .config/ranger/rc.conf
-.sxiv .config/sxiv
+sxiv .config/sxiv

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+folder=$(cat /dev/shm/pimio_folder)
+
+while read path; do
+	file=$(basename $path)
+	echo $folder $file
+        case "$1" in
+        "e")
+			_pimio_linker $folder $file edit ;;
+        "p")
+			_pimio_linker $folder $file potential ;;
+        "d")
+			_pimio_linker $folder $file discard ;;
+        "C-d")
+			rm $path ;;
+        esac
+done
+

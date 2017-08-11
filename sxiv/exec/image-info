@@ -1,0 +1,10 @@
+#!/bin/bash
+
+file=$(basename $1)
+[[ $1 == *"/edit"* ]] && echo BROWSING EDIT.
+[[ $1 == *"/potential"* ]] && echo BROWSING POTENTIAL.
+echo "E: $(find cam/edit/ -type l -name "*.JPG" | wc -l)"
+echo "P: $(find cam/potential/ -type l -name "*.JPG" | wc -l)"
+echo $file
+[[ -f $(cat /dev/shm/pimio_folder)/edit/$file ]] && echo *EDIT*
+[[ -f $(cat /dev/shm/pimio_folder)/potential/$file ]] && echo *POTENTIAL*

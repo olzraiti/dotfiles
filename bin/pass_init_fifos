@@ -1,3 +1,3 @@
 #!/bin/bash
-[[ -p /tmp/pass_clipped_fifo ]] || mkfifo /tmp/pass_clipped_fifo
-[[ -p /tmp/pass_picked ]] || mkfifo /tmp/pass_picked
+[[ -p /dev/shm/pass_clipped_fifo ]] || mkfifo /dev/shm/pass_clipped_fifo
+[[ -p /dev/shm/pass_picked ]] || mkfifo /dev/shm/pass_picked

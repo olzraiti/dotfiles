@@ -1,4 +1,5 @@
 .vim/undodir
+.vim/.netrwhist
 lighthouse/__pycache__
 *.pyc
 *.swp

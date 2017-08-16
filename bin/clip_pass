@@ -7,5 +7,5 @@ if [[ -z $pass_output ]]; then
 	exit
 fi
 
-echo "$pass_output" | gpg -e -r olli.raitio@helsinki.fi -o /tmp/pass_clipped_fifo --no-tty --yes
-echo $1 > /tmp/pass_picked
+echo "$pass_output" | gpg -e -r olli.raitio@helsinki.fi -o /dev/shm/pass_clipped_fifo --no-tty --yes
+echo $1 > /dev/shm/pass_picked

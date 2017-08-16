@@ -1,6 +1,6 @@
 #!/bin/bash
-if [[ -f /tmp/pass_env ]]; then
-	cat /tmp/pass_env
+if [[ -f /dev/shm/pass_env ]]; then
+	cat /dev/shm/pass_env
 else
 	echo .password-store/
 fi

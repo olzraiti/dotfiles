@@ -14,10 +14,10 @@ if [[ -z $pass_entry ]]; then
 fi
 
 if [[ -z $pass_entry ]]; then
-	echo "$(get_pass_entry "*")" > /tmp/pass_rofi_fifo
+	echo "$(get_pass_entry "*")" > /dev/shm/pass_rofi_fifo
 	rofi -show pass:~/dotfiles/rofi/pass.sh >/dev/null 2>&1
 elif [[ $(grep -c . <<<"$pass_entry") > 1 ]]; then
-	echo "$pass_entry" > /tmp/pass_rofi_fifo
+	echo "$pass_entry" > /dev/shm/pass_rofi_fifo
 	rofi -show pass:~/dotfiles/rofi/pass.sh >/dev/null 2>&1
 else
 	clip_pass $pass_entry

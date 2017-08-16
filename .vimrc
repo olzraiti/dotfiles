@@ -111,15 +111,15 @@ autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
 call plug#begin('~/.vim/plugged')
 
 Plug 'tpope/vim-surround'
-Plug 'vim-syntastic/syntastic'
+"Plug 'vim-syntastic/syntastic'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'xolox/vim-easytags'
 Plug 'xolox/vim-misc'
-"Plug 'vim-scripts/buftabs'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+"Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline-themes'
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
+Plug 'w0rp/ale'
 
 call plug#end()
 
@@ -127,11 +127,11 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_javascript_checkers = ['eslint']
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+""let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
+"let g:syntastic_javascript_checkers = ['eslint']
 
 let g:jsx_ext_required = 0
 
@@ -146,7 +146,7 @@ let g:easytags_languages = {
 			\   }
 			\}
 
-let g:airline#extensions#tabline#enabled = 1
-
-let g:airline_theme='base16_eighties'
+"let g:airline#extensions#tabline#enabled = 1
+"
+"let g:airline_theme='base16_eighties'
 

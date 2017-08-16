@@ -11,7 +11,6 @@ bspc config borderless_monocle  true
 bspc config gapless_monocle     true
 #bspc config focus_by_distance   true
 bspc config click_to_focus true
-bspc config pointer_modifier shift                                                                  
 
 bspc config focused_border_color \#bbbb99
 bspc config presel_border_color \#ffff00

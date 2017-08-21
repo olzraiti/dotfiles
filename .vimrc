@@ -64,8 +64,6 @@ nnoremap <Leader>r ye:%s/<C-r>"//g<left><left>
 
 map <C-J> :bprevious<CR>
 map <C-K> :bnext<CR>
-map <C-L> :tabn<CR>
-map <C-H> :tabp<CR>
 
 function! g:ToggleBothNums()
   if &relativenumber && &number
@@ -116,22 +114,30 @@ Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'xolox/vim-easytags'
 Plug 'xolox/vim-misc'
-"Plug 'vim-airline/vim-airline'
-"Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'w0rp/ale'
 
 call plug#end()
 
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 
 "let g:syntastic_always_populate_loc_list = 1
 "let g:syntastic_auto_loc_list = 1
 ""let g:syntastic_check_on_open = 1
 "let g:syntastic_check_on_wq = 0
 "let g:syntastic_javascript_checkers = ['eslint']
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#ale#enabled = 1
+
+let g:ale_sign_error = '!'
+let g:ale_sign_warning = '#'
+nmap <silent> <C-h> <Plug>(ale_previous_wrap)
+nmap <silent> <C-l> <Plug>(ale_next_wrap)
 
 let g:jsx_ext_required = 0
 
@@ -147,6 +153,6 @@ let g:easytags_languages = {
 			\}
 
 "let g:airline#extensions#tabline#enabled = 1
-"
-"let g:airline_theme='base16_eighties'
+
+let g:airline_theme='base16_eighties'
 

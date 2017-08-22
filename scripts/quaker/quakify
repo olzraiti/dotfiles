@@ -182,7 +182,7 @@ fi
 bspc rule -a *:$name state=floating layer=above
 [[ $global == true ]] && bspc rule -a *:$name sticky=on
 
-size=$(cat /tmp/xrandr_output | grep $(query_primary) | awk '{print $4}')
+size=$(cat /dev/shm/xrandr_output | grep $(query_primary) | awk '{print $4}')
 width=$(echo $size | awk -F 'x' '{print $1}')
 height=$(echo $size | awk -F 'x' '{print $2}' | awk -F '+' '{print $1}')
 

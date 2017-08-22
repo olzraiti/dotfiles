@@ -1,5 +1,5 @@
 #!/bin/bash
-xrandr_output=$(cat /tmp/xrandr_output)
+xrandr_output=$(cat /dev/shm/xrandr_output)
 
 monitor_x=$(echo "$xrandr_output" | grep "primary" | awk '{print $4}' | awk -F+ '{print $2}')
 monitor_y=$(echo "$xrandr_output" | grep "primary" | awk '{print $4}' | awk -F+ '{print $3}')

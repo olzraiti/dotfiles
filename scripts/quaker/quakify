@@ -1,15 +1,15 @@
 #!/bin/bash
 function quit {
-	#rmdir /tmp/quake_lock
+	#rmdir /dev/shm/quake_lock
 	exit
 }
 
-POS_DIR=/tmp/win_positions
+POS_DIR=/dev/shm/win_positions
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 get_name=$DIR/get_name
 get_end_pos=$DIR/get_end_pos
 
-#if ! mkdir /tmp/quake_lock; then
+#if ! mkdir /dev/shm/quake_lock; then
 #	exit
 #fi
 
@@ -21,7 +21,7 @@ forget=false
 global=false
 speed=40
 framerate=60
-animate=false
+animate=true
 win=""
 
 while getopts ':d:s:w:n:Agf' flag; do

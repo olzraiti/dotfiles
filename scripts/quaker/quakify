@@ -21,7 +21,7 @@ forget=false
 global=false
 speed=40
 framerate=60
-animate=true
+animate=false
 win=""
 
 while getopts ':d:s:w:n:Agf' flag; do
@@ -100,14 +100,18 @@ function hide_others {
 }
 
 function move_animation {
-	[[ $animate == false ]] && return 1
 	local win=$1
 	local start_x=$2
 	local start_y=$3
 	local end_x=$4
 	local end_y=$5
 
-	xdotool windowmap $win windowmove $win $start_x $start_y
+	xdotool windowmap $win
+
+	[[ $animate == false ]] && xdotool windowmove --sync $win $end_x $end_y
+	[[ $animate == false ]] && return 1
+
+	xdotool windowmove $win $start_x $start_y
 
 	for axis in "x" "y"; do
 		start="start_"$axis
@@ -170,6 +174,14 @@ function move_animation {
 		gone=$(($(get_millis) - $now))
 	done
 	xdotool windowmove --sync $win $(tail -n 1 <<< "$columns")
+}
+
+function cache_pos {
+	name="$1"
+	geometry="$2"
+	x=$(echo "$geometry" | sed -n 2p | awk -F '=' '{print $2}')
+	y=$(echo "$geometry" | sed -n 3p | awk -F '=' '{print $2}')
+	echo "$x $y" > $POS_DIR/$name
 }
 
 win=$(get_win $name $win)
@@ -257,15 +269,15 @@ else
 
 		move_animation $win $start_x $start_y $x $y
 		xdotool windowactivate $win
+
+		cache_pos "$name" "$geometry"
 	else
 		if [[ $(xdotool getwindowfocus) != $win ]]; then
 			xdotool windowactivate $win
 			quit
 		fi
 
-		x=$(echo "$geometry" | sed -n 2p | awk -F '=' '{print $2}')
-		y=$(echo "$geometry" | sed -n 3p | awk -F '=' '{print $2}')
-		echo "$x $y" > $POS_DIR/$name
+		cache_pos "$name" "$geometry"
 
 		xy=$(get_end_pos $@)
 		end_x=$(echo $xy | awk '{print $1}')

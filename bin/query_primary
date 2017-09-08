@@ -1,2 +1,2 @@
 #!/bin/bash
-cat /tmp/xrandr_output | grep 'primary' | awk '{print $1}'
+cat /dev/shm/xrandr_output | grep 'primary' | awk '{print $1}'

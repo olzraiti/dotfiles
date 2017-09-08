@@ -1,15 +1,15 @@
 #!/bin/bash
 function quit {
-	#rmdir /tmp/quake_lock
+	#rmdir /dev/shm/quake_lock
 	exit
 }
 
-POS_DIR=/tmp/win_positions
+POS_DIR=/dev/shm/win_positions
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 get_name=$DIR/get_name
 get_end_pos=$DIR/get_end_pos
 
-#if ! mkdir /tmp/quake_lock; then
+#if ! mkdir /dev/shm/quake_lock; then
 #	exit
 #fi
 
@@ -100,14 +100,18 @@ function hide_others {
 }
 
 function move_animation {
-	[[ $animate == false ]] && return 1
 	local win=$1
 	local start_x=$2
 	local start_y=$3
 	local end_x=$4
 	local end_y=$5
 
-	xdotool windowmap $win windowmove $win $start_x $start_y
+	xdotool windowmap $win
+
+	[[ $animate == false ]] && xdotool windowmove --sync $win $end_x $end_y
+	[[ $animate == false ]] && return 1
+
+	xdotool windowmove $win $start_x $start_y
 
 	for axis in "x" "y"; do
 		start="start_"$axis
@@ -172,6 +176,14 @@ function move_animation {
 	xdotool windowmove --sync $win $(tail -n 1 <<< "$columns")
 }
 
+function cache_pos {
+	name="$1"
+	geometry="$2"
+	x=$(echo "$geometry" | sed -n 2p | awk -F '=' '{print $2}')
+	y=$(echo "$geometry" | sed -n 3p | awk -F '=' '{print $2}')
+	echo "$x $y" > $POS_DIR/$name
+}
+
 win=$(get_win $name $win)
 
 if [[ $forget == true ]]; then
@@ -182,7 +194,7 @@ fi
 bspc rule -a *:$name state=floating layer=above
 [[ $global == true ]] && bspc rule -a *:$name sticky=on
 
-size=$(cat /tmp/xrandr_output | grep $(query_primary) | awk '{print $4}')
+size=$(cat /dev/shm/xrandr_output | grep $(query_primary) | awk '{print $4}')
 width=$(echo $size | awk -F 'x' '{print $1}')
 height=$(echo $size | awk -F 'x' '{print $2}' | awk -F '+' '{print $1}')
 
@@ -257,15 +269,15 @@ else
 
 		move_animation $win $start_x $start_y $x $y
 		xdotool windowactivate $win
+
+		cache_pos "$name" "$geometry"
 	else
 		if [[ $(xdotool getwindowfocus) != $win ]]; then
 			xdotool windowactivate $win
 			quit
 		fi
 
-		x=$(echo "$geometry" | sed -n 2p | awk -F '=' '{print $2}')
-		y=$(echo "$geometry" | sed -n 3p | awk -F '=' '{print $2}')
-		echo "$x $y" > $POS_DIR/$name
+		cache_pos "$name" "$geometry"
 
 		xy=$(get_end_pos $@)
 		end_x=$(echo $xy | awk '{print $1}')

@@ -5,6 +5,7 @@ lighthouse/__pycache__
 *.swp
 qutebrowser/bookmarks/*
 qutebrowser/quickmarks
+qutebrowser/qsettings/QtProject.conf
 .tmux/plugins/*
 !.tmux/plugins/tpm
 .vim/plugged

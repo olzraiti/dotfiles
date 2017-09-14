@@ -128,7 +128,7 @@ super + {d, shift + d, f}
 super + shift + f
 	bspc desktop -l next
 super +  t
-	quakify -f && $BSPWM_SCRIPTS_DIR/state_toggle tiled
+	quakify -f
 super + g
 	is_on=$(bspc config center_pseudo_tiled) && \
 	val=true && \
@@ -174,19 +174,16 @@ super + {y,u,i,o} + {_, ctrl}
 #
 # switch desktop
 ctrl + {super,alt} + {_,shift + }{h,j,k,l}
-	$BSPWM_SCRIPTS_DIR/desktop_wall{ , }{switch,switchwithwindow} \
-		{west,south,north,east} && \
-	$BSPWM_SCRIPTS_DIR/on_desktop_change
+	$BSPWM_SCRIPTS_DIR/desktop_wall{ , }{switch,switchwithwindow} {west,south,north,east}
 
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}
-	bspc {desktop -f,node -d} '^{1-9,10}' && \
-	$BSPWM_SCRIPTS_DIR/on_desktop_change
+	bspc {desktop -f,node -d} '^{1-9,10}'
 
 #
 # focus the next/previous desktop
 super + bracket{left,right}
-	bspc desktop -f {prev,next} && notify_focused_desktop
+	bspc desktop -f {prev,next}
 
 Print
 	scrot ~/tmp/%b%d::%H%M%S.png

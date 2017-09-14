@@ -1,0 +1,22 @@
+#!/bin/bash
+
+QUAKER=/dev/shm/quaker
+WINS_TO_NAMES=$QUAKER/wins_to_names
+NAMES_TO_WINS=$QUAKER/names_to_wins
+NAMES_TO_POS=$QUAKER/names_to_pos
+WINS_TO_SIZES=$QUAKER/wins_to_sizes
+WINS_TO_LAYERS=$QUAKER/wins_to_layers
+WINS_TO_STATES=$QUAKER/wins_to_states
+
+win=$1
+name=$2
+
+if [[ "$@" != *"-w"* && -z $(xdotool search . 2>/dev/null | grep ^"$win"$) ]]; then
+	for d in $WINS_TO_LAYERS $WINS_TO_STATES $WINS_TO_NAMES $WINS_TO_SIZES; do
+		rm $d/$win
+	done
+	for d in $NAMES_TO_WINS $NAMES_TO_POS; do
+		rm $d/$name
+	done
+	exit 1
+fi

@@ -12,6 +12,8 @@ bspc config click_to_focus true
 bspc config focused_border_color \#bbbb99
 bspc config presel_border_color \#ffff00
 
+bspc config external_rules_command /home/olli/scripts/quaker/external_rules
+
 #bspc config top_padding 20
 #bspc monitor DVI-1 -d 1 2 3 4 5 6 7 8 9
 
@@ -42,6 +44,7 @@ $BSPWM_SCRIPTS_DIR/desktop_wall init
 wmname LG3D
 change_wallpaper $HOME/sparkleshark/wallpaper
 bspc subscribe node_manage node_unmanage | while read line; do update_wallpaper; done &
+bspc subscribe desktop_focus | while read line; do notify_focused_desktop && update_wallpaper; done &
 
 yeahconsole &
 xdotool behave_screen_edge --quiesce 600 --delay 0 top-right exec bin/notify_info &

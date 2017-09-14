@@ -1,5 +1,4 @@
 #!/bin/bash
-name=$(get_name $@)
 direction="bottom"
 win=$(xdotool getwindowfocus)
 
@@ -38,6 +37,7 @@ top)
 	;;
 bottom)
 	end_y=$(($height + $win_height))
+	end_y=$height
 	;;
 left)
 	end_x='-'$win_width

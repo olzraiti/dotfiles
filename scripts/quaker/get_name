@@ -2,7 +2,7 @@
 
 direction="bottom"
 namespace=""
-current=$(bspc query -D -d)
+desktop=$(bspc query -D -d)
 
 while getopts ':d:s:w:n:Agf' flag; do
 	case "${flag}" in
@@ -10,7 +10,7 @@ while getopts ':d:s:w:n:Agf' flag; do
 			direction="$OPTARG"
 		;;
 		g)
-			current=""
+			desktop="quakify_global"
 		;;
 		n)
 			namespace="$OPTARG"
@@ -21,4 +21,4 @@ while getopts ':d:s:w:n:Agf' flag; do
   esac
 done
 
-echo $current"_"$direction"_quaked"$namespace
+echo $desktop"_"$direction"_quaked"$namespace

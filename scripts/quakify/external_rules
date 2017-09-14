@@ -4,7 +4,7 @@ wid=$1
 class=$2
 instance=$3
 
-if [[ -f /dev/shm/quaker/wins_to_names/$wid ]]; then
+if [[ -f /dev/shm/quakify/wins_to_names/$wid ]]; then
 	echo "state=floating layer=above"
 elif [[ "$instance" == *"quake_terminal"* ]]; then
 	name=$(echo "$instance" | sed 's/quake_terminal //')

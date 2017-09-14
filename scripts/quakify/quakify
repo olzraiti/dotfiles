@@ -4,7 +4,7 @@ function quit {
 	exit
 }
 
-QUAKER=/dev/shm/quaker
+QUAKER=/dev/shm/quakify
 GLOBAL_ACTIVER_DAEMON_PID=$QUAKER/global_pid
 WINS_TO_NAMES=$QUAKER/wins_to_names
 NAMES_TO_WINS=$QUAKER/names_to_wins

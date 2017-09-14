@@ -43,7 +43,7 @@ dirs=( bottom top left right )
 desktop=$(bspc query -D -d)
 dir_found=false
 for dir in ${dirs[@]}; do
-	if [[ -d /dev/shm/quaker/names_to_wins && -n $(ls /dev/shm/quaker/names_to_wins/$desktop"_"$dir"_quaked"*) ]]; then
+	if [[ -d /dev/shm/quakify/names_to_wins && -n $(ls /dev/shm/quakify/names_to_wins/$desktop"_"$dir"_quaked"*) ]]; then
 		var_name=$dir"_quake"
 		declare $var_name=true
 		converted=$converted"_quaked_"$dir

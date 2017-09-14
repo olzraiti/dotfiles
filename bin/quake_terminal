@@ -3,7 +3,7 @@ namespace=quake_terminal
 name=$(get_name $@ -n $namespace)
 params="$@ -n $namespace"
 
-existing_win=$(cat /dev/shm/quaker/names_to_wins/$name)
+existing_win=$(cat /dev/shm/quakify/names_to_wins/$name)
 
 if [[ -n $existing_win ]]; then
 	validate_win $existing_win $name

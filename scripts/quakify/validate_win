@@ -1,6 +1,6 @@
 #!/bin/bash
 
-QUAKER=/dev/shm/quaker
+QUAKER=/dev/shm/quakify
 WINS_TO_NAMES=$QUAKER/wins_to_names
 NAMES_TO_WINS=$QUAKER/names_to_wins
 NAMES_TO_POS=$QUAKER/names_to_pos

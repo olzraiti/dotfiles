@@ -1,6 +1,6 @@
 #!/bin/bash
 function close_existing {
-	existing_name=$(~/scripts/quaker/get_name $@)
+	existing_name=$(~/scripts/quakify/get_name $@)
 	existing_win=$(xdotool search --classname '^'$existing_name'$')
 
 	if [[ -n $existing_win ]]; then

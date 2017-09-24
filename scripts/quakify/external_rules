@@ -1,0 +1,16 @@
+#!/bin/sh
+
+wid=$1
+class=$2
+instance=$3
+
+if [[ -f /dev/shm/quakify/wins_to_names/$wid ]]; then
+	echo "state=floating layer=above"
+elif [[ "$instance" == *"quake_terminal"* ]]; then
+	name=$(echo "$instance" | sed 's/quake_terminal //')
+
+	size=$(cat /dev/shm/xrandr_output | grep $(query_primary) | awk '{print $4}')
+	display_width=$(echo $size | awk -F 'x' '{print $1}')
+	display_height=$(echo $size | awk -F 'x' '{print $2}' | awk -F '+' '{print $1}')
+	echo "state=floating layer=above rectangle=1x1+$(($display_width - 1))+$(($display_height - 1))"
+fi

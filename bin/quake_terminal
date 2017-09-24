@@ -1,22 +1,23 @@
 #!/bin/bash
 namespace=quake_terminal
 name=$(get_name $@ -n $namespace)
+params="$@ -n $namespace"
 
-bspc rule -a URxvt:hiddenfloating state=floating hidden=on
+existing_win=$(cat /dev/shm/quakify/names_to_wins/$name)
 
-if [[ -z $(xdotool search --classname '^'$name'$') ]]; then
-	urxvtc -name hiddenfloating
-	win=$(xdotool search --classname hiddenfloating)
-	xdotool set_window --classname "forgotten" $win
-
-	xy=$(get_end_pos $@ -n $namespace)
-	x=$(echo $xy | awk '{print $1}')
-	y=$(echo $xy | awk '{print $2}')
-
-	xdotool windowsize $win 100 100
-	xdotool windowmove $win $x $y
-
-	bspc node $win -g hidden=off
-	bspc rule -r URxvt:hiddenfloating state=floating hidden=on
+if [[ -n $existing_win ]]; then
+	validate_win $existing_win $name
+	is_valid=$?
+	if [[ $is_valid == 1 ]]; then
+		quake_terminal $@
+		exit
+	fi
+	quakify $params
+else
+	(bspc subscribe node_manage | while read line; do
+		win=$(xdotool getwindowfocus)
+		quakify $params -w $win
+		exit
+	done) &
+	urxvtc -name "quake_terminal $params"
 fi
-quakify $@ -n $namespace -w $win 

@@ -25,5 +25,5 @@ for row in {1..2}; do
 	notification=$notification";"
 done
 notification=${notification::-1}
-notify-no-icon "$notification"
+notify "$notification"
 

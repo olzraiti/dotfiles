@@ -89,13 +89,15 @@ fi
 source $ZSH/oh-my-zsh.sh
 
 #tästä alkaa omat konffit
-#
 
 [[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
-plugins=(git vi-mode dirhistory sudo)
+plugins=(git vi-mode dirhistory)
 
 #vim mode
 bindkey -v
+
+KEYTIMEOUT=1
+
 
 bindkey '^P' up-history
 bindkey '^N' down-history

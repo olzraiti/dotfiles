@@ -9,12 +9,12 @@ global:
       ;c: hint links spawn chromium {hint-url}
       ;p: hint links run open -p {hint-url}
       <: tab-move -
+      <ctrl+u>: undo
       '>': tab-move +
       J: tab-prev
       K: tab-next
       W: tab-detach
       ctrl-d: tab-close
-      ctrl-u: undo
       d: scroll-page 0 0.5
       pz: spawn --userscript pass_fill
       u: scroll-page 0 -0.5
@@ -285,10 +285,24 @@ global:
   colors.tabs.selected.odd.fg: '#000000'
   content.plugins: true
   downloads.location.directory: ~/tmp/
+  editor.command:
+  - urxvt
+  - -name
+  - floating
+  - -e
+  - vim
+  - '{}'
+  - +start
   fonts.monospace: Gohu
   fonts.web.family.standard: Droid Sans
   hints.uppercase: true
   scrolling.bar: true
+  scrolling.smooth: true
+  tabs.background: true
+  tabs.select_on_remove: last-used
+  url.default_page: https://www.startpage.com
   url.searchengines:
     DEFAULT: https://www.startpage.com/do/metasearch.pl?query={}
-  url.start_pages: https://www.start.page.com
+    g: https://www.google.fi/search?q={}
+    y: https://www.youtube.com/results?search_query={}
+  url.start_pages: https://www.startpage.com

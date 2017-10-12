@@ -57,7 +57,7 @@ printjs() {
 }
 
 execute() {
- user_pass=$(cat /tmp/pass_clipped_fifo | gpg -d -r olli.raitio@helsinki.fi --no-tty 2>/dev/null)
+ user_pass=$(cat /dev/shm/pass_clipped_fifo | gpg -d -r olli.raitio@helsinki.fi --no-tty 2>/dev/null)
  pass=$(echo "$user_pass" | head -n 1)
  user=$(echo "$user_pass" | grep "user" | awk -F ":" '{print $2}' | awk '{print $1}')
 
@@ -68,12 +68,12 @@ execute() {
 simplify_url "$QUTE_URL"
 
 simple_url=$(echo $simple_url | rev | awk -F "." '{print $2}' | rev)
-rm /tmp/pass_clipped_fifo
+rm /dev/shm/pass_clipped_fifo
 search_pass "$simple_url"
 
-if [ -f /tmp/pass_clipped_fifo ]; then
+if [ -f /dev/shm/pass_clipped_fifo ]; then
 	execute
 else
-	inotifywait -e close_write /tmp/pass_clipped_fifo >/dev/null 2>&1
+	inotifywait -e close_write /dev/shm/pass_clipped_fifo >/dev/null 2>&1
 	execute
 fi

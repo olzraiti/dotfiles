@@ -1,16 +1,52 @@
-#!/bin/sh
+#!/bin/bash
 
 wid=$1
 class=$2
 instance=$3
 
+SPAWN_FILE=/dev/shm/quakify/spawn_params
+
 if [[ -f /dev/shm/quakify/wins_to_names/$wid ]]; then
 	echo "state=floating layer=above"
-elif [[ "$instance" == *"quake_terminal"* ]]; then
-	name=$(echo "$instance" | sed 's/quake_terminal //')
-
+elif [[ -f $SPAWN_FILE ]]; then
+	spawn_params=$(cat /dev/shm/quakify/spawn_params)
+	direction="bottom"
+	while getopts ':d:s:w:n:agf' flag ${spawn_params[@]}; do
+		case "${flag}" in
+			d) 
+				direction="$OPTARG"
+			;;
+			w)
+				win="$OPTARG"
+			;;
+	  esac
+	done
 	size=$(cat /dev/shm/xrandr_output | grep $(query_primary) | awk '{print $4}')
 	display_width=$(echo $size | awk -F 'x' '{print $1}')
 	display_height=$(echo $size | awk -F 'x' '{print $2}' | awk -F '+' '{print $1}')
-	echo "state=floating layer=above rectangle=1x1+$(($display_width - 1))+$(($display_height - 1))"
+
+	win_height=$display_height
+	win_width=$display_width
+	if [[ $direction == "bottom" || $direction == "top" ]]; then
+		win_height=$(($display_height / 3))
+	else
+		win_width=$(($display_width / 3))
+	fi
+
+	xy=$(get_end_pos $spawn_params -w $wid -G "WINDOW=$wid\nX=0\nY=0\nWIDTH=$win_width\nHEIGHT=$win_height\nSCREEN=0")
+	x_offset=$(echo $xy | awk '{print $1}')
+	y_offset=$(echo $xy | awk '{print $2}')
+
+	if [[ $direction == "bottom" ]]; then
+		y_offset=$(($y_offset - 1))
+	elif [[ $direction == "top" ]]; then
+		y_offset=$(($y_offset + 1))
+	elif [[ $direction == "left" ]]; then
+		x_offset=$(($x_offset + 1))
+	elif [[ $direction == "right" ]]; then
+		x_offset=$(($x_offset - 1))
+	fi
+
+	echo "state=floating layer=above rectangle="$win_width"x"$win_height"+$x_offset+$y_offset"
+	rm $SPAWN_FILE
 fi

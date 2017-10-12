@@ -2,7 +2,12 @@
 direction="bottom"
 win=$(xdotool getwindowfocus)
 
-while getopts ':d:s:w:n:Agf' flag; do
+size=$(cat /dev/shm/xrandr_output | grep $(query_primary) | awk '{print $4}')
+width=$(echo $size | awk -F 'x' '{print $1}')
+height=$(echo $size | awk -F 'x' '{print $2}' | awk -F '+' '{print $1}')
+
+geometry=$(xdotool getwindowgeometry -shell $win)
+while getopts ':d:s:w:n:x:y:G:agf' flag; do
 	case "${flag}" in
 		d) 
 			direction="$OPTARG"
@@ -10,19 +15,23 @@ while getopts ':d:s:w:n:Agf' flag; do
 		w)
 			win="$OPTARG"
 		;;
+		x)
+			x="$OPTARG"
+		;;
+		y)
+			y="$OPTARG"
+		;;
+		G)
+			geometry="$OPTARG"
+		;;
   esac
 done
 shift $((OPTIND-1))
 
-size=$(cat /dev/shm/xrandr_output | grep $(query_primary) | awk '{print $4}')
-width=$(echo $size | awk -F 'x' '{print $1}')
-height=$(echo $size | awk -F 'x' '{print $2}' | awk -F '+' '{print $1}')
-
-geometry=$(xdotool getwindowgeometry -shell $win)
-x=$(echo "$geometry" | sed -n 2p | awk -F '=' '{print $2}')
-y=$(echo "$geometry" | sed -n 3p | awk -F '=' '{print $2}')
-win_width=$(echo "$geometry" | sed -n 4p | awk -F '=' '{print $2}')
-win_height=$(echo "$geometry" | sed -n 5p | awk -F '=' '{print $2}')
+x=$(echo -e "$geometry" | sed -n 2p | awk -F '=' '{print $2}')
+y=$(echo -e "$geometry" | sed -n 3p | awk -F '=' '{print $2}')
+win_width=$(echo -e "$geometry" | sed -n 4p | awk -F '=' '{print $2}')
+win_height=$(echo -e "$geometry" | sed -n 5p | awk -F '=' '{print $2}')
 
 if [[ $direction == "top" || $direction == "bottom" ]]; then
 	end_x=$x
@@ -43,7 +52,7 @@ left)
 	end_x='-'$win_width
 	;;
 right)
-	end_x=$(($width + $win_width))
+	end_x=$(($width))
 	;;
 esac
 

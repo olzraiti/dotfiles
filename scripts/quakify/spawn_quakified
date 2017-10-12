@@ -1,0 +1,49 @@
+#!/bin/bash
+direction="bottom"
+win=$(xdotool getwindowfocus)
+
+while getopts ':d:s:w:n:agf' flag; do
+	case "${flag}" in
+		d) 
+			direction="$OPTARG"
+		;;
+		w)
+			win="$OPTARG"
+		;;
+		n)
+			name="$OPTARG"
+		;;
+  esac
+done
+
+QUAKER=/dev/shm/quakify
+mkdir $QUAKER 2>/dev/null
+spawn_params=$QUAKER/spawn_params
+
+for program; do true; done
+length=$(($#-1))
+params="${@:1:$length}"
+[[ -z $name ]] && name="$program"
+params="$params -n $name"
+
+name=$(get_name $params)
+echo $params > "$spawn_params"
+existing_win=$(cat /dev/shm/quakify/names_to_wins/$name)
+
+if [[ -n $existing_win ]]; then
+	validate_win $existing_win $name
+	is_valid=$?
+	if [[ $is_valid == 1 ]]; then
+		spawn_quakified $@
+		exit
+	fi
+	quakify $params
+else
+	(bspc subscribe node_manage | while read line; do
+		win=$(xdotool getwindowfocus)
+		quakify $params -w $win
+		exit
+	done) &
+	$program &
+fi
+

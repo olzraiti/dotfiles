@@ -27,7 +27,6 @@ params="${@:1:$length}"
 params="$params -n $name"
 
 name=$(get_name $params)
-echo $params > "$spawn_params"
 existing_win=$(cat /dev/shm/quakify/names_to_wins/$name)
 
 if [[ -n $existing_win ]]; then
@@ -44,6 +43,7 @@ else
 		quakify $params -w $win
 		exit
 	done) &
+	echo $params > "$spawn_params"
 	$program &
 fi
 

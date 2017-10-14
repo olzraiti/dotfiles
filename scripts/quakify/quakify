@@ -4,6 +4,7 @@ function quit {
 	exit
 }
 
+
 QUAKER=/dev/shm/quakify
 GLOBAL_ACTIVER_DAEMON_PID=$QUAKER/global_pid
 WINS_TO_NAMES=$QUAKER/wins_to_names
@@ -18,25 +19,23 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 get_name=$DIR/get_name
 get_end_pos=$DIR/get_end_pos
 
-! [[ -d $QUAKER ]] && mkdir $QUAKER
-! [[ -d $NAMES_TO_POS ]] && mkdir $NAMES_TO_POS
-! [[ -d $WINS_TO_SIZES ]] && mkdir $WINS_TO_SIZES
-! [[ -d $WINS_TO_NAMES ]] && mkdir $WINS_TO_NAMES
-! [[ -d $NAMES_TO_WINS ]] && mkdir $NAMES_TO_WINS
-! [[ -d $WINS_TO_LAYERS ]] && mkdir $WINS_TO_LAYERS
-! [[ -d $WINS_TO_STATES ]] && mkdir $WINS_TO_STATES
-! [[ -d $ANIM_SEQ_CACHE ]] && mkdir $ANIM_SEQ_CACHE
+! [[ -d $NAMES_TO_POS ]] && mkdir -p $NAMES_TO_POS
+! [[ -d $WINS_TO_SIZES ]] && mkdir -p $WINS_TO_SIZES
+! [[ -d $WINS_TO_NAMES ]] && mkdir -p $WINS_TO_NAMES
+! [[ -d $NAMES_TO_WINS ]] && mkdir -p $NAMES_TO_WINS
+! [[ -d $WINS_TO_LAYERS ]] && mkdir -p $WINS_TO_LAYERS
+! [[ -d $WINS_TO_STATES ]] && mkdir -p $WINS_TO_STATES
+! [[ -d $ANIM_SEQ_CACHE ]] && mkdir -p $ANIM_SEQ_CACHE
 
 direction="bottom"
-forget=false
+forget_flag=false
 global=false
 speed=40
 framerate=60
-animate=true
-animate_initialization=true
+animate=false
 win=""
 
-while getopts ':d:s:w:n:Agfh' flag; do
+while getopts ':d:s:w:n:agfh' flag; do
 	case "${flag}" in
 		d) 
 			direction="$OPTARG"
@@ -51,13 +50,13 @@ while getopts ':d:s:w:n:Agfh' flag; do
 			speed="$OPTARG"
 		;;
 		f)
-			forget=true
+			forget_flag=true
 		;;
 		g)
 			global=true
 		;;
-		A)
-			animate=false
+		a)
+			animate=true
 		;;
 		h)
 			echo "\
@@ -70,8 +69,8 @@ SYNTAX
 		Unquakifies a quakified window, restoring the state of the window.
 	-g 
 		Makes the quakified window global (accessible on any desktop).
-	-A 
-		Disable the animation transition.
+	-a 
+		Enable the transition animation.
 	-s SPEED
 		Animation speed (relative to framerate). Defaults to 40."
 			exit
@@ -94,7 +93,6 @@ function forget {
 	local layer=$(cat $WINS_TO_LAYERS/$win)
 	cat $WINS_TO_STATES/$win
 	cat $WINS_TO_LAYERS/$win
-	echo forget $win $name $state $layer
 	[[ -n $state ]] && bspc node $win -t $state
 	[[ -n $layer ]] && bspc node $win -l $layer
 	rm $NAMES_TO_POS/$name
@@ -135,8 +133,7 @@ function hide_others {
 			local end_x=$(echo $xy | awk '{print $1}')
 			local end_y=$(echo $xy | awk '{print $2}')
 
-			move_animation $_win $x $y $end_x $end_y
-			xdotool windowunmap $_win
+			move_away $_win $x $y $end_x $end_y
 		fi
 	done
 }
@@ -227,6 +224,30 @@ function move_animation {
 	xdotool windowmove --sync $win $(tail -n 1 <<< "$columns")
 }
 
+function move_away {
+	local win=$1
+	local start_x=$2
+	local start_y=$3
+	local end_x=$4
+	local end_y=$5
+
+	move_animation $direction $win $start_x $start_y $end_x $end_y
+
+	if [[ $direction == "bottom" ]]; then
+		end_y=$(($end_y - 1))
+	elif [[ $direction == "top" ]]; then
+		end_y=$(($end_y + 1))
+	elif [[ $direction == "left" ]]; then
+		end_x=$(($end_x + 1))
+	elif [[ $direction == "right" ]]; then
+		end_x=$(($end_x - 1))
+	fi
+
+	xdotool windowmove --sync $win $end_x $end_y
+	sleep 0.04 # windowmove doesn't work in sync correctly, so we need to wait before hiding
+	xdotool windowunmap --sync $win
+}
+
 function cache {
 	local win="$1"
 	local name="$2"
@@ -265,7 +286,7 @@ if [[ $is_valid == 1 ]]; then
 	quit
 fi
 
-if [[ $forget == true ]]; then
+if [[ $forget_flag == true ]]; then
 	forget $win
 	quit
 fi
@@ -278,7 +299,6 @@ display_height=$(echo $size | awk -F 'x' '{print $2}' | awk -F '+' '{print $1}')
 
 # Format windows to grep or format (eg. 1 2 3 4 -> 1|2|3|4)
 desktop_dir_quakified="$(cat $NAMES_TO_WINS"/*"$direction"_quaked"* 2>/dev/null | sed 's/ /\\\|/g')"
-
 
 # If there is no quakified window at the desktop/direction position, we quakify the given window.
 if [[ -z $(ls $NAMES_TO_WINS/$name 2>/dev/null) && (-z $desktop_dir_quakified || -n $(echo "$visible_wins" | grep $desktop_dir_quakified)) ]]; then
@@ -370,13 +390,7 @@ else # There is a quakified window at the desktop/direction position, we show/hi
 		end_x=$(echo $xy | awk '{print $1}')
 		end_y=$(echo $xy | awk '{print $2}')
 
-		move_animation $win $x $y $end_x $end_y
-
-		# bspwm fails to restore position correctly if the window is outside screen,
-		# so we make the window 1px visible before hiding.
-		xdotool windowmove --sync $win $(($display_width  - 1)) $(($display_height  - 1))
-
-		xdotool windowunmap $win
+		move_away $win $x $y $end_x $end_y
 	fi
 fi
 

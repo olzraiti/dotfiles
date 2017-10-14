@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DIR=/tmp/wallpaper_ambience
+DIR=/dev/shm/wallpaper_ambience
 wallpaper=$DIR/wallpaper
 converted=$wallpaper
 current=$DIR/current

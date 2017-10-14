@@ -17,9 +17,9 @@ alias cal='cal -m'
 alias t="todo.sh"
 
 function sgrp { 
-	dir="."
+	dir="src"
 	[[ -n "$2" ]] && dir="$2"
 	grep  "$1" -r $dir
 }
 
-export -f sgrp
+export sgrp

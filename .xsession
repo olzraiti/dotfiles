@@ -39,6 +39,10 @@ notifyd &
 bar_notifyd &
 redshift &
 sparkleshare start &
+<<<<<<< HEAD
+=======
+darkhttpd /var/cache/pacman/pkg  --port 8004 &
+>>>>>>> df175e563e20bcf919af3c0015421347547ce73c
 compton &
 unclutter &
 #mpd &

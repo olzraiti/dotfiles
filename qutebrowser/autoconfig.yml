@@ -11,11 +11,13 @@ global:
       <: tab-move -
       <ctrl+u>: undo
       '>': tab-move +
+      G: scroll-to-perc 100
       J: tab-prev
       K: tab-next
       W: tab-detach
       ctrl-d: tab-close
       d: scroll-page 0 0.5
+      gg: scroll-to-perc 0
       pz: spawn --userscript pass_fill
       u: scroll-page 0 -0.5
   bindings.default:
@@ -293,7 +295,9 @@ global:
   - vim
   - '{}'
   - +start
-  fonts.monospace: Gohu
+  fonts.monospace: '"Gohu", "xos4 Terminus", Terminus, Monospace, "DejaVu Sans Mono",
+    Monaco, "Bitstream Vera Sans Mono", "Andale Mono", "Courier New", Courier, "Liberation
+    Mono", monospace, Fixed, Consolas, Terminal'
   fonts.web.family.standard: Droid Sans
   hints.uppercase: true
   scrolling.bar: true

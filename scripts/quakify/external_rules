@@ -10,7 +10,6 @@ if [[ -f /dev/shm/quakify/wins_to_names/$wid ]]; then
 	echo "state=floating layer=above"
 elif [[ -f $SPAWN_FILE ]]; then
 	spawn_params=$(cat /dev/shm/quakify/spawn_params)
-	notify rm
 	rm $SPAWN_FILE
 
 	direction="bottom"

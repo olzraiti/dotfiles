@@ -1,9 +1,10 @@
 #!/bin/bash
 
+sxhkd &
+
 bspc config merge_overlapping_monitors true
 bspc config remove_unplugged_monitors true
 bspc config remove_disabled_monitors true
-sxhkd &
 
 bspc config border_width        0
 bspc config window_gap         10

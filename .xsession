@@ -39,10 +39,6 @@ notifyd &
 bar_notifyd &
 redshift &
 sparkleshare start &
-<<<<<<< HEAD
-=======
-darkhttpd /var/cache/pacman/pkg  --port 8004 &
->>>>>>> df175e563e20bcf919af3c0015421347547ce73c
 compton &
 unclutter &
 #mpd &
@@ -57,16 +53,6 @@ setxkbmap us_custom &
  custom_keys
  ~/programming/steamcontroller/scripts/custom.py start
  ) &
-
-function restore_alsa {
-	while [ -z "$(pidof pulseaudio)" ]; do
-		sleep 0.5
-	done
-	sleep 0.5
-	amixer -c 1 set Master 80%
-}
-
-restore_alsa
 
 muttatt &
 battery_listener &

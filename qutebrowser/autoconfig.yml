@@ -295,9 +295,9 @@ global:
   - vim
   - '{}'
   - +start
-  fonts.monospace: '"Gohu", "xos4 Terminus", Terminus, Monospace, "DejaVu Sans Mono",
-    Monaco, "Bitstream Vera Sans Mono", "Andale Mono", "Courier New", Courier, "Liberation
-    Mono", monospace, Fixed, Consolas, Terminal'
+  fonts.monospace: '"Gohu GohuFont", "xos4 Terminus", Terminus, Monospace, "DejaVu
+    Sans Mono", Monaco, "Bitstream Vera Sans Mono", "Andale Mono", "Courier New",
+    Courier, "Liberation Mono", monospace, Fixed, Consolas, Terminal'
   fonts.web.family.standard: Droid Sans
   hints.uppercase: true
   scrolling.bar: true

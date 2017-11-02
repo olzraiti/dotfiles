@@ -118,6 +118,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'w0rp/ale'
+Plug 'editorconfig/editorconfig-vim'
 
 call plug#end()
 

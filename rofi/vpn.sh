@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-if [[ -n $@ ]]
-then
-	coproc ( pia-vpn "$@" & > /dev/null 2>&1 )
+if [[ -n $@ ]]; then
+	pia-vpn "$@" & > /dev/null 2>&1
 	notify-no-icon "$VPN_ICON $@" & > /dev/null 2>&1
 	exit
 fi

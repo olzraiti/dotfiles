@@ -295,9 +295,19 @@ global:
   - vim
   - '{}'
   - +start
+  fonts.completion.category: bold 8pt monospace
+  fonts.completion.entry: 8pt monospace
+  fonts.debug_console: 8pt monospace
+  fonts.downloads: 8pt monospace
+  fonts.keyhint: 8pt monospace
+  fonts.messages.error: 8pt monospace
+  fonts.messages.info: 8pt monospace
+  fonts.messages.warning: 8pt monospace
   fonts.monospace: '"Gohu GohuFont", "xos4 Terminus", Terminus, Monospace, "DejaVu
     Sans Mono", Monaco, "Bitstream Vera Sans Mono", "Andale Mono", "Courier New",
     Courier, "Liberation Mono", monospace, Fixed, Consolas, Terminal'
+  fonts.statusbar: 8pt monospace
+  fonts.tabs: 8pt monospace
   fonts.web.family.standard: Droid Sans
   hints.uppercase: true
   scrolling.bar: true

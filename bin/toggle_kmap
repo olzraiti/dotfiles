@@ -1,6 +1,6 @@
 #!/bin/bash
 kmap=$(setxkbmap -print | awk -F"+" '/xkb_symbols/ {print $2}')
-if [[ $kmap == "us_custom" ]]; then
+if [[ $kmap == "us"* ]]; then
 	$(setxkbmap fi_custom)
 else
 	$(setxkbmap us_custom)

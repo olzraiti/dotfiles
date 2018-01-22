@@ -45,11 +45,6 @@ unclutter &
 urxvtd -q -f -o &
 setxkbmap us_custom &
 (sleep 8
- xset -dpms 
- xset s off  # screen blanking off
- xset -b # audible bell off
- xset r rate 200 25 # key repeat rate
- xset m 3 4 # mouse speed
  custom_keys
  ~/programming/steamcontroller/scripts/custom.py start
  ) &

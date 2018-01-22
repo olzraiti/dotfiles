@@ -5,15 +5,15 @@ wallpaper=$DIR/wallpaper
 converted=$wallpaper
 current=$DIR/current
 
-vol=$(query_vol)
+#vol=$(query_vol)
 
 # create the file path
 mute=false
 if [[ $(query_mute) == true ]]; then
 	converted=$converted"_mute"
 	mute=true
-else
-	converted=$converted"_vol_"$vol
+#else
+#	converted=$converted"_vol_"$vol
 fi
 
 vpn=false
@@ -72,10 +72,10 @@ if [[ ! -f $converted ]]; then
 	if [[ $mute == true ]]; then
 		convert_cmd=$convert_cmd" -fill navyblue -colorize 60"
 		convert_cmd=$convert_cmd" -fill black -colorize 50"
-	else
-		amount=$(((100 - vol) / 2))
-		convert_cmd=$convert_cmd" -fill blue -colorize $amount"
-		convert_cmd=$convert_cmd" -fill black -colorize $amount"
+	#else
+	#	amount=$(((100 - vol) / 2))
+	#	convert_cmd=$convert_cmd" -fill blue -colorize $amount"
+	#	convert_cmd=$convert_cmd" -fill black -colorize $amount"
 	fi
 
 	if [[ $vpn == false ]]; then

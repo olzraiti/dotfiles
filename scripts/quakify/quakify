@@ -349,7 +349,6 @@ else # There is a quakified window at the desktop/direction position, we show/hi
 	# Show the quakified window
 	if [[ -z $(ls $NAMES_TO_WINS/$name 2>/dev/null) || -z $(echo "$visible_wins" | grep $(cat $NAMES_TO_WINS/$name)) ]]; then
 		hide_others $direction $win &
-		sleep 0.05
 
 		if [[ $direction == "top" || $direction == "bottom" ]]; then
 			start_x=$x

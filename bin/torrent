@@ -1,5 +1,5 @@
 if [[ $HOSTNAME == "holvi" || $HOST == "holvi" ]]; then
 	urxvtc -e sh -c 'screen -drS torrent'
 	else
-	urxvtc -e sh -c 'ssh -t home bin/torrent'
+	urxvtc -e sh -c 'ssh -t home screen -drS torrent'
 	fi

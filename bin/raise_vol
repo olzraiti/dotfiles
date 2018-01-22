@@ -6,4 +6,4 @@ if [[ $(query_mute) == "true" ]]; then
 	icon=$MUTE_ICON
 fi
 notify-no-icon "$icon $(query_vol)"
-update_wallpaper /tmp/wallpaper
+#update_wallpaper /tmp/wallpaper

@@ -4,3 +4,4 @@ if [[ -n $1 ]]; then
 	country=$1
 fi
 vpn $country.conf pia-login.conf $HOME/sparkleshark/wallpaper 
+systemctl --user start rt.service

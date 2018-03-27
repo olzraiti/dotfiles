@@ -71,8 +71,10 @@ alt + {_, shift, ctrl, shift + ctrl} + {e, s}
 	spawn_quakified -d {bottom, left, right, top} {urxvtc, qutebrowser}
 alt + {_, shift, ctrl, shift + ctrl} + a
 	quakify -d {bottom, left, right, top} -n spawned_by_a_key
-super + {_, shift, ctrl, shift + ctrl} + a
-	quakify -g -d {top, left, right, bottom} -n spawned_by_a_key
+super + {_, ctrl, shift + ctrl} + a
+	quakify -g -d {top, right, bottom} -n spawned_by_a_key
+super + shift + a
+	spawn_quakified -g -d left torrent
 
 super + {z, x}
 	{lower_vol, raise_vol}

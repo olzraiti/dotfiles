@@ -38,7 +38,7 @@ if [[ -n $existing_win ]]; then
 	fi
 	quakify $params
 else
-	(bspc subscribe node_manage | while read line; do
+	(bspc subscribe node_add | while read line; do
 		win=$(xdotool getwindowfocus)
 		quakify $params -w $win
 		exit

@@ -1,1 +1,1 @@
-/usr/bin/compton --opacity-rule '99:name *= "rofi"' $@
+allow_rgb10_configs=false /usr/bin/compton --opacity-rule '99:name *= "rofi"' --backend glx $@

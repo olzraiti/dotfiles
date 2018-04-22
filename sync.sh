@@ -22,7 +22,7 @@ install_packages
 
 echo "Updating packages"
 
-pacaur -Syu --noconfirm
+pacaur -Syyuu
 
 $HOME/dotfiles/link.sh
 

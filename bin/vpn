@@ -23,4 +23,5 @@ fi
 
 if [[ -n $3 ]]; then
 	$HOME/bin/update_wallpaper
+	systemctl --user stop rt.service
 fi

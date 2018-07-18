@@ -83,7 +83,7 @@ if [[ ! -f $converted ]]; then
 	fi
 
 	if [[ $blur == true ]]; then
-		convert_cmd=$convert_cmd" -blur 0x5"
+		convert_cmd=$convert_cmd" -blur 0x2"
 	fi
 
 	if [[ $battery == true ]]; then

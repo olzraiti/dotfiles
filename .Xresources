@@ -17,7 +17,7 @@ URxvt.keysym.C-Up: font-size:incglobal
 URxvt.keysym.C-Down: font-size:decglobal
 URxvt.font-size.step: 1
 URxvt*dynamicColors: on
-URxvt.keysym.C-7: command:\033]11;#c2c2b0\007\033]10;#181818\007
+URxvt.keysym.C-7: command:\033]11;#c2c2b0\007\033]10;#181818\007\033]12;#000000\007
 URxvt.keysym.C-8: command:\033]11;#181818\007\033]10;#c2c2b0\007
 
 !{{{ XFT

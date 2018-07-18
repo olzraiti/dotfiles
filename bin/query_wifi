@@ -5,7 +5,7 @@ function notify {
 }
 
 function get_noti {
-	current=$(netctl-auto list | grep "*" | awk -F "* " '{print $2}')
+	current=$(nmcli dev | grep connected | head -1 | awk '{print $4}')
 	noti=""
 
 	if [[ -n $current ]]; then

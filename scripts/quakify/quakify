@@ -13,6 +13,7 @@ NAMES_TO_POS=$QUAKER/names_to_pos
 WINS_TO_SIZES=$QUAKER/wins_to_sizes
 WINS_TO_LAYERS=$QUAKER/wins_to_layers
 WINS_TO_STATES=$QUAKER/wins_to_states
+WINS_TO_STICKY=$QUAKER/wins_to_sticky
 ANIM_SEQ_CACHE=$QUAKER/anim_seq_cache
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -25,6 +26,7 @@ get_end_pos=$DIR/get_end_pos
 ! [[ -d $NAMES_TO_WINS ]] && mkdir -p $NAMES_TO_WINS
 ! [[ -d $WINS_TO_LAYERS ]] && mkdir -p $WINS_TO_LAYERS
 ! [[ -d $WINS_TO_STATES ]] && mkdir -p $WINS_TO_STATES
+! [[ -d $WINS_TO_STICKY ]] && mkdir -p $WINS_TO_STICKY
 ! [[ -d $ANIM_SEQ_CACHE ]] && mkdir -p $ANIM_SEQ_CACHE
 
 direction="bottom"
@@ -91,13 +93,14 @@ function forget {
 	local name=$(cat $WINS_TO_NAMES/$win)
 	local state=$(cat $WINS_TO_STATES/$win)
 	local layer=$(cat $WINS_TO_LAYERS/$win)
-	cat $WINS_TO_STATES/$win
-	cat $WINS_TO_LAYERS/$win
+	local sticky=$(cat $WINS_TO_STICKY/$win)
 	[[ -n $state ]] && bspc node $win -t $state
 	[[ -n $layer ]] && bspc node $win -l $layer
+	[[ $sticky == true ]] && bspc node $win -g sticky
 	rm $NAMES_TO_POS/$name
 	rm $NAMES_TO_WINS/$name
 	rm $WINS_TO_STATES/$win
+	rm $WINS_TO_STICKY/$win
 	rm $WINS_TO_LAYERS/$win
 	rm $WINS_TO_NAMES/$win
 }
@@ -230,6 +233,9 @@ function move_away {
 	local start_y=$3
 	local end_x=$4
 	local end_y=$5
+	local name=$(cat $WINS_TO_NAMES/$win)
+
+	cache "$win" "$name" "$(xdotool getwindowgeometry -shell $win)"
 
 	move_animation $direction $win $start_x $start_y $end_x $end_y
 
@@ -293,7 +299,7 @@ fi
 
 [[ $global == true ]] && bspc node $win -g sticky=on
 
-size=$(cat /dev/shm/xrandr_output | grep $(query_primary) | awk '{print $4}')
+size=$(cat /dev/shm/xrandr_output | grep ^$(query_primary) | awk '{print $4}')
 display_width=$(echo $size | awk -F 'x' '{print $1}')
 display_height=$(echo $size | awk -F 'x' '{print $2}' | awk -F '+' '{print $1}')
 
@@ -331,6 +337,7 @@ if [[ -z $(ls $WINS_TO_NAMES/$win) &&
 	echo $win > $NAMES_TO_WINS/$name
 	echo $(bspc query -T -m | jq ".. | select(.id==$win?).client.layer" | sed 's/"//g') > $WINS_TO_LAYERS/$win
 	echo $(bspc query -T -m | jq ".. | select(.id==$win?).client.state" | sed 's/"//g') > $WINS_TO_STATES/$win
+	echo $(bspc query -T -m | jq ".. | select(.id==$win?).sticky") > $WINS_TO_STICKY/$win
 
 	bspc node $win -t floating -l above
 	xdotool windowsize --sync $win $win_width $win_height
@@ -378,15 +385,11 @@ else # There is a quakified window at the desktop/direction position, we show/hi
 		xdotool windowmap --sync $win 
 		move_animation $win $start_x $start_y $x $y
 		xdotool windowactivate $win
-
-		cache "$win" "$name" "$(xdotool getwindowgeometry -shell $win)"
 	else # Hide the quakified window
 		if [[ $(xdotool getwindowfocus) != $win ]]; then
 			xdotool windowactivate $win
 			quit
 		fi
-
-		cache "$win" "$name" "$(xdotool getwindowgeometry -shell $win)"
 
 		xy=$(get_end_pos $@)
 		end_x=$(echo $xy | awk '{print $1}')

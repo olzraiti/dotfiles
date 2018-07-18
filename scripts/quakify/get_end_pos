@@ -2,7 +2,7 @@
 direction="bottom"
 win=$(xdotool getwindowfocus)
 
-size=$(cat /dev/shm/xrandr_output | grep $(query_primary) | awk '{print $4}')
+size=$(cat /dev/shm/xrandr_output | grep ^$(query_primary) | awk '{print $4}')
 width=$(echo $size | awk -F 'x' '{print $1}')
 height=$(echo $size | awk -F 'x' '{print $2}' | awk -F '+' '{print $1}')
 

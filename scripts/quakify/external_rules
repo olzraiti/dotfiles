@@ -23,7 +23,7 @@ elif [[ -f $SPAWN_FILE ]]; then
 			;;
 	  esac
 	done
-	size=$(cat /dev/shm/xrandr_output | grep $(query_primary) | awk '{print $4}')
+	size=$(cat /dev/shm/xrandr_output | grep ^$(query_primary) | awk '{print $4}')
 	display_width=$(echo $size | awk -F 'x' '{print $1}')
 	display_height=$(echo $size | awk -F 'x' '{print $2}' | awk -F '+' '{print $1}')
 

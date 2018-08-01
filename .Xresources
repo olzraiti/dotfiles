@@ -127,7 +127,7 @@ XTerm*locale: true
 !█▓▒░ scorcerer colors
 *.foreground:   #c2c2b0
 *.background:   #181818
-*.cursorColor:  #c2c2b0
+!*.cursorColor:  #c2c2b0
 ! black
 *.color0:       #111111
 *.color8:       #7F7F7F
@@ -157,7 +157,7 @@ XTerm*locale: true
 *.colorBD:      #d3d3d3
 *.colorUL:      #528b8b
 
-! light
+!! light
 !*.foreground:   #181818
 !*.background:   #e2e2d0
 !!*.foreground:   #c2c2b0
@@ -185,9 +185,9 @@ XTerm*locale: true
 !*.color6:       #326b6b
 !*.color14:      #67aecb
 !! white
-!*.color7:       #d3d3d3
-!*.color15:      #c1cdc1
+!*.color7:       #000000
+!*.color15:      #222222
 !! stylized
-!*.colorit:      #719611
-!*.colorbd:      #d3d3d3
-!*.colorul:      #528b8b
+!*.colorIT:      #000000
+!*.colorBD:      #4444b0
+!*.colorUL:      #528b8b

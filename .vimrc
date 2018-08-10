@@ -67,6 +67,7 @@ autocmd FileType typescript nmap <buffer> <Leader>t : <C-u>echo tsuquyomi#hint()
 
 map <C-J> :bprevious<CR>
 map <C-K> :bnext<CR>
+map <C-;> :b#<CR>
 
 function! g:ToggleBothNums()
   if &relativenumber && &number

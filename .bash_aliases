@@ -15,7 +15,6 @@ alias pu='pacaur -Syu'
 alias ls='ls --color'
 alias cal='cal -m'
 alias t="todo.sh"
-alias torrench="torrench -t --copy"
 
 function sgrp { 
 	dir="src"

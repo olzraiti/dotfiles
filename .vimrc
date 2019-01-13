@@ -62,6 +62,9 @@ nnoremap <Leader>s :mksession!<Space>.vimsession<CR>
 nnoremap <Leader>S :mksession!<Space>.vimsession<CR>:wq<CR>
 nnoremap <Leader>r ye:%s/<C-r>"//g<left><left>
 
+autocmd FileType typescript nmap <buffer> <Leader>t : <C-u>echo tsuquyomi#hint()<CR>
+
+
 map <C-J> :bprevious<CR>
 map <C-K> :bnext<CR>
 
@@ -119,6 +122,8 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'w0rp/ale'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'leafgarland/typescript-vim'
+Plug 'Quramy/tsuquyomi'
 
 call plug#end()
 

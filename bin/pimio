@@ -1,13 +1,61 @@
 #!/bin/bash
-folder=$(readlink -f $1)
-echo $folder > /dev/shm/pimio_folder
+
 params=""
-[[ $2 == continue ]] && params+=" -n $folder/$(cat "$folder"/.pimiofile)"
+files=""
+_edit=false
+_potential=false
+_continue=false
+while getopts ':epc' flag; do
+	case "${flag}" in
+		e) 
+			_edit=true
+			;;
+		p) 
+			_potential=true
+			;;
+		c) 
+			_continue=true
+			;;
+	esac
+done
+
+shift $((OPTIND-1))
+
+folder=$(readlink -f $1)
+
+echo $folder > /dev/shm/pimio_folder
+
+
+pimio_file=$(cat "$folder"/.pimiofile)
 
 if [[ $(basename $folder) != "potential" && $(basename $folder) != "edit" ]]; then
 	for sub in "potential" "edit"; do
 		! [[ -d $folder/$sub ]] && mkdir $folder/$sub
 	done
+
+	i=0
+	for f in $(ls $folder/*.JPG); do
+		base=$(basename $f)
+		added=false
+		if [[ $_edit == true && -f $folder/edit/$base ]]; then
+			files="$files $f"
+			added=true
+		fi
+		if [[ $_potential == true && -f $folder/potential/$base ]]; then
+			files="$files $f"
+			added=true
+		fi
+		if [[ $_edit != true && $_potential != true ]]; then
+			added=true
+		fi
+
+		[[ $added == true ]] && i=$(($i + 1))
+		[[ $_continue == true && $added == true && $base == $pimio_file ]] && _continue=$i
+	done
 fi
 
-sxiv $params $folder/*.JPG 
+[[ -z $files ]] && files="$folder/*.JPG"
+
+[[ $_continue != false && $_continue != true ]] && params+=" -n $_continue"
+
+sxiv $params $files 

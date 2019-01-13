@@ -68,4 +68,4 @@ elif [[ $sub == "edit" ]]; then
 	do_link $from $to
 fi
 
-[[ -n $msg ]] && notify-no-icon "$msg"
+#[[ -n $msg ]] && notify-no-icon "$msg"

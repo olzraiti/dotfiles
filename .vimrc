@@ -3,6 +3,7 @@ syntax on
 
 colorscheme default
 hi Search cterm=NONE ctermfg=black ctermbg=yellow
+hi SpellBad ctermfg=0 ctermbg=225 guibg=LightMagenta
  
 " Show partial commands in the last line of the screen
 set showcmd
@@ -160,3 +161,14 @@ let g:easytags_languages = {
 
 let g:airline_theme='base16_eighties'
 
+map <C-l> <Plug>(TsuquyomiReferences)
+map <C-^> :b#<CR>
+"map <C-t> @<Plug>(TsuquyomiReferences
+" define the default minus c-^ (TsuquyomiReferendes)
+"let g:tsuquyomi_disable_default_mappings = 1
+"map <C-t> @<Plug>(TsuquyomiReferences
+"map <buffer> <C-]> <Plug>(TsuquyomiDefinition)
+"map <buffer> <C-W>] <Plug>(TsuquyomiSplitDefinition)
+"map <buffer> <C-W><C-]> <Plug>(TsuquyomiSplitDefinition)
+"map <buffer> <C-t> <Plug>(TsuquyomiGoBack)
+"map <buffer> <C-l> <Plug>(TsuquyomiReferences)

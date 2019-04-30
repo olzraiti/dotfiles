@@ -65,7 +65,7 @@ elif [[ $target_row -lt $cur_row ]]; then
 	append_fn="-"
 fi
 
-d_img=/tmp/bspwm_desktop_
+d_img=/dev/shm/bspwm_desktop_
 
 scrot $d_img$cur_d".png"
 
@@ -96,9 +96,9 @@ ffmpeg -f lavfi -i color=s=$width"x"$height:d=$duration -loop 1 -i $combined -y 
 	-filter_complex \
 	"[1:v]scale=$scale[fg]; \
 	 [0:v][fg]overlay="$direction_cmd":shortest=1[v]" \
-	 -map "[v]" /tmp/output.mkv
+	 -map "[v]" /dev/shm/output.mkv
 
-mpv /tmp/output.mkv --title="ampeevee" &
+mpv /dev/shm/output.mkv --title="ampeevee" &
 
 sleep 1
 

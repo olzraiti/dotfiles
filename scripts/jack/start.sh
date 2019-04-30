@@ -12,5 +12,5 @@ while [[ -z $(jack_lsp -c | grep '^qsynth') ]]; do
 	echo sleep
 	sleep 1
 done
-aconnect 16 128
+aconnect 24 128
 a2jmidid -e & 1>/dev/null 2>&1

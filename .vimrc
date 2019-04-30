@@ -43,7 +43,7 @@ set undodir=~/.vim/undodir
 
 set relativenumber!
 
-set path=$PWD/**
+set path=,src/**,playground/**,test/**,forms/**
 
 cmap w!! w !sudo tee > /dev/null %
 

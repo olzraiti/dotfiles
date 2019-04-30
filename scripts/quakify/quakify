@@ -14,6 +14,7 @@ WINS_TO_SIZES=$QUAKER/wins_to_sizes
 WINS_TO_LAYERS=$QUAKER/wins_to_layers
 WINS_TO_STATES=$QUAKER/wins_to_states
 WINS_TO_STICKY=$QUAKER/wins_to_sticky
+WINS_TO_SIZE=$QUAKER/wins_to_size
 ANIM_SEQ_CACHE=$QUAKER/anim_seq_cache
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -27,6 +28,7 @@ get_end_pos=$DIR/get_end_pos
 ! [[ -d $WINS_TO_LAYERS ]] && mkdir -p $WINS_TO_LAYERS
 ! [[ -d $WINS_TO_STATES ]] && mkdir -p $WINS_TO_STATES
 ! [[ -d $WINS_TO_STICKY ]] && mkdir -p $WINS_TO_STICKY
+! [[ -d $WINS_TO_SIZE ]] && mkdir -p $WINS_TO_SIZE
 ! [[ -d $ANIM_SEQ_CACHE ]] && mkdir -p $ANIM_SEQ_CACHE
 
 direction="bottom"
@@ -143,17 +145,17 @@ function hide_others {
 
 function move_animation {
 	local win=$1
-	local start_x=$2
-	local start_y=$3
+	local x_start=$2
+	local y_start=$3
 	local end_x=$4
 	local end_y=$5
 
 	[[ $animate == false ]] && xdotool windowmove --sync $win $end_x $end_y
 	[[ $animate == false ]] && return 1
 
-	xdotool windowmove $win $start_x $start_y
+	xdotool windowmove $win $x_start $y_start
 
-	cache_key=$ANIM_SEQ_CACHE/$start_x"_"$start_y"_"$end_x"_"$end_y"_"$speed"_"$framerate
+	cache_key=$ANIM_SEQ_CACHE/$x_start"_"$y_start"_"$end_x"_"$end_y"_"$speed"_"$framerate
 
 	columns=""
 
@@ -229,15 +231,15 @@ function move_animation {
 
 function move_away {
 	local win=$1
-	local start_x=$2
-	local start_y=$3
+	local x_start=$2
+	local y_start=$3
 	local end_x=$4
 	local end_y=$5
 	local name=$(cat $WINS_TO_NAMES/$win)
 
 	cache "$win" "$name" "$(xdotool getwindowgeometry -shell $win)"
 
-	move_animation $direction $win $start_x $start_y $end_x $end_y
+	move_animation $direction $win $x_start $y_start $end_x $end_y
 
 	if [[ $direction == "bottom" ]]; then
 		end_y=$(($end_y - 1))
@@ -306,13 +308,9 @@ display_height=$(echo $size | awk -F 'x' '{print $2}' | awk -F '+' '{print $1}')
 # Format windows to grep or format (eg. 1 2 3 4 -> 1|2|3|4)
 desktop_dir_quakified="$(cat $NAMES_TO_WINS"/*"$direction"_quaked"* 2>/dev/null | sed 's/ /\\\|/g')"
 
-# If there is no quakified window at the desktop/direction position, we quakify the given window.
-if [[ -z $(ls $WINS_TO_NAMES/$win) && 
-	-z $(ls $NAMES_TO_WINS/$name 2>/dev/null) && 
-	(-z $desktop_dir_quakified || -n $(echo "$visible_wins" | grep $desktop_dir_quakified)) 
-	]]; then
-	win_width=$display_width
-	win_height=$display_height
+function get_pos_and_size() {
+	local win_width=$display_width
+	local win_height=$display_height
 
 	if [[ $direction == "bottom" || $direction == "top" ]]; then
 		win_height=$(($display_height / 3))
@@ -320,31 +318,48 @@ if [[ -z $(ls $WINS_TO_NAMES/$win) &&
 		win_width=$(($display_width / 3))
 	fi
 
-	x_offset=0
-	y_offset=0
+	local x_end=0
+	local y_end=0
 	if [[ $direction == "bottom" ]]; then
-		y_offset=$(($display_height - $win_height))
+		y_end=$(($display_height - $win_height))
 	elif [[ $direction == "right" ]]; then
-		x_offset=$(($display_width - $win_width))
+		x_end=$(($display_width - $win_width))
 	elif [[ $direction == "left" || $direction == "top" ]]; then
-		x_offset=0
+		x_end=0
 	fi
 
-	geometry=$(xdotool getwindowgeometry -shell $win)
-	x=$(echo "$geometry" | sed -n 2p | awk -F '=' '{print $2}')
-	y=$(echo "$geometry" | sed -n 3p | awk -F '=' '{print $2}')
+	local geometry=$(xdotool getwindowgeometry -shell $win)
+	local x_start=$(echo "$geometry" | sed -n 2p | awk -F '=' '{print $2}')
+	local y_start=$(echo "$geometry" | sed -n 3p | awk -F '=' '{print $2}')
+	echo $x_start $y_start $x_end $y_end $win_width $win_height
+}
+
+# If there is no quakified window at the desktop/direction position, we quakify the given window.
+if [[ -z $(ls $WINS_TO_NAMES/$win) && 
+	-z $(ls $NAMES_TO_WINS/$name 2>/dev/null) && 
+	(-z $desktop_dir_quakified || -n $(echo "$visible_wins" | grep $desktop_dir_quakified)) 
+	]]; then
+
+	computed_pos_size=$(get_pos_and_size)
+	x_start=$(echo $computed_pos_size | awk '{print $1}')
+	y_start=$(echo $computed_pos_size | awk '{print $2}')
+	x_end=$(echo $computed_pos_size | awk '{print $3}')
+	y_end=$(echo $computed_pos_size | awk '{print $4}')
+	win_width=$(echo $computed_pos_size | awk '{print $5}')
+	win_height=$(echo $computed_pos_size | awk '{print $6}')
 
 	echo $win > $NAMES_TO_WINS/$name
 	echo $(bspc query -T -m | jq ".. | select(.id==$win?).client.layer" | sed 's/"//g') > $WINS_TO_LAYERS/$win
 	echo $(bspc query -T -m | jq ".. | select(.id==$win?).client.state" | sed 's/"//g') > $WINS_TO_STATES/$win
 	echo $(bspc query -T -m | jq ".. | select(.id==$win?).sticky") > $WINS_TO_STICKY/$win
+	echo $size > $WINS_TO_SIZE/$win
 
 	bspc node $win -t floating -l above
 	xdotool windowsize --sync $win $win_width $win_height
 
-	xdotool windowmove --sync $win $x $y
+	xdotool windowmove --sync $win $x_start $y_start
 	xdotool windowmap $win
-	move_animation $win $x $y $x_offset $y_offset
+	move_animation $win $x_start $y_start $x_end $y_end
 	xdotool windowsize $win $win_width $win_height
 	xdotool windowactivate $win
 	cache "$win" "$name" "$(xdotool getwindowgeometry -shell $win)"
@@ -360,30 +375,45 @@ else # There is a quakified window at the desktop/direction position, we show/hi
 	if [[ -z $(ls $NAMES_TO_WINS/$name 2>/dev/null) || -z $(echo "$visible_wins" | grep $(cat $NAMES_TO_WINS/$name)) ]]; then
 		hide_others $direction $win &
 
-		if [[ $direction == "top" || $direction == "bottom" ]]; then
-			start_x=$x
-		elif [[ $direction == "left" || $direction == "right" ]]; then
-			start_y=$y
+		reso_changed=false
+		if [[ $size == $(cat $WINS_TO_SIZE/$win) ]]; then
+			if [[ $direction == "top" || $direction == "bottom" ]]; then
+				x_start=$x
+			elif [[ $direction == "left" || $direction == "right" ]]; then
+				y_start=$y
+			fi
+
+			case "${direction}" in
+			top)
+				y_start='-'$win_height
+				;;
+			bottom)
+				y_start=$(($display_height + $win_height))
+				;;
+			left)
+				x_start='-'$win_width
+				;;
+			right)
+				x_start=$(($display_width + $win_width))
+				;;
+			esac
+		else # Resolution has changed, reset window size.
+			reso_changed=true
+			computed_pos_size=$(get_pos_and_size)
+			x_start=$(echo $computed_pos_size | awk '{print $1}')
+			y_start=$(echo $computed_pos_size | awk '{print $2}')
+			x=$(echo $computed_pos_size | awk '{print $3}')
+			y=$(echo $computed_pos_size | awk '{print $4}')
+			win_width=$(echo $computed_pos_size | awk '{print $5}')
+			win_height=$(echo $computed_pos_size | awk '{print $6}')
+			echo $win x $x_start y $y_start x $x y $y w $win_width $win_height
+			echo $size > $WINS_TO_SIZE/$win
 		fi
 
-		case "${direction}" in
-		top)
-			start_y='-'$win_height
-			;;
-		bottom)
-			start_y=$(($display_height + $win_height))
-			;;
-		left)
-			start_x='-'$win_width
-			;;
-		right)
-			start_x=$(($display_width + $win_width))
-			;;
-		esac
-
 		bspc node $win -t floating -l above
+		[[ $reso_changed == true ]] && xdotool windowsize --sync $win $win_width $win_height
 		xdotool windowmap --sync $win 
-		move_animation $win $start_x $start_y $x $y
+		move_animation $win $x_start $y_start $x $y
 		xdotool windowactivate $win
 	else # Hide the quakified window
 		if [[ $(xdotool getwindowfocus) != $win ]]; then

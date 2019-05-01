@@ -4,8 +4,8 @@ file=$(basename $1)
 folder=$(cat /dev/shm/pimio_folder)
 [[ $1 == *"/edit"* ]] && echo "BROWSING EDIT |"
 [[ $1 == *"/potential"* ]] && echo "BROWSING POTENTIAL |"
-echo "E: $(find cam/edit/ -type l -name "*.JPG" | wc -l)"
-echo "P: $(find cam/potential/ -type l -name "*.JPG" | wc -l)"
+echo "E: $(find $folder/edit/ -type l -name "*.JPG" | wc -l)"
+echo "P: $(find $folder/potential/ -type l -name "*.JPG" | wc -l)"
 echo $file
 echo $1
 echo $file > "$folder"/.pimiofile

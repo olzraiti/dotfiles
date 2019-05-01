@@ -3,4 +3,5 @@
 tmp=/tmp/jolla
 [[ -d $tmp ]] || mkdir $tmp
 
-scp jolla:{sdcard/Pictures/Camera,Pictures/Camera,Camera/Camera,android_storage/Pictures/Telegram,android_storage/WhatsApp/Media/WhatsApp\ Images/}/'*'$(date +%Y%m%d)_'*.jpg' $tmp
+wa='android_storage/WhatsApp/Media/WhatsApp\ Images'
+scp jolla:{sdcard/Pictures/Camera,Pictures/Camera,Camera/Camera,android_storage/Pictures/Telegram,"$wa"}/'*'$(date +%Y%m%d)'*.jp*g' $tmp

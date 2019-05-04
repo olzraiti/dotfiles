@@ -4,7 +4,7 @@ direction="bottom"
 namespace=""
 desktop=$(bspc query -D -d)
 
-while getopts ':d:s:w:n:Agf' flag; do
+while getopts ':d:n:g' flag; do
 	case "${flag}" in
 		d) 
 			direction="$OPTARG"

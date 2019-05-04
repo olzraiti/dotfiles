@@ -71,10 +71,12 @@ alt + {_, shift, ctrl, shift + ctrl} + {e, s}
 	spawn_quakified -d {bottom, left, right, top} {urxvtc, qutebrowser}
 alt + {_, shift, ctrl, shift + ctrl} + a
 	quakify -d {bottom, left, right, top} -n spawned_by_a_key
-super + {_, ctrl, shift + ctrl} + a
-	quakify -g -d {top, right, bottom} -n spawned_by_a_key
-super + shift + a
-	spawn_quakified -g -d left torrent
+super + {shift, ctrl, shift + ctrl} + a
+	quakify -g -d {left, right, bottom} -n spawned_by_a_key
+super + a
+	spawn_quakified -g -d top torrent
+super + ctrl + d
+	quakify -r
 
 super + {z, x}
 	{lower_vol, raise_vol}
@@ -125,7 +127,7 @@ super + {d, shift + d, f}
 	$BSPWM_SCRIPTS_DIR/state_toggle {floating,pseudo_tiled,fullscreen}
 super + shift + f
 	bspc desktop -l next
-super +  t
+super + t
 	quakify -f
 super + g
 	is_on=$(bspc config center_pseudo_tiled) && \

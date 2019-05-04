@@ -33,13 +33,14 @@ get_end_pos=$DIR/get_end_pos
 
 direction="bottom"
 forget_flag=false
+reset=false
 global=false
 speed=40
 framerate=60
 animate=false
 win=""
 
-while getopts ':d:s:w:n:agfh' flag; do
+while getopts ':d:s:w:n:ragfh' flag; do
 	case "${flag}" in
 		d) 
 			direction="$OPTARG"
@@ -58,6 +59,9 @@ while getopts ':d:s:w:n:agfh' flag; do
 		;;
 		g)
 			global=true
+		;;
+		r)
+			reset=true
 		;;
 		a)
 			animate=true
@@ -83,6 +87,9 @@ SYNTAX
 done
 
 name=$(get_name $@)
+size=$(cat /dev/shm/xrandr_output | grep ^$(query_primary) | awk '{print $4}')
+display_width=$(echo $size | awk -F 'x' '{print $1}')
+display_height=$(echo $size | awk -F 'x' '{print $2}' | awk -F '+' '{print $1}')
 
 function get_visible_wins {
 	xdotool search --name --onlyvisible .
@@ -269,46 +276,9 @@ function cache {
 	echo $name > $WINS_TO_NAMES/$win
 }
 
-if [[ ! -f $GLOBAL_ACTIVER_DAEMON_PID || $(ps $(cat $GLOBAL_ACTIVER_DAEMON_PID) | wc -l) < 2 ]]; then
-	(bspc subscribe desktop_focus | while read line; do 
-		visible_wins="$(get_visible_wins)"
-		global_wins=$(cat $NAMES_TO_WINS"/quakify_global_"*"_quaked"* 2>/dev/null | head -n 1)
-		visible_global_win=$(echo "$visible_wins" | grep $global_wins)
-
-		[[ -n $global_wins ]] && for win in $visible_global_win; do
-			if [[ -n $(echo "$global_wins" | grep $win) ]]; then
-				xdotool windowactivate $visible_global_win
-				break
-			fi
-		done
-	done) &
-	echo $! > $GLOBAL_ACTIVER_DAEMON_PID
-fi
-
-win=$(get_win $name $win)
-
-validate_win $win $name
-is_valid=$?
-if [[ $is_valid == 1 ]]; then
-	quakify "$@"
-	quit
-fi
-
-if [[ $forget_flag == true ]]; then
-	forget $win
-	quit
-fi
-
-[[ $global == true ]] && bspc node $win -g sticky=on
-
-size=$(cat /dev/shm/xrandr_output | grep ^$(query_primary) | awk '{print $4}')
-display_width=$(echo $size | awk -F 'x' '{print $1}')
-display_height=$(echo $size | awk -F 'x' '{print $2}' | awk -F '+' '{print $1}')
-
-# Format windows to grep or format (eg. 1 2 3 4 -> 1|2|3|4)
-desktop_dir_quakified="$(cat $NAMES_TO_WINS"/*"$direction"_quaked"* 2>/dev/null | sed 's/ /\\\|/g')"
-
 function get_pos_and_size() {
+	local win=$1
+	local direction=$2
 	local win_width=$display_width
 	local win_height=$display_height
 
@@ -334,13 +304,66 @@ function get_pos_and_size() {
 	echo $x_start $y_start $x_end $y_end $win_width $win_height
 }
 
+
+if [[ ! -f $GLOBAL_ACTIVER_DAEMON_PID || $(ps $(cat $GLOBAL_ACTIVER_DAEMON_PID) | wc -l) < 2 ]]; then
+	(bspc subscribe desktop_focus | while read line; do 
+		visible_wins="$(get_visible_wins)"
+		global_wins=$(cat $NAMES_TO_WINS"/quakify_global_"*"_quaked"* 2>/dev/null | head -n 1)
+		visible_global_win=$(echo "$visible_wins" | grep $global_wins)
+
+		[[ -n $global_wins ]] && for win in $visible_global_win; do
+			if [[ -n $(echo "$global_wins" | grep $win) ]]; then
+				xdotool windowactivate $visible_global_win
+				break
+			fi
+		done
+	done) &
+	echo $! > $GLOBAL_ACTIVER_DAEMON_PID
+fi
+
+win=$(get_win $name $win)
+
+validate_win $win $name
+is_valid=$?
+if [[ $is_valid == 1 ]]; then
+	quakify "$@"
+	quit
+fi
+
+if [[ $reset == true ]]; then
+	direction=$(cat $WINS_TO_NAMES/$win | awk -F '_' '{print $2}')
+	computed_pos_size=$(get_pos_and_size $win $direction)
+	x_start=$(echo $computed_pos_size | awk '{print $1}')
+	y_start=$(echo $computed_pos_size | awk '{print $2}')
+	x=$(echo $computed_pos_size | awk '{print $3}')
+	y=$(echo $computed_pos_size | awk '{print $4}')
+	win_width=$(echo $computed_pos_size | awk '{print $5}')
+	win_height=$(echo $computed_pos_size | awk '{print $6}')
+	echo $size > $WINS_TO_SIZE/$win
+	bspc node $win -t floating -l above
+	xdotool windowsize --sync $win $win_width $win_height
+	xdotool windowmap --sync $win 
+	move_animation $win $x_start $y_start $x $y
+	quit
+fi
+
+if [[ $forget_flag == true ]]; then
+	forget $win
+	quit
+fi
+
+[[ $global == true ]] && bspc node $win -g sticky=on
+
+# Format windows to grep or format (eg. 1 2 3 4 -> 1|2|3|4)
+desktop_dir_quakified="$(cat $NAMES_TO_WINS"/*"$direction"_quaked"* 2>/dev/null | sed 's/ /\\\|/g')"
+
 # If there is no quakified window at the desktop/direction position, we quakify the given window.
 if [[ -z $(ls $WINS_TO_NAMES/$win) && 
 	-z $(ls $NAMES_TO_WINS/$name 2>/dev/null) && 
 	(-z $desktop_dir_quakified || -n $(echo "$visible_wins" | grep $desktop_dir_quakified)) 
 	]]; then
 
-	computed_pos_size=$(get_pos_and_size)
+	computed_pos_size=$(get_pos_and_size $win $direction)
 	x_start=$(echo $computed_pos_size | awk '{print $1}')
 	y_start=$(echo $computed_pos_size | awk '{print $2}')
 	x_end=$(echo $computed_pos_size | awk '{print $3}')
@@ -399,14 +422,13 @@ else # There is a quakified window at the desktop/direction position, we show/hi
 			esac
 		else # Resolution has changed, reset window size.
 			reso_changed=true
-			computed_pos_size=$(get_pos_and_size)
+			computed_pos_size=$(get_pos_and_size $win $direction)
 			x_start=$(echo $computed_pos_size | awk '{print $1}')
 			y_start=$(echo $computed_pos_size | awk '{print $2}')
 			x=$(echo $computed_pos_size | awk '{print $3}')
 			y=$(echo $computed_pos_size | awk '{print $4}')
 			win_width=$(echo $computed_pos_size | awk '{print $5}')
 			win_height=$(echo $computed_pos_size | awk '{print $6}')
-			echo $win x $x_start y $y_start x $x y $y w $win_width $win_height
 			echo $size > $WINS_TO_SIZE/$win
 		fi
 

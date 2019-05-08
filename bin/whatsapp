@@ -1,0 +1,7 @@
+#!/bin/bash
+DIR=~/.whatsapp_dir
+if [ ! -d $DIR ]; then
+	mkdir $DIR
+fi
+
+chromium --user-data-dir=$DIR --app=https://web.whatsapp.com

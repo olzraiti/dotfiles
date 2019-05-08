@@ -6,7 +6,7 @@ function install_packages {
 	while read package; do
 		[[ -z $(pacman -Q $package) ]] && packages="$packages $package"
 	done <<< "$(cat $HOME'/dotfiles/packages')"
-	[[ -n $packages ]] && pacaur -Syyu --noconfirm $packages
+	[[ -n $packages ]] && pacaur -Syyu $packages
 }
 
 echo "Decrypting..."

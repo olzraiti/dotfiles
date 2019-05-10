@@ -1,0 +1,14 @@
+#!/bin/bash
+browser="chromium"
+if ! type $browser >/dev/null; then
+	browser="chromium-browser"
+fi
+if ! type $browser >/dev/null; then
+	browser="google-chrome"
+fi
+DIR=~/.chrome_apps
+if [ ! -d "$DIR" ]; then
+	mkdir "$DIR"
+fi
+
+$browser --user-data-dir=$DIR --app="$1"

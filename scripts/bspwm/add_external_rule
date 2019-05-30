@@ -1,0 +1,6 @@
+#!/bin/bash
+EXT_DIR=/dev/shm/bspwm_external_rules
+if [ ! -d $EXT_DIR ]; then
+	mkdir $EXT_DIR
+fi
+ln -s $(realpath $1) "$EXT_DIR"/"$(basename $1)"

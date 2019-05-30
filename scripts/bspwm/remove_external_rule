@@ -1,0 +1,2 @@
+#!/bin/bash
+rm "$EXT_DIR"/"$(basename $1)"

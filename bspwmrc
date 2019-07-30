@@ -41,6 +41,7 @@ bspc rule -a URxvt:floating state=floating
 bspc rule -a 'Ardour-4.7.0' state=floating
 bspc rule -a Onboard state=floating
 bspc rule -a Pinentry state=floating
+bspc rule -a Zathura state=tiled
 
 export BSPWM_DESKTOP_WALL_WIDTH=3
 export BSPWM_DESKTOP_WALL_HEIGHT=2

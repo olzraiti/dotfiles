@@ -59,7 +59,7 @@ yeahconsole*handleWidth: 0
 yeahconsole*aniDelay: 10
 
 !rofi
-rofi.font: gohu gohufont 9
+rofi.font: GohuFont Medium 8
 rofi.color-normal: #1d2a30, #71c2af, #1d2a30, #aa4450, #ffffff
 rofi.color-window: #1d2a30, #1d2a30
 rofi.terminal: urxvtc 

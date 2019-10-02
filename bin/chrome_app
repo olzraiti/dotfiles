@@ -11,4 +11,4 @@ if [ ! -d "$DIR" ]; then
 	mkdir "$DIR"
 fi
 
-$browser --user-data-dir=$DIR --app="$1"
+$browser --user-data-dir=$DIR --app="$1" $2

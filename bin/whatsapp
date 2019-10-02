@@ -1,1 +1,1 @@
-chrome_app https://web.whatsapp.com
+chrome_app https://web.whatsapp.com --force-device-scale-factor=0.80

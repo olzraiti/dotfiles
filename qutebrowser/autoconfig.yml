@@ -127,3 +127,5 @@ settings:
       y: https://www.youtube.com/results?search_query={}
   url.start_pages:
     global: https://www.startpage.com
+  zoom.default:
+    global: '90'

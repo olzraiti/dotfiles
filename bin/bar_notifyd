@@ -13,7 +13,7 @@ width_treshold=20
 in_pad="20"
 offset="-2"
 
-font="-gohu-gohufont-medium-*-*-*-11-*-*-*-*-*-iso8859-*"
+font="gohufont:size=8"
 font_icons="FontAwesome:size=8"
 
 color_fg="#71c2af"

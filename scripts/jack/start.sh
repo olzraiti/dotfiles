@@ -1,4 +1,6 @@
 #!/bin/bash
+
+jack_control dps rate 48000
 pacmd set-default-sink "jack_out"
 killall pulseaudio
 

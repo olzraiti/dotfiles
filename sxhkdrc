@@ -44,8 +44,8 @@ super + {_,shift} + Return
 super + r
 	launcher
 
-super + {_,shift,ctrl,shift+ctrl,alt} + space
-	toggle_{kmap,opacity,rs,trayer,cairo_dock}
+super + {_,shift,ctrl,shift+ctrl,alt,alt+shift} + space
+	toggle_{kmap,opacity,rs,trayer,cairo_dock,screen}
 
 super + {_,ctrl +} q
 	{notify_info,query_wifi}

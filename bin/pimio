@@ -5,7 +5,7 @@ files=""
 _edit=false
 _potential=false
 _continue=false
-while getopts ':epc' flag; do
+while getopts ':epch' flag; do
 	case "${flag}" in
 		e) 
 			_edit=true
@@ -15,6 +15,15 @@ while getopts ':epc' flag; do
 			;;
 		c) 
 			_continue=true
+			;;
+		h) 
+			echo '
+pimio [OPTION]... [FILE]...
+-e EDIT
+-p POTENTIAL
+-c CONTINUE
+'
+exit
 			;;
 	esac
 done

@@ -6,10 +6,12 @@ URxvt.scrollBar: false
 !*font: -gohu-gohufont-medium-r-normal--11-80-100-100-c-60-iso10646-1
 !URxvt*font: -gohu-gohufont-medium-r-normal--11-80-100-100-c-60-iso10646-1
 !URxvt.boldFont:-gohu-gohufont-medium-r-normal--11-80-100-100-c-60-iso10646-1
-URxvt*boldFont:-gohu-gohufont-medium-*-*-*-11-*-*-*-*-*-iso8859-*
-URxvt*font:-gohu-gohufont-medium-*-*-*-11-*-*-*-*-*-iso8859-*
-!URxvt.font: xft:gohufont:pixelsize=11
-!URxvt.boldFont: xft:gohufont:pixelsize=11
+!URxvt*boldFont:-gohu-gohufont-medium-*-*-*-11-*-*-*-*-*-iso8859-*
+!URxvt*font:-gohu-gohufont-medium-*-*-*-11-*-*-*-*-*-iso8859-*
+!URxvt*boldFont:-misc-gohufont-thin-r-ultracondensed--11-0-75--2147483648-p-60-adobe-standard
+!URxvt*font:-misc-gohufont-thin-r-ultracondensed--11-0-75--2147483648-p-60-adobe-standard
+URxvt.font: xft:gohufont:size=8
+URxvt.boldFont: xft:gohufont:size=8
 !*boldFont: -gohu-gohufont-bold-r-normal--11-80-100-100-c-60-iso10646-1
 !URxvt.boldFont:xft:Ubuntu Mono:size=10:Regular
 !URxvt.letterSpace: -1
@@ -59,7 +61,7 @@ yeahconsole*handleWidth: 0
 yeahconsole*aniDelay: 10
 
 !rofi
-rofi.font: GohuFont Medium 8
+rofi.font: GohuFont 8
 rofi.color-normal: #1d2a30, #71c2af, #1d2a30, #aa4450, #ffffff
 rofi.color-window: #1d2a30, #1d2a30
 rofi.terminal: urxvtc 

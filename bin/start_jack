@@ -1,3 +1,3 @@
 #!/bin/bash
-jack_control start
-scripts/jack/start.sh
+$HOME/effect-tools/bin/start_jack
+a2jmidid -e & 1>/dev/null 2>&1

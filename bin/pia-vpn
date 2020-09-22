@@ -1,5 +1,5 @@
 #!/bin/bash
-country="Finland"
+country="Sweden"
 if [[ -n $1 ]]; then
 	country=$1
 fi

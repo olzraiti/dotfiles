@@ -69,9 +69,9 @@ settings:
     global: '#87ceeb'
   colors.tabs.selected.odd.fg:
     global: '#000000'
-  content.host_blocking.enabled:
+  content.blocking.enabled:
     global: false
-  content.host_blocking.lists:
+  content.blocking.hosts.lists:
     global:
     - https://easylist.to/easylist/easylist.txt
   content.plugins:
@@ -88,29 +88,36 @@ settings:
     - '{}'
     - +start
   fonts.completion.category:
-    global: bold 8pt monospace
+    global: bold 8pt default_family
   fonts.completion.entry:
-    global: 8pt monospace
+    global: 8pt default_family
   fonts.debug_console:
-    global: 8pt monospace
+    global: 8pt default_family
+  fonts.default_family:
+    global:
+    - Gohu GohuFont
+    - xos4 Terminus
+    - Terminus
+  fonts.default_size:
+    global: 8pt
   fonts.downloads:
-    global: 8pt monospace
+    global: 8pt default_family
+  fonts.hints:
+    global: bold 14pt default_family
   fonts.keyhint:
-    global: 8pt monospace
+    global: 8pt default_family
   fonts.messages.error:
-    global: 8pt monospace
+    global: 8pt default_family
   fonts.messages.info:
-    global: 8pt monospace
+    global: 8pt default_family
   fonts.messages.warning:
-    global: 8pt monospace
-  fonts.monospace:
-    global: '"Gohu GohuFont", "xos4 Terminus", Terminus, Monospace, "DejaVu Sans Mono",
-      Monaco, "Bitstream Vera Sans Mono", "Andale Mono", "Courier New", Courier, "Liberation
-      Mono", monospace, Fixed, Consolas, Terminal'
+    global: 8pt default_family
   fonts.statusbar:
-    global: 8pt monospace
-  fonts.tabs:
-    global: 8pt monospace
+    global: default_size default_family
+  fonts.tabs.selected:
+    global: default_size default_family
+  fonts.tabs.unselected:
+    global: default_size default_family
   fonts.web.family.standard:
     global: Droid Sans
   hints.uppercase:
@@ -134,6 +141,6 @@ settings:
       g: https://www.google.fi/search?q={}
       y: https://www.youtube.com/results?search_query={}
   url.start_pages:
-    global: https://www.startpage.com
+    global: https://start.duckduckgo.com
   zoom.default:
     global: '90'

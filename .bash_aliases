@@ -15,11 +15,12 @@ alias pu='pacaur -Syu'
 alias ls='ls --color'
 alias cal='cal -m'
 alias t="todo.sh"
+alias json="python -m json.tool"
 
 function sgrp { 
 	dir="src"
 	[[ -n "$2" ]] && dir="$2"
-	grep  "$1" -r $dir
+	grep  "$1" -r $dir --color=always
 }
 
 export sgrp

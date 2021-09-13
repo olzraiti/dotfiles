@@ -74,6 +74,8 @@ settings:
   content.blocking.hosts.lists:
     global:
     - https://easylist.to/easylist/easylist.txt
+  content.blocking.method:
+    global: adblock
   content.plugins:
     global: true
   downloads.location.directory:

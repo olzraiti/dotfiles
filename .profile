@@ -24,6 +24,9 @@ fi
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
 
 export JAVA_HOME=/usr/lib/jvm/default
 export JRE_HOME=/usr/lib/jvm/default

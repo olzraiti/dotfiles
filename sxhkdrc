@@ -139,9 +139,9 @@ super + {equal, plus, minus}
 	bspc node -l {normal, above, below}
 
 alt + {_,shift + }Tab
-	bspc node -f {next,prev}.local
+	bspc node -f {next,prev}.local.!hidden.window
 super + {_,shift + }Tab
-	bspc node -f {next,prev}.local
+	bspc node -f {next,prev}.local.!hidden.window
 
 # rotations
 super + {_, ctrl +} {n,m}

@@ -65,7 +65,6 @@ nnoremap <Leader>r ye:%s/<C-r>"//g<left><left>
 
 autocmd FileType typescript nmap <buffer> <Leader>t : <C-u>echo tsuquyomi#hint()<CR>
 
-
 map <C-J> :bprevious<CR>
 map <C-K> :bnext<CR>
 
@@ -107,8 +106,8 @@ set wildmenu
 
 set backupcopy=yes
 
-
 autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
+autocmd Filetype typescript setlocal ts=2 sts=2 sw=2
 
 call plug#begin('~/.vim/plugged')
 
@@ -121,10 +120,18 @@ Plug 'xolox/vim-misc'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
-Plug 'w0rp/ale'
+"Plug 'w0rp/ale'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'leafgarland/typescript-vim'
-Plug 'Quramy/tsuquyomi'
+"Plug 'Quramy/tsuquyomi'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+let g:coc_global_extensions = [
+	  \ 'coc-tsserver',
+	  \ 'coc-eslint',
+	  \ 'coc-json',
+\ ]
 
 call plug#end()
 
@@ -144,7 +151,7 @@ let g:airline#extensions#ale#enabled = 1
 let g:ale_sign_error = '!'
 let g:ale_sign_warning = '#'
 let g:ale_linters = {
-\   'javascript': ['tslint', 'eslint'],
+\   'javascript': ['eslint'],
 \}
 
 nmap <silent> <C-h> <Plug>(ale_previous_wrap)
@@ -165,14 +172,33 @@ let g:easytags_languages = {
 
 let g:airline_theme='base16_eighties'
 
-map <C-l> <Plug>(TsuquyomiReferences)
+"map <C-l> <Plug>(TsuquyomiReferences)
 map <C-^> :b#<CR>
 "map <C-t> @<Plug>(TsuquyomiReferences
+"
 " define the default minus c-^ (TsuquyomiReferendes)
 "let g:tsuquyomi_disable_default_mappings = 1
-"map <C-t> @<Plug>(TsuquyomiReferences
+"map <C-t> @<Plug>(TsuquyomiReferences)
 "map <buffer> <C-]> <Plug>(TsuquyomiDefinition)
 "map <buffer> <C-W>] <Plug>(TsuquyomiSplitDefinition)
 "map <buffer> <C-W><C-]> <Plug>(TsuquyomiSplitDefinition)
 "map <buffer> <C-t> <Plug>(TsuquyomiGoBack)
-"map <buffer> <C-l> <Plug>(TsuquyomiReferences)
+""map <buffer> <C-l> <Plug>(TsuquyomiReferences)
+
+nnoremap <c-h> :call CocAction('diagnosticPrevious')<CR>
+nnoremap <c-l> :call CocAction('diagnosticNext')<CR>
+nnoremap <c-]> :call CocAction('jumpDefinition')<CR>
+
+nnoremap <c-[> :call <SID>show_documentation()<CR>
+nnoremap <c-\> :CocAction<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+

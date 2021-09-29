@@ -15,6 +15,7 @@ settings:
         ;c: hint links spawn chromium {hint-url}
         ;p: hint links run open -p {hint-url}
         <: tab-move -
+        <Ctrl+q>: null
         <Ctrl+u>: undo
         '>': tab-move +
         G: scroll-to-perc 100

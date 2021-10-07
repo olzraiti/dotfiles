@@ -152,3 +152,6 @@ if which tmux >/dev/null 2>&1; then
 	test -z "$TMUX" && tmux new-session
 fi
 source /usr/share/nvm/init-nvm.sh --no-use
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_OPTS='--bind=ctrl-j:accept'

@@ -5,3 +5,6 @@ if [[ "$TERM" == *rxvt* ]]; then
    exec zsh
 fi
 
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+export FZF_DEFAULT_OPTS='--bind=ctrl-j:accept'

@@ -43,12 +43,15 @@ set undodir=~/.vim/undodir
 
 set relativenumber!
 
-set path=,src/**,playground/**,test/**,forms/**
+set path=,src/**,playground/**,test/**,forms/**,projects/laji/**,projects/laji-ui/**
+"set wildignore+=tmp/*,*.so,*.swp,*.zip,lib/*,dist/*,node_modules/*
+"
+set hidden
 
 cmap w!! w !sudo tee > /dev/null %
 
 let mapleader = "\<Space>"
-nnoremap <Leader>w :w<CR>
+nnoremap <Leader>w :wa<CR>
 nnoremap <Leader>W :wq<CR>
 nnoremap <Leader>q :q<CR>
 nnoremap <Leader>Q :q!<CR>
@@ -56,9 +59,11 @@ nnoremap <Leader>v viw<CR>
 nnoremap <Leader>V viW<CR>
 nnoremap <Leader>y yiw<CR>
 nnoremap <Leader>Y yiW<CR>
-nnoremap <Leader><Leader> :ls<CR>:b<Space>
+"nnoremap <Leader><Leader> :ls<CR>:b<Space>
+nnoremap <Leader><Leader> :Buffers<CR><Space>
 nnoremap <Leader>x :bd<CR>
-nnoremap <Leader>f :find<Space>
+"nnoremap <Leader>f :find<Space>
+nnoremap <Leader>f :GFiles<CR><Space>
 nnoremap <Leader>s :mksession!<Space>.vimsession<CR>
 nnoremap <Leader>S :mksession!<Space>.vimsession<CR>:wq<CR>
 nnoremap <Leader>r ye:%s/<C-r>"//g<left><left>
@@ -119,7 +124,7 @@ Plug 'xolox/vim-easytags'
 Plug 'xolox/vim-misc'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
+"Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 "Plug 'w0rp/ale'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'leafgarland/typescript-vim'
@@ -127,10 +132,16 @@ Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'tomtom/tcomment_vim'
+
+"Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 let g:coc_global_extensions = [
 	  \ 'coc-tsserver',
 	  \ 'coc-eslint',
 	  \ 'coc-json',
+	  \ 'coc-angular'
 \ ]
 
 call plug#end()
@@ -174,8 +185,6 @@ let g:airline_theme='base16_eighties'
 
 "map <C-l> <Plug>(TsuquyomiReferences)
 map <C-^> :b#<CR>
-"map <C-t> @<Plug>(TsuquyomiReferences
-"
 " define the default minus c-^ (TsuquyomiReferendes)
 "let g:tsuquyomi_disable_default_mappings = 1
 "map <C-t> @<Plug>(TsuquyomiReferences)
@@ -202,3 +211,4 @@ function! s:show_documentation()
   endif
 endfunction
 
+let g:fzf_preview_window = ['up:40%:hidden', 'ctrl-/']

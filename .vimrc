@@ -60,10 +60,10 @@ nnoremap <Leader>V viW<CR>
 nnoremap <Leader>y yiw<CR>
 nnoremap <Leader>Y yiW<CR>
 "nnoremap <Leader><Leader> :ls<CR>:b<Space>
-nnoremap <Leader><Leader> :Buffers<CR><Space>
+nnoremap <silent> <Leader><Leader> :Buffers<CR><Space>
 nnoremap <Leader>x :bd<CR>
 "nnoremap <Leader>f :find<Space>
-nnoremap <Leader>f :GFiles<CR><Space>
+nnoremap <silent> <Leader>f :GFiles<CR><Space>
 nnoremap <Leader>s :mksession!<Space>.vimsession<CR>
 nnoremap <Leader>S :mksession!<Space>.vimsession<CR>:wq<CR>
 nnoremap <Leader>r ye:%s/<C-r>"//g<left><left>
@@ -111,8 +111,8 @@ set wildmenu
 
 set backupcopy=yes
 
-autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
-autocmd Filetype typescript setlocal ts=2 sts=2 sw=2
+autocmd Filetype javascript setlocal tabstop=2 shiftwidth=2
+autocmd Filetype typescript setlocal tabstop=2 shiftwidth=2
 
 call plug#begin('~/.vim/plugged')
 
@@ -133,6 +133,8 @@ Plug 'peitalin/vim-jsx-typescript'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tomtom/tcomment_vim'
+Plug 'preservim/nerdtree'
+
 
 "Plug 'ctrlpvim/ctrlp.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -194,12 +196,12 @@ map <C-^> :b#<CR>
 "map <buffer> <C-t> <Plug>(TsuquyomiGoBack)
 ""map <buffer> <C-l> <Plug>(TsuquyomiReferences)
 
-nnoremap <c-h> :call CocAction('diagnosticPrevious')<CR>
-nnoremap <c-l> :call CocAction('diagnosticNext')<CR>
-nnoremap <c-]> :call CocAction('jumpDefinition')<CR>
+nnoremap <silent> <c-h> :call CocAction('diagnosticPrevious')<CR>
+nnoremap <silent> <c-l> :call CocAction('diagnosticNext')<CR>
+nnoremap <silent> <c-]> :call CocAction('jumpDefinition')<CR>
 
-nnoremap <c-[> :call <SID>show_documentation()<CR>
-nnoremap <c-\> :CocAction<CR>
+nnoremap <silent> <c-[> :call <SID>show_documentation()<CR>
+nnoremap <silent> <c-\> :CocAction<CR>
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -212,3 +214,5 @@ function! s:show_documentation()
 endfunction
 
 let g:fzf_preview_window = ['up:40%:hidden', 'ctrl-/']
+
+nnoremap <silent> <buffer> <Enter> :NERDTreeToggle<CR>

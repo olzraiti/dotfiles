@@ -144,7 +144,7 @@ AUTOSUGGESTION_HIGHLIGHT_STYLE='fg=8'
 #autosuggets
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 #syntax highlighting
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # TMUX
 if which tmux >/dev/null 2>&1; then

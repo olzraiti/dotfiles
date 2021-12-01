@@ -200,17 +200,17 @@ nnoremap <silent> <c-h> :call CocAction('diagnosticPrevious')<CR>
 nnoremap <silent> <c-l> :call CocAction('diagnosticNext')<CR>
 nnoremap <silent> <c-]> :call CocAction('jumpDefinition')<CR>
 
-nnoremap <silent> <c-[> :call <SID>show_documentation()<CR>
+nnoremap <silent> <c-t> :call <SID>show_documentation()<CR>
 nnoremap <silent> <c-\> :CocAction<CR>
 
 function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
+	if (index(['vim','help'], &filetype) >= 0)
+		execute 'h '.expand('<cword>')
+	elseif (coc#rpc#ready())
+		call CocActionAsync('doHover')
+	else
+		execute '!' . &keywordprg . " " . expand('<cword>')
+	endif
 endfunction
 
 let g:fzf_preview_window = ['up:40%:hidden', 'ctrl-/']

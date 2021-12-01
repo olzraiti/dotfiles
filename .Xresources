@@ -52,15 +52,7 @@ URxvt.keysym.M-Escape:      perl:keyboard-select:activate
 URxvt.keysym.M-s:           perl:keyboard-select:search
 URxvt.matcher.rend.0:       Uline fg16
 
-yeahconsole*term: urxvtc
-yeahconsole*toggleKey: Win+e
-yeahconsole*keyBigger: WinControl+e
-yeahconsole*keySmaller: WinControlAlt+e
-yeahconsole*consoleHeight: 30
-yeahconsole*handleWidth: 0
-yeahconsole*aniDelay: 10
-
-!rofi
+!rofi (overridden by .config/rofi/config.rasi)
 rofi.font: GohuFont 8
 rofi.color-normal: #1d2a30, #71c2af, #1d2a30, #aa4450, #ffffff
 rofi.color-window: #1d2a30, #1d2a30
@@ -77,7 +69,7 @@ rofi.kb-row-first: Home,KP_Home
 rofi.opacity: 99
 rofi.modi: run,ssh
 rofi.tokenize: false
-!rofi.sidebar-mode: true
+rofi.sidebar-mode: true
 
 !XTERM
 XTerm*faceName: Ubuntu Mono

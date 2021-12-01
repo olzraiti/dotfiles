@@ -41,7 +41,6 @@ pia-vpn &
 notifyd &
 bar_notifyd &
 redshift &
-sparkleshare start &
 darkhttpd /var/cache/pacman/pkg  --port 8004 &
 compton &
 unclutter &

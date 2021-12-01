@@ -31,3 +31,5 @@ ranger_rifle.conf .config/ranger/rifle.conf
 ranger_rc.conf .config/ranger/rc.conf
 sxiv .config/sxiv
 gpg-agent.conf .gnupg/gpg-agent.conf
+rofi/config.rasi .config/rofi/config.rasi
+rofi/theme.rasi .config/rofi/theme.rasi

@@ -77,6 +77,8 @@ settings:
     - https://easylist.to/easylist/easylist.txt
   content.blocking.method:
     global: adblock
+  content.pdfjs:
+    global: true
   content.plugins:
     global: true
   downloads.location.directory:

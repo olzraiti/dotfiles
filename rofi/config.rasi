@@ -1,0 +1,19 @@
+configuration {
+	font: "GohuFont 8";
+	terminal: "urxvtc ";
+	run-shell-command: "{terminal} -e sh -c 'tmux new-session "{cmd}"'";
+	separator-style: "solid";
+	hide-scrollbar: true;
+	kb-remove-word-back: "Control+w";
+	kb-remove-word-forward: "Alt+d";
+	kb-mode-next: "Control+r";
+	kb-mode-previous: "Control+shift+r";
+	kb-mode-complete: "";
+	kb-clear-line: "Control+l";
+	kb-row-first: "Home,KP_Home";
+	opacity: "99";
+	modi: "run,ssh";
+	tokenize: false;
+	sidebar-mode: false;
+}
+@theme "./theme.rasi"

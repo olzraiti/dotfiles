@@ -18,11 +18,7 @@ function close_existing {
 }
 
 foldername=$1
-name=$(echo $1 | sed -e 's/^.*\/.*\///' | sed -e 's/\.*\..*//')
-browser=$BROWSER
-[[ -n $2 ]] && browser="$2"
-
-port=$(grep -E 'start.*--port' $foldername/package.json | head -1 | sed -e 's/^.*--port \([0-9]*\).*$/\1/')
+name=$1
 
 if [[ -z $(tmux ls | grep $name) ]]; then
 	args=""
@@ -32,7 +28,7 @@ else
 	urxvtc -e tmux a -t $name
 fi
 
-urxvtc -e tmux new zsh -c "cd $1 ; tmux split -h \"npm start\" ; zsh"
+urxvtc -e tmux new zsh -c "cd $1 ; tmux split -h \"nvn use default; npm start\" ; zsh"
 sleep 0.5
 close_existing -d bottom -n quake_terminal
 quakify -d bottom -n quake_terminal
@@ -40,15 +36,11 @@ quakify -d bottom -n quake_terminal
 
 close_existing -d bottom -n spawned_by_a_key
 
-$browser "http://localhost:"$port &
+$BROWSER $2 &
 
 sleep 3
 
-if [[ $browser == *chromium* ]]; then
-	xdotool key ctrl+shift+j
-elif [[ $browser == *qutebrowser* ]]; then
-	xdotool type wi
-fi
+xdotool key ctrl+shift+j
 
 sleep 1
 

@@ -1,0 +1,6 @@
+[user]
+	email = olli.raitio@helsinki.fi
+	name = Olli Raitio
+
+[core]
+	pager = diff-so-fancy | less -R

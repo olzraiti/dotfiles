@@ -1,1 +1,7 @@
-chrome_app https://luomus-ict.slack.com --force-device-scale-factor=0.75
+#!/bin/bash
+app=$1
+if [[ -z $app ]]; then
+	app=luomus-ict
+fi
+echo $app
+chrome_app https://"$app".slack.com --force-device-scale-factor=0.75

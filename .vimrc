@@ -35,8 +35,8 @@ set number
 " Indentation settings for using hard tabs for indent. Display tabs as
 " two characters wide.
 set noexpandtab
-set shiftwidth=4
-set tabstop=4
+set shiftwidth=2
+set tabstop=2
 
 set undofile
 set undodir=~/.vim/undodir
@@ -130,7 +130,6 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'leafgarland/typescript-vim'
 "Plug 'Quramy/tsuquyomi'
 Plug 'peitalin/vim-jsx-typescript'
-Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tomtom/tcomment_vim'
 Plug 'preservim/nerdtree'
@@ -159,16 +158,16 @@ call plug#end()
 "let g:syntastic_javascript_checkers = ['eslint']
 
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#ale#enabled = 1
+" let g:airline#extensions#ale#enabled = 1
 
-let g:ale_sign_error = '!'
-let g:ale_sign_warning = '#'
-let g:ale_linters = {
-\   'javascript': ['eslint'],
-\}
-
-nmap <silent> <C-h> <Plug>(ale_previous_wrap)
-nmap <silent> <C-l> <Plug>(ale_next_wrap)
+" let g:ale_sign_error = '!'
+" let g:ale_sign_warning = '#'
+" let g:ale_linters = {
+" \   'javascript': ['eslint'],
+" \}
+"
+" nmap <silent> <C-h> <Plug>(ale_previous_wrap)
+" nmap <silent> <C-l> <Plug>(ale_next_wrap)
 
 let g:jsx_ext_required = 0
 
@@ -199,6 +198,7 @@ map <C-^> :b#<CR>
 nnoremap <silent> <c-h> :call CocAction('diagnosticPrevious')<CR>
 nnoremap <silent> <c-l> :call CocAction('diagnosticNext')<CR>
 nnoremap <silent> <c-]> :call CocAction('jumpDefinition')<CR>
+nnoremap <silent> <Leader>r :CocCommand document.renameCurrentWord<CR>
 
 nnoremap <silent> <c-t> :call <SID>show_documentation()<CR>
 nnoremap <silent> <c-\> :CocAction<CR>

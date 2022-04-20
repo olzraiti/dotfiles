@@ -215,4 +215,4 @@ endfunction
 
 let g:fzf_preview_window = ['up:40%:hidden', 'ctrl-/']
 
-nnoremap <silent> <buffer> <Enter> :NERDTreeToggle<CR>
+nnoremap <silent> <buffer> <Leader><CR> :NERDTreeToggle<CR>

@@ -39,7 +39,7 @@ super + {ctrl, shift} + 0
 	{poweroff || poweroff, systemctl reboot || systemctl reboot}
 
 super + {_,shift} + Return
-	urxvtc { ,-name floating}
+	kitty { ,--class floating}
 
 super + r
 	launcher
@@ -66,9 +66,9 @@ super + ctrl + v
 
 # quakes
 super + {_, shift, ctrl, shift + ctrl} + {e, s}
-	spawn_quakified -g  -d {top, left, right, bottom} {urxvtc, qutebrowser}
+	spawn_quakified -g  -d {top, left, right, bottom} {kitty, qutebrowser}
 alt + {_, shift, ctrl, shift + ctrl} + {e, s}
-	spawn_quakified -d {bottom, left, right, top} {urxvtc, qutebrowser}
+	spawn_quakified -d {bottom, left, right, top} {kitty, qutebrowser}
 alt + {_, shift, ctrl, shift + ctrl} + a
 	quakify -d {bottom, left, right, top} -n spawned_by_a_key
 super + {shift, ctrl, shift + ctrl} + a

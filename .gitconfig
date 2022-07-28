@@ -4,3 +4,5 @@
 
 [core]
 	pager = diff-so-fancy | less -R
+[safe]
+	directory = /mnt/storage/.cache/yay

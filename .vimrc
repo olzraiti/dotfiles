@@ -133,6 +133,7 @@ Plug 'peitalin/vim-jsx-typescript'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tomtom/tcomment_vim'
 Plug 'preservim/nerdtree'
+Plug 'tpope/vim-repeat'
 
 
 "Plug 'ctrlpvim/ctrlp.vim'

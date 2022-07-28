@@ -1,0 +1,7 @@
+#!/bin/bash
+short_url=$(curl -s http://tinyurl.com/api-create.php?url="$1")
+if [[ -n $2 ]]; then
+	echo "$short_url" | xsel -b
+else
+	echo $short_url 
+fi

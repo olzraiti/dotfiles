@@ -134,7 +134,7 @@ zle -N zle-line-init
 zle -N zle-keymap-select
 export KEYTIMEOUT=1
 
-if [[ -n $(who am i | cut -f2  -d\( | cut -f1 -d:) ]]; then
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
 	  PROMPT="%{$fg[yellow]%}%m%{$reset_color%} "$PROMPT
 fi
 

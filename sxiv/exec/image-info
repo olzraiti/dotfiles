@@ -1,7 +1,13 @@
 #!/bin/bash
 
+if [[ ! -f /dev/shm/pimio_folder ]]; then
+	echo $1
+	exit
+fi
+
 file=$(basename $1)
 folder=$(cat /dev/shm/pimio_folder)
+
 [[ $1 == *"/edit"* ]] && echo "BROWSING EDIT |"
 [[ $1 == *"/potential"* ]] && echo "BROWSING POTENTIAL |"
 echo "E: $(find $folder/edit/ -type l -name "*.JPG" | wc -l)"

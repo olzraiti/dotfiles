@@ -56,4 +56,4 @@ bspc subscribe node_add node_remove | while read line; do update_wallpaper; done
 bspc subscribe desktop_focus | while read line; do notify_focused_desktop && update_wallpaper; done &
 
 xdotool behave_screen_edge --quiesce 600 --delay 0 top-right exec bin/notify_info &
-(sleep 5 && start_jack) &
+#(sleep 5 && start_jack) &

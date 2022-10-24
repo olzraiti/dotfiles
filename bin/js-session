@@ -28,15 +28,15 @@ else
 	urxvtc -e tmux a -t $name
 fi
 
-urxvtc -e tmux new zsh -c "cd $1 ; tmux split -h \"nvn use default; npm start\" ; zsh"
+urxvtc -e tmux new zsh -c "cd $1 ; tmux split -h \"nvm use default; npm start\" ; zsh"
 sleep 0.5
-close_existing -d bottom -n quake_terminal
-quakify -d bottom -n quake_terminal
-quakify -d bottom -n quake_terminal
+close_existing -d bottom
+quakify -d bottom
+quakify -d bottom
 
 close_existing -d bottom -n spawned_by_a_key
 
-$BROWSER $2 &
+chromium $2 &
 
 sleep 3
 
@@ -44,5 +44,4 @@ xdotool key ctrl+shift+j
 
 sleep 1
 
-quakify -d bottom -n spawned_by_a_key
-quakify -d bottom -n quake_terminal
+quakify -d bottom

@@ -1,5 +1,5 @@
 #!/bin/bash
-$HOME/effect-tools/bin/start_jack
+$HOME/effect-tools/bin/start_jack $@
 a2jmidid -e & 1>/dev/null 2>&1
 #jack_connect system:capture_1 system:playback_1
 #jack_connect system:capture_1 system:playback_2

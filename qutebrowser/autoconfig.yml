@@ -70,6 +70,8 @@ settings:
     global: '#87ceeb'
   colors.tabs.selected.odd.fg:
     global: '#000000'
+  colors.webpage.darkmode.enabled:
+    global: false
   content.blocking.enabled:
     global: false
   content.blocking.hosts.lists:

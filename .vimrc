@@ -1,9 +1,10 @@
 filetype plugin indent on
 syntax on
 
-colorscheme default
-hi Search cterm=NONE ctermfg=black ctermbg=yellow
-hi SpellBad ctermfg=0 ctermbg=225 guibg=LightMagenta
+colorscheme sorcerer
+hi Normal guibg=NONE ctermbg=NONE
+"hi Search cterm=NONE ctermfg=black ctermbg=yellow
+"hi SpellBad ctermfg=0 ctermbg=225 guibg=LightMagenta
  
 " Show partial commands in the last line of the screen
 set showcmd
@@ -145,6 +146,7 @@ let g:coc_global_extensions = [
 	  \ 'coc-json',
 	  \ 'coc-angular'
 \ ]
+let g:coc_disable_transparent_cursor = 1
 
 call plug#end()
 
@@ -183,7 +185,7 @@ let g:easytags_languages = {
 			\   }
 			\}
 
-let g:airline_theme='base16_eighties'
+let g:airline_theme='alduin'
 
 "map <C-l> <Plug>(TsuquyomiReferences)
 map <C-^> :b#<CR>
@@ -202,7 +204,9 @@ nnoremap <silent> <c-]> :call CocAction('jumpDefinition')<CR>
 nnoremap <silent> <Leader>r :CocCommand document.renameCurrentWord<CR>
 
 nnoremap <silent> <c-t> :call <SID>show_documentation()<CR>
+command! -nargs=* -range CocAction :call CocActionAsync('codeActionRange', <line1>, <line2>, <f-args>)
 nnoremap <silent> <c-\> :CocAction<CR>
+
 
 function! s:show_documentation()
 	if (index(['vim','help'], &filetype) >= 0)

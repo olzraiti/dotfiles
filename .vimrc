@@ -119,8 +119,8 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'tpope/vim-surround'
 "Plug 'vim-syntastic/syntastic'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
+Plug 'pangloss/vim-javascript', {'for': ['javascript', 'typescript']}
+Plug 'mxw/vim-jsx', {'for': ['javascript', 'typescript']}
 Plug 'xolox/vim-easytags'
 Plug 'xolox/vim-misc'
 Plug 'vim-airline/vim-airline'
@@ -128,10 +128,10 @@ Plug 'vim-airline/vim-airline-themes'
 "Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 "Plug 'w0rp/ale'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'leafgarland/typescript-vim'
+Plug 'leafgarland/typescript-vim', {'for': ['javascript', 'typescript']}
 "Plug 'Quramy/tsuquyomi'
-Plug 'peitalin/vim-jsx-typescript'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'peitalin/vim-jsx-typescript', {'for': ['javascript', 'typescript']}
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': ['javascript', 'typescript']}
 Plug 'tomtom/tcomment_vim'
 Plug 'preservim/nerdtree'
 Plug 'tpope/vim-repeat'

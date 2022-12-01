@@ -1,2 +1,2 @@
 #!/bin/bash
-vpn openvpn.conf hy-login.conf $HOME/sparkleshark/hy-wallpaper
+vpn uh-vpn-allroute.ovpn hy-login.conf $HOME/sparkleshark/hy-wallpaper

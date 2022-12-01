@@ -131,7 +131,8 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'leafgarland/typescript-vim', {'for': ['javascript', 'typescript']}
 "Plug 'Quramy/tsuquyomi'
 Plug 'peitalin/vim-jsx-typescript', {'for': ['javascript', 'typescript']}
-Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': ['javascript', 'typescript']}
+"Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': ['javascript', 'typescript']}
+Plug 'neoclide/coc.nvim', {'commit': '487d077e1131ee5b09e329d15f9d9ae53aa8f44a'}
 Plug 'tomtom/tcomment_vim'
 Plug 'preservim/nerdtree'
 Plug 'tpope/vim-repeat'
@@ -197,6 +198,7 @@ map <C-^> :b#<CR>
 "map <buffer> <C-W><C-]> <Plug>(TsuquyomiSplitDefinition)
 "map <buffer> <C-t> <Plug>(TsuquyomiGoBack)
 ""map <buffer> <C-l> <Plug>(TsuquyomiReferences)
+command! -nargs=* -range CocAction :call CocActionAsync('codeActionRange', <line1>, <line2>, <f-args>)
 
 nnoremap <silent> <c-h> :call CocAction('diagnosticPrevious')<CR>
 nnoremap <silent> <c-l> :call CocAction('diagnosticNext')<CR>

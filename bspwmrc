@@ -57,3 +57,4 @@ bspc subscribe desktop_focus | while read line; do notify_focused_desktop && upd
 
 xdotool behave_screen_edge --quiesce 600 --delay 0 top-right exec bin/notify_info &
 #(sleep 5 && start_jack) &
+start_jack &

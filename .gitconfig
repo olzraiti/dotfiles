@@ -3,6 +3,6 @@
 	name = Olli Raitio
 
 [core]
-	pager = diff-so-fancy | less -R
+	pager = diff-so-fancy | less -R -x2
 [safe]
 	directory = /mnt/storage/.cache/yay

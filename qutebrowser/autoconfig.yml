@@ -144,8 +144,8 @@ settings:
     global: https://www.startpage.com
   url.searchengines:
     global:
-      DEFAULT: https://duckduckgo.com/?q={}
-      g: https://www.google.fi/search?q={}
+      DEFAULT: https://www.google.fi/search?q={}
+      d: https://duckduckgo.com/?q={}
       y: https://www.youtube.com/results?search_query={}
   url.start_pages:
     global: https://start.duckduckgo.com

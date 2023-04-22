@@ -4,4 +4,4 @@ if [[ -z $app ]]; then
 	app=luomus-ict
 fi
 echo $app
-chrome_app https://"$app".slack.com --force-device-scale-factor=0.75
+chrome_app https://"$app".slack.com --force-device-scale-factor=0.8

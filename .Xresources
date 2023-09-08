@@ -120,7 +120,7 @@ XTerm*locale: true
 
 !█▓▒░ scorcerer colors
 *.foreground:   #c2c2b0
-*.background:   #181818
+*.background:   #262626
 *.cursorColor:  #c2c2b0
 ! black
 *.color0:       #111111

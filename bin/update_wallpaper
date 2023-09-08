@@ -88,7 +88,7 @@ if [[ ! -f $converted ]]; then
 
 	if [[ $battery == true ]]; then
 		battery_amount=$(((100 - $battery_amount) - 20))
-		convert_cmd=$convert_cmd" /home/olli/battery_overlay.png -compose blend -define compose:args="$battery_amount" -composite"
+		convert_cmd=$convert_cmd" ~/sparkleshark/battery_overlay.png -compose blend -define compose:args="$battery_amount" -composite"
 	fi
 
 	for dir in ${dirs[@]}; do

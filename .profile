@@ -37,12 +37,15 @@ export BSPWM_SCRIPTS_DIR=$HOME/scripts/bspwm
 
 PATH="$HOME/scripts/quakify:$PATH"
 
-color_fg="#71c2af"
-color_icon="#ff6a6a"
+color_fg="#b9bbbb"
+color_low="#6a8e91"
+color_hi="#3ed1fa"
 export notify_color_fg=$color_fg
-export notify_icon_fg=$color_icon
+export notify_icon_fg=$color_low
+export notify_hi_fg=$color_hi
+export notify_low_fg=$color_low
 function icon {
-	export $1="%{F$color_icon}$2%{F$color_fg}"
+	export $1="%{F$color_low}$2%{F$color_fg}"
 }
 icon VOL_ICON "\uf028"
 icon MUTE_ICON "\uf026x"

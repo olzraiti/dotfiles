@@ -16,8 +16,8 @@ offset="-2"
 font="gohufont:size=8"
 font_icons="FontAwesome:size=8"
 
-color_fg="#71c2af"
-color_bg="#1d2a30"
+color_fg="$notify_color_fg"
+color_bg="#2b3132"
 
 dismiss_time=3
 

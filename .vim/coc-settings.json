@@ -1,3 +1,5 @@
 {
-	"suggest.noselect": true
+	"angular.experimental-ivy": true,
+	"suggest.noselect": true,
+	"typescript.suggest.autoImports": true
 }

@@ -1,0 +1,19 @@
+#!/bin/bash
+mute=false
+while getopts ':m' flag; do
+	case "${flag}" in
+		m) 
+			mute=true
+			;;
+	esac
+done
+shift $((OPTIND-1))
+
+msg=Success
+if [[ -n "$1" ]]; then
+	msg="$1"
+fi
+
+
+notify-send "%{F#49ffbc}$msg"
+[[ $mute == false ]] && ffplay -v 0 -nodisp -autoexit ~/sparkleshark/sounds/success.mp3

@@ -1,0 +1,21 @@
+#!/bin/bash
+mute=false
+while getopts ':m' flag; do
+	case "${flag}" in
+		m) 
+			mute=true
+			;;
+	esac
+done
+shift $((OPTIND-1))
+
+flags=""
+if [[ $mute == true ]]; then
+	flags="-m"
+fi
+"$@"
+if [[ $? -eq 0 ]]; then
+	notify-success "$flags"
+else
+	notify-error "$flags"
+fi

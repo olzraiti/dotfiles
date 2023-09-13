@@ -1,0 +1,8 @@
+#!/bin/bash
+if [[ -f /dev/shm/screen_off ]]; then
+	xrandr --auto
+	rm /dev/shm/screen_off
+else
+	xrandr --output DVI-1 --off
+	touch /dev/shm/screen_off
+fi

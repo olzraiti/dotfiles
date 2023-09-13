@@ -1,0 +1,18 @@
+#!/bin/bash
+mute=false
+while getopts ':m' flag; do
+	case "${flag}" in
+		m) 
+			mute=true
+			;;
+	esac
+done
+shift $((OPTIND-1))
+
+msg=Fail
+if [[ -n "$1" ]]; then
+	msg="$1"
+fi
+
+notify-send "%{F#ff5c8e}$msg"
+[[ $mute == false ]] && ffplay -v 0 -nodisp -autoexit ~/sparkleshark/sounds/fail.mp3

@@ -16,6 +16,8 @@ alias ls='ls --color'
 alias cal='cal -m'
 alias t="todo.sh"
 alias json="python -m json.tool"
+alias nr="notify-run"
+alias nrm="notify-run -m"
 
 function sgrp { 
 	dir="src"

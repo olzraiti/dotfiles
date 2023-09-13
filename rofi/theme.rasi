@@ -1,6 +1,6 @@
 * {
-    selected-normal-foreground:  rgba ( 249, 249, 249, 100 % );
-    foreground:                  #71c2af;
+    selected-normal-foreground:  #e1e1e1;
+    foreground:                  #8c8c8c;
     normal-foreground:           @foreground;
     red:                         rgba ( 220, 50, 47, 100 % );
     selected-urgent-foreground:  rgba ( 249, 249, 249, 100 % );
@@ -11,12 +11,12 @@
     lightbg:                     rgba ( 238, 232, 213, 100 % );
     selected-active-foreground:  rgba ( 249, 249, 249, 100 % );
     alternate-active-background: rgba ( 75, 81, 96, 89 % );
-    background:                  #1d2a30;
+    background:                  #3e3e3e;
     alternate-normal-foreground: @foreground;
     alternate-normal-background: @background;
     normal-background:           @background;
     lightfg:                     rgba ( 88, 104, 117, 100 % );
-    selected-normal-background:  #aa4450;
+    selected-normal-background:  #3e3e3e;
     border-color:                rgba ( 124, 131, 137, 100 % );
     spacing:                     2;
     separatorcolor:              rgba ( 29, 31, 33, 100 % );
@@ -127,7 +127,7 @@ case-indicator {
 }
 entry {
     spacing:    0;
-    text-color: @normal-foreground;
+    text-color: #e1e1e1;
 }
 prompt {
     spacing:    0;

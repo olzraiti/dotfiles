@@ -42,7 +42,7 @@ notifyd &
 bar_notifyd &
 redshift &
 darkhttpd /var/cache/pacman/pkg  --port 8004 &
-compton &
+compton --shadow-exclude '!focused' &
 unclutter &
 mpd &
 urxvtd -q -f -o &

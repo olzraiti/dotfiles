@@ -17,7 +17,7 @@ font="gohufont:size=8"
 font_icons="FontAwesome:size=8"
 
 color_fg="$notify_color_fg"
-color_bg="#2b3132"
+color_bg="#3e3e3e"
 
 dismiss_time=3
 

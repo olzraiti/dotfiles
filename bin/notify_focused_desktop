@@ -1,7 +1,7 @@
 #!/bin/bash
-empty_icon="%{O1}\uf096"
-filled_icon="%{F$notify_low_fg}\uf0c8%{F$notify_color_fg}"
-focused_icon="%{F$notify_hi_fg}\uf0c8%{F$notify_color_fg}"
+empty_icon="%{F$notify_low_fg}%{O1}\uf096"
+filled_icon="%{F$notify_low_fg}\uf0c8%{F$notify_low_fg}"
+focused_icon="%{F$notify_hi_fg}\uf0c8%{F$notify_low_fg}"
 
 notification=""
 focused=$($BSPWM_SCRIPTS_DIR/get_focused)

@@ -37,23 +37,39 @@ export BSPWM_SCRIPTS_DIR=$HOME/scripts/bspwm
 
 PATH="$HOME/scripts/quakify:$PATH"
 
-color_fg="#b9bbbb"
-color_low="#6a8e91"
-color_hi="#3ed1fa"
+color_fg="#ededed"
+color_low="#8c8c8c"
+color_hi="#e1e1e1"
 export notify_color_fg=$color_fg
 export notify_icon_fg=$color_low
 export notify_hi_fg=$color_hi
 export notify_low_fg=$color_low
+export notify_color_error="#ff5c8e"
+export notify_color_success="#49ffbc"
 function icon {
+	color=$3
+	if [[ -z $col ]]; then
+		color=%{F$color_low}
+	fi
+
 	export $1="%{F$color_low}$2%{F$color_fg}"
 }
 icon VOL_ICON "\uf028"
-icon MUTE_ICON "\uf026x"
+icon MUTE_ICON "\uf026×"
 icon KEYBOARD_ICON "\uf11c"
 icon CLOCK_ICON "\uf017"
 icon CALENDAR_ICON "\uf073"
 icon REDSHIFT_ICON "\uf042"
 icon TV_ICON "\uf26c"
+icon BATTERY_ICON "\uf240"
+icon BATTERY_4_ICON "\uf240"
+icon BATTERY_3_ICON "\uf241"
+icon BATTERY_2_ICON "\uf242"
+icon BATTERY_1_ICON "\uf243"
+icon BATTERY_0_ICON "\uf244"
+icon CHORD_PLUGGED "\uf1e6"
+icon WIFI_ICON "\uf1eb"
+icon WIFI_DISCONNECTED_ICON "\uf1eb ×"
 icon DESKTOP_ICON "\uf108"
 icon VPN_ICON "\uf0ac"
 icon UNLOCKED "\uf084 \uf13e"

@@ -1,7 +1,6 @@
 #!/bin/bash
-app=$1
-if [[ -z $app ]]; then
-	app=luomus-ict
+space=$1
+if [[ -z $space ]];then
+	space=luomus-ict
 fi
-echo $app
-chrome_app https://"$app".slack.com --force-device-scale-factor=0.8
+chrome_app https://"$space".slack.com --force-device-scale-factor=0.8

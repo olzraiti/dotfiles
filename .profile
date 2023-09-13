@@ -47,12 +47,12 @@ export notify_low_fg=$color_low
 export notify_color_error="#ff5c8e"
 export notify_color_success="#49ffbc"
 function icon {
-	color=$3
-	if [[ -z $col ]]; then
-		color=%{F$color_low}
+	_color="$3"
+	if [[ -z $_color ]]; then
+		_color="$color_low"
 	fi
 
-	export $1="%{F$color_low}$2%{F$color_fg}"
+	export $1="%{F$_color}$2%{F$color_fg}"
 }
 icon VOL_ICON "\uf028"
 icon MUTE_ICON "\uf026×"

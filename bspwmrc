@@ -46,6 +46,19 @@ bspc rule -a Onboard state=floating
 bspc rule -a Pinentry state=floating
 bspc rule -a Zathura state=tiled
 
+# floating urxvt size {
+windowwidth=1000
+windowheight=800
+
+screenwidth=$(xdpyinfo  | grep dimensions | awk '{print $2}' | awk -F x '{print $1}')
+screenheight=$(xdpyinfo  | grep dimensions | awk '{print $2}' | awk -F x '{print $2}')
+windowx=$(("$screenwidth"/2-"$windowwidth"/2))
+windowy=$(("$screenheight"/2-"$windowheight"/2))
+
+echo rectangle="$windowwidth"x"$windowheight"+"$windowx"+"$windowy"
+bspc rule -a URxvt:floating state=floating rectangle="$windowwidth"x"$windowheight"+"$windowx"+"$windowy"
+# }
+
 export BSPWM_DESKTOP_WALL_WIDTH=3
 export BSPWM_DESKTOP_WALL_HEIGHT=2
 $BSPWM_SCRIPTS_DIR/desktop_wall init

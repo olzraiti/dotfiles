@@ -1,4 +1,6 @@
 #!/bin/bash
+source ~/dotfiles/load-bar-env.sh
+
 kmap=$(setxkbmap -print | awk -F"+" '/xkb_symbols/ {print $2}')
 if [[ $kmap == "us"* ]]; then
 	$(setxkbmap fi_custom)

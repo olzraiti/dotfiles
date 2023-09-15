@@ -1,4 +1,5 @@
 #!/bin/bash
+source ~/dotfiles/load-bar-env.sh
 
 clock_symbol=$CLOCK_ICON
 clock=$(date +'%H:%M') 

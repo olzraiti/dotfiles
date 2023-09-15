@@ -1,4 +1,6 @@
 #!/bin/bash
+source ~/dotfiles/load-bar-env.sh
+
 mute=false
 while getopts ':m' flag; do
 	case "${flag}" in
@@ -14,5 +16,5 @@ if [[ -n "$1" ]]; then
 	msg="$1"
 fi
 
-notify-send "%{F#ff5c8e}$msg"
+notify-send "%{F$notify_color_error}$msg"
 [[ $mute == false ]] && ffplay -v 0 -nodisp -autoexit ~/sparkleshark/sounds/fail.mp3

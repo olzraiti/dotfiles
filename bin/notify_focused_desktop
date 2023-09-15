@@ -1,4 +1,6 @@
 #!/bin/bash
+source ~/dotfiles/load-bar-env.sh
+
 empty_icon="%{F$notify_low_fg}%{O1}\uf096"
 filled_icon="%{F$notify_low_fg}\uf0c8%{F$notify_low_fg}"
 focused_icon="%{F$notify_hi_fg}\uf0c8%{F$notify_low_fg}"

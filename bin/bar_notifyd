@@ -1,4 +1,6 @@
 #!/bin/bash
+source ~/dotfiles/load-bar-env.sh
+
 xrandr_output=$(cat /dev/shm/xrandr_output)
 
 monitor_x=$(echo "$xrandr_output" | grep "primary" | awk '{print $4}' | awk -F+ '{print $2}')
@@ -17,7 +19,7 @@ font="gohufont:size=8"
 font_icons="FontAwesome:size=8"
 
 color_fg="$notify_color_fg"
-color_bg="#3e3e3e"
+color_bg="$notify_color_bg"
 
 dismiss_time=3
 

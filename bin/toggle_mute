@@ -1,4 +1,6 @@
 #!/bin/bash
+source ~/dotfiles/load-bar-env.sh
+
 amixer set Master toggle
 mute=$VOL_ICON
 if [[ $(query_mute) == "true" ]]; then

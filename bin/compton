@@ -1,1 +1,1 @@
-allow_rgb10_configs=false /usr/bin/compton --opacity-rule '99:name *= "rofi"' --backend glx --blur-method kawase --blur-strength 13 $@
+allow_rgb10_configs=false /usr/bin/compton --shadow-exclude '!focused' --opacity-rule '99:name *= "rofi"' --backend glx --blur-method kawase --blur-strength 20 $@

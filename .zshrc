@@ -81,17 +81,22 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+
 ZSH_CACHE_DIR=$HOME/.oh-my-zsh-cache
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
   mkdir $ZSH_CACHE_DIR
 fi
 
+export NVM_LAZY_LOAD_EXTRA_COMMANDS=('vim')
+export NVM_LAZY_LOAD=true
+plugins=(git vi-mode dirhistory zsh-nvm)
+
 source $ZSH/oh-my-zsh.sh
 
 #tästä alkaa omat konffit
 
+
 [[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
-plugins=(git vi-mode dirhistory)
 
 #vim mode
 bindkey -v
@@ -151,7 +156,9 @@ if which tmux >/dev/null 2>&1; then
 	#if not inside a tmux session, and if no session is started, start a new session
 	test -z "$TMUX" && tmux new-session
 fi
-source /usr/share/nvm/init-nvm.sh --no-use
-
+#source /usr/share/nvm/init-nvm.sh
+#export NVM_DIR="$HOME/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_OPTS='--bind=ctrl-j:accept'

@@ -4,7 +4,7 @@ notify_color_fg=#e6e6e6
 notify_hi_fg="#bfe0bf"
 notify_low_fg=#7e8578
 notify_icon_fg=$notify_low_fg
-notify_color_error="#ff789c"
+notify_color_error="#ff6e4d"
 notify_color_warn="#ffb100"
 notify_color_success="#49ffbc"
 function icon {

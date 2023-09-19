@@ -2,9 +2,9 @@
 source ~/dotfiles/load-bar-env.sh
 
 if [[ -z $(ps ax | grep "[c]ompton2") && -z $(ps ax | grep "[c]ompton3") ]]; then
-	pkill compton && compton --shadow-exclude '!focused' --config $HOME/dotfiles/compton2.conf
+	pkill compton && compton --config $HOME/dotfiles/compton2.conf
 elif [[ -z $(ps ax | grep "[c]ompton3") ]]; then
-	pkill compton && compton --shadow-exclude '!focused' --config $HOME/dotfiles/compton3.conf
+	pkill compton && compton --config $HOME/dotfiles/compton3.conf
 else
-	pkill compton && compton --shadow-exclude '!focused'
+	pkill compton && compton
 fi

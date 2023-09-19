@@ -1,5 +1,5 @@
 * {
-    selected-normal-foreground:  #e1e1e1;
+    selected-normal-foreground:  #e6e6e6;
     foreground:                  #8c8c8c;
     normal-foreground:           @foreground;
     red:                         rgba ( 220, 50, 47, 100 % );
@@ -47,11 +47,11 @@ textbox {
 }
 listview {
     fixed-height: 0;
-    border:       2px 0px 0px ;
+    border:       0px 0px 0px ;
     border-color: @separatorcolor;
-    spacing:      2px ;
+    spacing:      0px ;
     scrollbar:    false;
-    padding:      2px 0px 0px ;
+    padding:      0px 0px 0px ;
 }
 element {
     border:  0;

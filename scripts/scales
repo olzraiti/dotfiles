@@ -1,0 +1,52 @@
+#!/usr/bin/node
+const readline = require("readline");
+readline.emitKeypressEvents(process.stdin);
+process.stdin.setRawMode(true);
+
+const tones = ["A", "B", "C", "D", "E", "F", "G"];
+
+const modes = process.argv.slice(2);
+
+const take = items => items[Math.floor(Math.random() * items.length)];
+
+signs = modes.includes("no-scale") ? [""] : ["", "m"];
+scale = modes.includes("no-scale") ? [""] : ["7", "△7"];
+
+const upDown = modes.includes("#")
+	? ["#"]
+	: modes.includes("b")
+		? ["b"]
+	: modes.includes("pure")
+		? [""]
+		: ["", "#", "b"];
+
+
+const get = () => {
+	const getNote = () => `${take(tones)}${take(upDown)}`;
+	let note = getNote();
+	while (note === "Cb" || note === "Fb" || note === "E#" || note === "B#") {
+		note = getNote();
+	}
+
+	return `${note}${take(signs)}${take(scale)}`;
+}
+
+let prev;
+const next = () => {
+	let current = get();
+	while (current === prev) {
+		current = get();
+	}
+	prev = current;
+	console.log('\033[2J');
+	console.log(current);
+}
+
+next();
+
+process.stdin.on("keypress", (str, key) => {
+	if (key.ctrl === true && key.name === "c") {
+		process.exit();
+	}
+	next();
+});

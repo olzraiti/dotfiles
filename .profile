@@ -44,3 +44,5 @@ if [[ -z $TMUX && -z $SSH_CONNECTION && -z $DISPLAY && $XDG_VTNR -eq 1 ]]; then
 else
 	export GPG_TTY=`tty`
 fi
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"

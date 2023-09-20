@@ -87,9 +87,9 @@ if [[ ! -d $ZSH_CACHE_DIR ]]; then
   mkdir $ZSH_CACHE_DIR
 fi
 
-export NVM_LAZY_LOAD_EXTRA_COMMANDS=('vim')
-export NVM_LAZY_LOAD=true
-plugins=(git vi-mode dirhistory zsh-nvm)
+#export NVM_LAZY_LOAD_EXTRA_COMMANDS=('vim')
+#export NVM_LAZY_LOAD=true
+plugins=(git vi-mode dirhistory)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -162,3 +162,5 @@ fi
 #[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_OPTS='--bind=ctrl-j:accept'
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"

@@ -1,2 +1,0 @@
-#!/bin/bash
-amixer -c 0 get Master | tail -1 | awk '{print $4}' | tr -d '[]' | grep -o "[0-9]*"

@@ -10,7 +10,7 @@ sudo pkill pptp
 $(
 	sleep 0.1;
 	if [[ -n $3 ]]; then
-		$HOME/bin/change_wallpaper $3
+		$HOME/bin/change-wallpaper $3
 	fi
 ) &
 
@@ -22,7 +22,7 @@ else
 fi
 
 if [[ -n $3 ]]; then
-	$HOME/bin/update_wallpaper
+	$HOME/bin/update-wallpaper
 	systemctl --user stop rt.service
 fi
 systemctl --user restart spotifyd

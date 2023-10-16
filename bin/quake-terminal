@@ -9,7 +9,7 @@ if [[ -n $existing_win ]]; then
 	validate_win $existing_win $name
 	is_valid=$?
 	if [[ $is_valid == 1 ]]; then
-		quake_terminal $@
+		quake-terminal $@
 		exit
 	fi
 	quakify $params

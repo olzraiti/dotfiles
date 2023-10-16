@@ -7,4 +7,4 @@ touch /tmp/pass_clipped_fifo
  echo $pass | xsel -b
  notify-no-icon "$UNLOCKED copied $(cat /tmp/pass_picked) to clipboard"
  ) &
-get_pass
+get-pass

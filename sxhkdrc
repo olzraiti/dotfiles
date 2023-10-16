@@ -45,10 +45,10 @@ super + r
 	launcher
 
 super + {_,shift,ctrl,shift+ctrl,alt,alt+shift} + space
-	toggle_{kmap,opacity,rs,trayer,cairo_dock,screen}
+	toggle-{kmap,opacity,rs,trayer,cairo_dock,screen}
 
 super + {_,ctrl +} q
-	{notify_info,query_wifi}
+	{notify-info,query-wifi}
 
 ctrl + space
 	for corner in northeast northwest southeast southwest; do \
@@ -56,13 +56,13 @@ ctrl + space
 	done
 
 super + p + {_, shift, ctrl, ctrl + shift} + {_, alt}
-	{paste_pass, paste_user, paste_user_pass, paste_user_then_pass} {'', 'dontguess'}
+	{paste-pass, paste-user, paste-user-pass, paste-user-then-pass} {'', 'dontguess'}
 
 super + {_,shift + } v
-	{toggle,restart}_vpn
+	{toggle,restart}-vpn
 	
 super + ctrl + v
-	pia_dialog
+	pia-dialog
 
 # quakes
 super + {_, shift, ctrl, shift + ctrl} + {e, s}
@@ -79,11 +79,11 @@ super + ctrl + d
 	quakify -r
 
 super + {z, x}
-	{lower_vol, raise_vol}
+	{lower-vol, raise-vol}
 XF86Audio{Lower,Raise}Volume
-	{lower_vol, raise_vol}
+	{lower-vol, raise-vol}
 XF86AudioMute
-	toggle_mute
+	toggle-mute
 
 # close and kill
 super + {_,shift + } w

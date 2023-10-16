@@ -35,11 +35,11 @@ fi
 xrandr --output DVI-1 --primary
 xrandr --output HDMI-0 --right-of DVI-1
 xrandr --output HDMI-0 --same-as DVI-1
-cache_xrandr
+cache-xrandr
 amixer -c 1 set Master 80% &
 pia-vpn &
 notifyd &
-bar_notifyd &
+bar-notifyd &
 redshift &
 darkhttpd /var/cache/pacman/pkg  --port 8004 &
 compton --shadow-exclude '!focused' &
@@ -48,7 +48,7 @@ mpd &
 urxvtd -q -f -o &
 setxkbmap us_custom &
 (sleep 8
- custom_keys
+ custom-keys
  ~/programming/steamcontroller/scripts/custom.py start
  ) &
 

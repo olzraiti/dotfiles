@@ -1,3 +1,0 @@
-pkill bar_notifyd -9 && pkill lemonbar -9 && pkill tail -9 && rm -rf /dev/shm/notify_fifo_*
-bar_notifyd &
-notifyd &

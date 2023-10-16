@@ -1,6 +1,6 @@
 #!/bin/bash
 win_name="$1"
-PASSWORD_STORE_DIR=$(get_pass_env)
+PASSWORD_STORE_DIR=$(get-pass-env)
 escaped_pass_store=$(echo $PASSWORD_STORE_DIR | sed 's/[]\/$*.^|[]/\\&/g')
 
 function get_pass_entry {
@@ -20,5 +20,5 @@ elif [[ $(grep -c . <<<"$pass_entry") > 1 ]]; then
 	echo "$pass_entry" > /dev/shm/pass_rofi_fifo
 	rofi -show pass:~/dotfiles/rofi/pass.sh >/dev/null 2>&1
 else
-	clip_pass $pass_entry
+	clip-pass $pass_entry
 fi

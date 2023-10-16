@@ -7,11 +7,11 @@ while read path; do
 	echo $folder $file
         case "$1" in
         "e")
-			_pimio_linker $folder $file edit ;;
+			pimio-linker $folder $file edit ;;
         "p")
-			_pimio_linker $folder $file potential ;;
+			pimio-linker $folder $file potential ;;
         "d")
-			_pimio_linker $folder $file discard ;;
+			pimio-linker $folder $file discard ;;
         "C-d")
 			rm $path ;;
         esac

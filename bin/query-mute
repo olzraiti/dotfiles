@@ -1,0 +1,7 @@
+#!/bin/bash
+if [[ -n $(amixer get Master | grep '\[on\]') ]]; then
+	echo false
+else
+	echo true
+fi
+

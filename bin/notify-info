@@ -10,13 +10,13 @@ date=$(date +'%d.%m.')
 kmap_symbol=$KEYBOARD_ICON
 kmap=$(caps $(setxkbmap -print | awk -F'+' '/xkb_symbols/ {print $2}'))
 [[ $kmap == *_* ]] && kmap=$(echo $kmap | awk -F "_" '{print $1}')
-kmap_command="toggle_kmap no_notify && notify_info"
+kmap_command="toggle_kmap no_notify && notify-info"
 
 vol_symbol=$VOL_ICON
-vol=$(query_vol)
-vol_command="toggle_mute no_notify && notify_info"
+vol=$(query-vol)
+vol_command="toggle_mute no_notify && notify-info"
 
-if [[ $(query_mute) == true ]]; then
+if [[ $(query-mute) == true ]]; then
 	vol_symbol=$MUTE_ICON
 fi
 

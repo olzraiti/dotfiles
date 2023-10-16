@@ -19,11 +19,11 @@ local lain = require("lain")
 -- Theme can be changed, but must contain bg_widgets array for each widget. 
 beautiful.init(awful.util.getdir("config") .. "/" .. "themes/peura/theme.lua")
 
-awful.util.spawn_with_shell("compton_init")
-awful.util.spawn_with_shell("run_once redshift-gtk")
-awful.util.spawn_with_shell("run_once sparkleshare start")
---awful.util.spawn_with_shell("run_once cairo-dock")
-awful.util.spawn_with_shell("sleep 3; run_once qjackctl")
+awful.util.spawn_with_shell("compton-init")
+awful.util.spawn_with_shell("run-once redshift-gtk")
+awful.util.spawn_with_shell("run-once sparkleshare start")
+--awful.util.spawn_with_shell("run-once cairo-dock")
+awful.util.spawn_with_shell("sleep 3; run-once qjackctl")
 
 volumewidget = wibox.widget.textbox()
 volumewidget:set_font(beautiful.font)

@@ -3,4 +3,4 @@ space=$1
 if [[ -z $space ]];then
 	space=luomus-ict
 fi
-chrome_app https://"$space".slack.com --force-device-scale-factor=0.8
+chrome-app https://"$space".slack.com --force-device-scale-factor=0.8

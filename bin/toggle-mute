@@ -3,10 +3,10 @@ source ~/dotfiles/load-bar-env.sh
 
 amixer set Master toggle
 mute=$VOL_ICON
-if [[ $(query_mute) == "true" ]]; then
+if [[ $(query-mute) == "true" ]]; then
 	mute=$MUTE_ICON
 fi
 if [[ -z $1 ]]; then
 	notify-no-icon $mute
 fi
-update_wallpaper
+update-wallpaper

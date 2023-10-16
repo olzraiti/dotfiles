@@ -5,11 +5,11 @@ wallpaper=$DIR/wallpaper
 converted=$wallpaper
 current=$DIR/current
 
-#vol=$(query_vol)
+#vol=$(query-vol)
 
 # create the file path
 mute=false
-if [[ $(query_mute) == true ]]; then
+if [[ $(query-mute) == true ]]; then
 	converted=$converted"_mute"
 	mute=true
 #else

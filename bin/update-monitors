@@ -18,7 +18,7 @@ if [[ $external == false ]]; then
 fi
 xrandr -s 0
 
-cache_xrandr
+cache-xrandr
 
-pkill bar_notifyd -9
-bar_notifyd &
+pkill bar-notifyd -9
+bar-notifyd &

@@ -2,7 +2,7 @@
 
 dismiss=3
 
-bar_notifyd southeast &
+bar-notifyd southeast &
 
 sind -d -t $dismiss -f '%s;%b' |\
   # Reads the notifications line by line

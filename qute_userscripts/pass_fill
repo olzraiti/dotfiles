@@ -69,7 +69,7 @@ simplify_url "$QUTE_URL"
 
 simple_url=$(echo $simple_url | rev | awk -F "." '{print $2}' | rev)
 rm /dev/shm/pass_clipped_fifo
-search_pass "$simple_url"
+search-pass "$simple_url"
 
 if [ -f /dev/shm/pass_clipped_fifo ]; then
 	execute

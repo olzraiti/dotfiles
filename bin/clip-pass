@@ -1,5 +1,5 @@
 #!/bin/bash
-PASSWORD_STORE_DIR=$(get_pass_env)
+PASSWORD_STORE_DIR=$(get-pass-env)
 export PASSWORD_STORE_DIR
 pass_output=$(pass $1)
 if [[ -z $pass_output ]]; then

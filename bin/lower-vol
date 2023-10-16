@@ -1,0 +1,9 @@
+#!/bin/bash
+source ~/dotfiles/load-bar-env.sh
+
+amixer set Master 5%-
+icon=$VOL_ICON
+if [[ $(query-mute) == "true" ]]; then
+	icon=$MUTE_ICON
+fi
+notify-no-icon "$icon $(query-vol)"

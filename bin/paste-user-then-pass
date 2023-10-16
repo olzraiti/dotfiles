@@ -1,7 +1,7 @@
 #!/bin/bash
 source ~/dotfiles/load-bar-env.sh
 
-pass_init_fifos
+pass-init-fifos
 (user_pass=$(cat /dev/shm/pass_clipped_fifo | gpg -d -r olli.raitio@helsinki.fi --no-tty 2>/dev/null)
  pass=$(echo "$user_pass" | head -n 1)
  user=$(echo "$user_pass" | grep "user" | awk -F ":" '{print $2}' | awk '{print $1}')
@@ -12,4 +12,4 @@ pass_init_fifos
  xdotool type $pass
  notify-no-icon "$UNLOCKED pasted $(cat /dev/shm/pass_picked)"
  ) &
-get_pass $1
+get-pass $1

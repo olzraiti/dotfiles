@@ -1,2 +1,2 @@
 #!/bin/bash
-ensure_vpn && popcorn-time '$@' || notify "HELP! VPN EI OO PÄÄLLÄ :("
+ensure-vpn && popcorn-time '$@' || notify "HELP! VPN EI OO PÄÄLLÄ :("

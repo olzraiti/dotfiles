@@ -12,7 +12,7 @@ fi
 
 xwobf /tmp/.i3lock.png; i3lock -i /tmp/.i3lock.png
 
-wait_for i3lock
+wait-for i3lock
 
 if [[ $cairo_on == true ]]; then
 	cairo-dock -f &

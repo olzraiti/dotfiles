@@ -8,7 +8,7 @@ if [[ -z $(bspc query -D | grep 4) ]]; then
 	bspc monitor DVI-1 -r 4-1 4-2
 	bspc monitor HDMI-0 -a 4-1 4-2
 
-	change_wallpaper $HOME/SparkleShare/sparkleshark/wallpaper
+	change-wallpaper $HOME/SparkleShare/sparkleshark/wallpaper
 
 	pactl load-module module-jack-sink channels=2
 
@@ -26,7 +26,7 @@ else
 
 	bspc monitor HDMI-0 -r 4-1 4-2
 
-	change_wallpaper $HOME/SparkleShare/sparkleshark/wallpaper
+	change-wallpaper $HOME/SparkleShare/sparkleshark/wallpaper
 	
 	pactl unload-module $(pactl list modules | grep jack -B 1 | tail -n 2 | head -n 1 | cut -d " " -f 2 | cut -c 2-)
 

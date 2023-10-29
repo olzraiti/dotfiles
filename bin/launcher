@@ -8,4 +8,4 @@
 #	xdotool search --name lighthouse windowactivate
 #fi
 
-rofi -show run
+rofi -show run #-xoffset 320 -yoffset 80

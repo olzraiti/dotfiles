@@ -1,0 +1,6 @@
+#!/bin/bash
+params="-t"
+[[ -n "$1" ]] && params="$1"
+shift
+[[ -n "$@" ]] && /usr/bin/torrench $params --copy "$@"
+while echo -n "query: " && read line; do /usr/bin/torrench $params --copy "$line"; done

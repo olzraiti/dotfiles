@@ -1,0 +1,28 @@
+#!/bin/bash
+import_name="$1"
+export_name="$2"
+
+if [[ -z $export_name ]]; then
+	echo 'No target dir name given. Usage: "pimio-export from-dir target-dir-name". The target name is exported under ~/img/photos/$target-dir-name.'
+	exit
+fi
+target=img/photos/"$export_name"
+
+mkdir "$target"
+mkdir "$target"/edit
+mkdir "$target"/edited
+mkdir "$target"/potential
+
+cp $import_name/*.JPG "$target"
+cp $import_name/edited/* "$target"/edited/
+
+folders=( "edit" "potential" )
+for folder in "${folders[@]}"; do
+	ls "$import_name/"$folder"/"*.ORF* | while read file; do
+		cp $file $target"/"$folder"/"
+	done
+	ls "$import_name/"$folder"/"*.JPG | while read file; do
+		base=$(basename $file)
+		ln -s $(realpath "$target"/"$base") $(realpath "$target"/"$folder"/"$base")
+	done
+done

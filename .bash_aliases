@@ -21,7 +21,11 @@ alias nrm="notify-run -m"
 
 function sgrp { 
 	dir="src"
+	if [[ -f $PWD/.sgrp ]]; then
+		dir=$(cat $PWD/.sgrp)
+	fi
 	[[ -n "$2" ]] && dir="$2"
+
 	grep  "$1" -r $dir --color=always
 }
 

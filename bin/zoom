@@ -1,0 +1,43 @@
+#!/bin/bash
+
+BAND=$1
+SELECTED_DATE=$2
+
+[[ -z $BAND ]] && echo "usage: zoom BAND [DATE]" && exit
+
+id=$(ls /dev/shm/zoom-$BAND*)
+
+# You have mixed the audio, exporting now.
+if [[ ! -z $id ]]; then
+	DATE=$(echo $id | sed -e "s/^\/dev\/shm\/zoom-$BAND-//")
+	ffmpeg -i $HOME/rec/$BAND/$DATE/$DATE.wav $HOME/rec/$BAND/$DATE/$DATE.ogg 
+	rsync -v --progress $HOME/rec/$BAND/$DATE/$DATE.ogg robopop:public_html/tapes/$BAND/
+	tinyurl http://84.248.70.252/tapes/$BAND/$DATE.ogg copy
+	notify-send "$BAND tape $DATE.ogg ready"
+	rm /dev/shm/zoom-$BAND-$DATE
+	exit
+fi
+
+# Create dir & pull audio from zoom.
+
+if [[ -z $SELECTED_DATE ]]; then
+	DATE=$(ls /media/sdf1-usb-ZOOM_H1n_SD_R_W_/STEREO/FOLDER01/ | head -1 | awk -F - '{print $1}')
+fi
+
+[[ -z $DATE ]] && notify-send "Zoom audio not found" && exit
+
+touch /dev/shm/zoom-$BAND-$DATE
+
+mkdir rec/$BAND/$DATE
+echo -n Pulling audio...
+if [[ !  -z $SELECTED_DATE ]]; then
+	mv /media/sdf1-usb-ZOOM_H1n_SD_R_W_/STEREO/FOLDER01/$SELECTED_DATE* rec/$BAND/$DATE
+else
+	mv /media/sdf1-usb-ZOOM_H1n_SD_R_W_/STEREO/FOLDER01/* rec/$BAND/$DATE
+fi
+echo done
+
+echo $BAND $DATE
+
+ardour 2&>1 1>/dev/null &
+thunar ~/rec/$BAND/$DATE 2>&1 1>/dev/null &
